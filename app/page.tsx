@@ -226,7 +226,33 @@ export default function LandingPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeService, setActiveService] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
-  const [chatStatus, setChatStatus] = useState("");
+  
+  // Chatbot State
+  const [inputText, setInputText] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [messages, setMessages] = useState<{
+    id: string;
+    text: string;
+    sender: "user" | "bot";
+    timestamp: Date;
+  }[]>([
+    {
+      id: "welcome",
+      text: "مرحباً بك في مركز لؤي سعادة. كيف يمكننا مساعدتك بخصوص فحص أو صيانة سيارتك؟",
+      sender: "bot",
+      timestamp: new Date()
+    }
+  ]);
+
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+  
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   // Close mobile menu when hash changes
   useEffect(() => {
@@ -237,6 +263,58 @@ export default function LandingPage() {
 
   const toggleFaq = (index: number) => {
     setActiveFaq(activeFaq === index ? null : index);
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inputText.trim()) return;
+
+    const userMsg = {
+      id: Math.random().toString(),
+      text: inputText.trim(),
+      sender: "user" as const,
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMsg]);
+    setInputText("");
+    setIsTyping(true);
+
+    const userText = userMsg.text.toLowerCase();
+    
+    const matches = (keywords: string[]) => {
+      return keywords.some(keyword => userText.includes(keyword.toLowerCase()));
+    };
+
+    let reply = "";
+    if (matches(["فحص", "كمبيوتر", "عطل", "اعطال", "لمبة", "check", "engine"])) {
+      reply = "نعم، نوفر فحص كمبيوتر وتشخيص أعطال السيارة لمعرفة سبب المشكلة قبل تغيير القطع. يمكنك حجز فحص عبر واتساب.";
+    } else if (matches(["هايبرد", "hybrid", "بطارية", "انفرتر", "شحن"])) {
+      reply = "نعم، نقوم بفحص سيارات الهايبرد وتشخيص مشاكل البطارية، الشحن، الإنفرتر، والأعطال الكهربائية.";
+    } else if (matches(["كهرباء", "كهربائية", "electric", "ev", "شاحن", "بطارية كهرباء"])) {
+      reply = "نقوم بفحص وتشخيص أعطال السيارات الكهربائية وأنظمة البطارية والشحن والحساسات.";
+    } else if (matches(["بنزين", "ديزل", "محرك", "صرفية", "عزم", "تقطيع"])) {
+      reply = "نوفر فحص وصيانة سيارات البنزين والديزل وتشخيص مشاكل المحرك، ضعف العزم، التقطيع، والصرفية العالية.";
+    } else if (matches(["جير", "قير", "gearbox", "ناقل"])) {
+      reply = "نوفر فحص وتشخيص مشاكل الجير وناقل الحركة، ويمكن تحديد سبب المشكلة بعد الفحص.";
+    } else if (matches(["سعر", "كم", "تكلفة", "بكلف", "الاسعار"])) {
+      reply = "تختلف تكلفة الفحص أو الصيانة حسب نوع السيارة والمشكلة. الأفضل إرسال تفاصيل السيارة والعطل عبر واتساب ليتم توجيهك بشكل أدق.";
+    } else if (matches(["حجز", "موعد", "متى", "دوام", "متوفر"])) {
+      reply = "يمكنك حجز موعد أو الاستفسار مباشرة عبر واتساب من زر التواصل الموجود في الموقع.";
+    } else {
+      reply = "أهلاً بك في مركز لؤي سعادة. يمكنني مساعدتك في الاستفسار عن فحص الكمبيوتر، الكهرباء، الميكانيك، الهايبرد، السيارات الكهربائية، الجير، أو الحجز. اكتب سؤالك أو تواصل معنا عبر واتساب.";
+    }
+
+    setTimeout(() => {
+      const botMsg = {
+        id: Math.random().toString(),
+        text: reply,
+        sender: "bot" as const,
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botMsg]);
+      setIsTyping(false);
+    }, 600);
   };
 
   return (
@@ -1087,16 +1165,25 @@ export default function LandingPage() {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => {
-                setChatOpen(false);
-                setChatStatus("");
-              }}
-              className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-all"
-              aria-label="Close Chat"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://wa.me/962788526696"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#25d366] hover:bg-[#20ba5a] text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-all"
+              >
+                <span>تواصل واتساب</span>
+              </a>
+              <button
+                onClick={() => {
+                  setChatOpen(false);
+                }}
+                className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-all"
+                aria-label="Close Chat"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
           {/* Chat Description Banner */}
@@ -1105,41 +1192,64 @@ export default function LandingPage() {
           </div>
 
           {/* Chat Body (Messages) */}
-          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#080a0f]/40 flex flex-col justify-end">
+          <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-[#080a0f]/40 flex flex-col">
             <div className="space-y-4 flex-grow flex flex-col justify-start">
-              {/* Bot Message */}
-              <div className="flex items-start gap-2.5 max-w-[88%] text-right self-start">
-                <div className="w-7 h-7 rounded-full bg-electric-blue/15 border border-electric-blue/25 flex items-center justify-center text-electric-blue shrink-0">
-                  <Bot className="w-4 h-4" />
+              {messages.map((msg) => (
+                <div
+                  key={msg.id}
+                  className={`flex items-start gap-2.5 max-w-[85%] text-right ${
+                    msg.sender === "user" ? "self-end flex-row-reverse" : "self-start"
+                  }`}
+                >
+                  <div
+                    className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-[10px] ${
+                      msg.sender === "user"
+                        ? "bg-electric-blue text-white"
+                        : "bg-electric-blue/15 border border-electric-blue/25 text-electric-blue"
+                    }`}
+                  >
+                    {msg.sender === "user" ? "أنت" : <Bot className="w-4 h-4" />}
+                  </div>
+                  <div
+                    className={`border rounded-2xl p-3 text-xs sm:text-sm leading-relaxed font-medium ${
+                      msg.sender === "user"
+                        ? "bg-electric-blue border-electric-blue/20 text-white rounded-tl-none"
+                        : "bg-[#161a24] border-white/5 text-gray-200 rounded-tr-none"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
                 </div>
-                <div className="bg-[#161a24] border border-white/5 rounded-2xl rounded-tr-none p-3.5 text-xs sm:text-sm text-gray-200 leading-relaxed font-medium">
-                  مرحباً بك في مركز لؤي سعادة. قريباً سيتم تفعيل المساعد الذكي للرد على استفساراتك حول فحص وصيانة السيارات.
+              ))}
+              
+              {/* Bot typing simulation */}
+              {isTyping && (
+                <div className="flex items-start gap-2.5 max-w-[85%] text-right self-start animate-pulse">
+                  <div className="w-7 h-7 rounded-full bg-electric-blue/15 border border-electric-blue/25 flex items-center justify-center text-electric-blue shrink-0">
+                    <Bot className="w-4 h-4" />
+                  </div>
+                  <div className="bg-[#161a24] border border-white/5 rounded-2xl rounded-tr-none p-3 text-xs sm:text-sm text-gray-400 font-medium">
+                    يكتب الآن...
+                  </div>
                 </div>
-              </div>
+              )}
+              
+              <div ref={messagesEndRef} />
             </div>
-            
-            {/* Status alerts */}
-            {chatStatus && (
-              <div className="bg-warning-orange/10 border border-warning-orange/20 text-warning-amber text-xs rounded-xl p-3 text-center animate-fadeIn font-semibold leading-relaxed">
-                {chatStatus}
-              </div>
-            )}
           </div>
 
           {/* Chat Footer (Input Form) */}
           <div className="p-4 border-t border-white/5 bg-[#0f1422]/60">
             <form 
-              onSubmit={(e) => {
-                e.preventDefault();
-                setChatStatus("سيتم تفعيل هذه الخدمة قريباً للرد الذكي على كافة استفساراتكم!");
-              }}
+              onSubmit={handleSendMessage}
               className="flex gap-2"
             >
               <input
                 type="text"
-                readOnly
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
                 placeholder="اكتب سؤالك هنا..."
-                className="flex-grow bg-[#080a0f] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-gray-400 placeholder-gray-600 focus:outline-none cursor-not-allowed text-right"
+                className="flex-grow bg-[#080a0f] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-electric-blue/50 text-right"
               />
               <button
                 type="submit"
