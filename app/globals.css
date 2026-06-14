@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Cairo+Play:wght@200..1000&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-cairo: "Cairo", sans-serif;
+  --font-cairo-play: "Cairo Play", sans-serif;
+  --color-dark-bg: #080a0f;
+  --color-dark-card: #11141d;
+  --color-dark-card-hover: #161b27;
+  --color-electric-blue: #1e6ffa;
+  --color-electric-blue-hover: #0d5de6;
+  --color-glow-blue: rgba(30, 111, 250, 0.15);
+  --color-warning-amber: #ff9f1c;
+  --color-warning-orange: #ff5c00;
+  
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scan: scan 4s linear infinite;
+  --animate-glow: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes scan {
+  0%, 100% {
+    transform: translateY(-10%);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(110%);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(30, 111, 250, 0.3), 0 0 20px rgba(30, 111, 250, 0.2);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(30, 111, 250, 0.5), 0 0 35px rgba(30, 111, 250, 0.3);
+  }
+}
+
+/* Custom Utilities and Styles */
+:root {
+  --font-cairo: "Cairo", sans-serif;
+}
+
+body {
+  font-family: var(--font-cairo), system-ui, -apple-system, sans-serif;
+  background-color: #080a0f;
+  color: #f3f4f6;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e6ffa;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0d5de6;
+}
+
+/* Glassmorphism Styles */
+.glass-panel {
+  background: rgba(17, 20, 29, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-panel-glow {
+  background: rgba(17, 20, 29, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(30, 111, 250, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
+.glass-panel-glow:hover {
+  border-color: rgba(30, 111, 250, 0.35);
+  box-shadow: 0 0 20px rgba(30, 111, 250, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+/* Diagonal stripe pattern for backgrounds */
+.bg-stripes {
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.02) 75%, transparent 75%, transparent);
+  background-size: 40px 40px;
+}

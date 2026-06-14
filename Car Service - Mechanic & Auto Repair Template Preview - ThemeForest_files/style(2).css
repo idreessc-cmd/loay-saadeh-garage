@@ -1,0 +1,81 @@
+:root
+{
+	--ql-bar-height: 55px;
+}
+html.ql-bar-padding-top
+{
+	padding-top: var(--ql-bar-height);
+}
+@media all and (-ms-high-contrast:none)
+{
+	html.ql-bar-padding-top
+	{
+		padding-top: 0;
+	}
+}
+.ql-bar
+{
+	position: sticky;
+	top: 0;
+	display: flex;
+	width: 100%;
+	height: var(--ql-bar-height);
+	align-items: center;
+	background-color: #262626;
+	padding: 0 20px 1px;
+	box-sizing: border-box;
+	z-index: 9999999;
+}
+html.ql-bar-padding-top .ql-bar
+{
+	position: fixed;
+	left: 0;
+}
+a.ql-bar-envato-logo
+{
+	width: 152px;
+	height: 18px;
+	text-indent: -9999px;
+	background: url("envato-market-logo.svg");
+	background-size: 152px 18px;
+	border: none;
+}
+a.ql-bar-button
+{
+	position: relative;
+	top: -1px;
+	display: inline-block;
+	padding: 5px 20px;
+	text-align: center;
+	font-size: 14px;
+	line-height: 1.5;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #FFF;
+	background-color: #82B440;
+	box-shadow: 0 2px 0 #6F9A37;
+	border-radius: 4px;
+	margin-left: auto;
+	text-decoration: none;
+	text-shadow: none;
+	border: none;
+}
+.ql-bar-button:hover
+{
+	color: #FFF;
+	background-color: #7AA93C;
+	text-decoration: none;
+}
+@media screen and (max-width: 568px)
+{
+	.ql-bar
+	{
+		padding-left: 15px;
+		padding-right: 10px;
+	}
+	.ql-bar-envato-logo
+	{
+		width: 118px;
+		height: 14px;
+		background-size: 118px 14px;
+	}
+}

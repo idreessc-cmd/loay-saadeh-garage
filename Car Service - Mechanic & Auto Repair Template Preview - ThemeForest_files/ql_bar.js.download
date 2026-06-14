@@ -1,0 +1,34 @@
+"use strict";
+var previewInIframe = false;
+try 
+{
+	if(window.self !== window.top)
+	{
+		previewInIframe = true;
+		document.documentElement.style.setProperty("--ql-bar-height", "0px");
+	}
+	else
+	{
+		previewInIframe = false;
+	}
+}
+catch(e) 
+{
+	previewInIframe = true;
+	document.documentElement.style.setProperty("--ql-bar-height", "0px");
+}
+jQuery(document).ready(function($){
+	if(!previewInIframe && typeof(window.bar_button_url)!="undefined")
+	{
+		if(($("html").css("overflow-x")=="hidden" || typeof(window.bar_fixed)!="undefined") && typeof(window.bar_sticky)=="undefined")
+		{
+			$("html").addClass("ql-bar-padding-top");
+		}
+		$("body").prepend('<div class="ql-bar"><a class="ql-bar-envato-logo" href="'+window.bar_button_url+'">Envato Market</a><a class="ql-bar-button" href="'+window.bar_button_url+'">Buy now</a></div>');
+		$(window).trigger("resize");
+	}
+	else
+	{
+		document.documentElement.style.setProperty("--ql-bar-height", "0px");
+	}
+});
