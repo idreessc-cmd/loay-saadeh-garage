@@ -8,6 +8,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://loay-saadeh-garage.vercel.app"),
   title: "مركز لؤي سعادة لصيانة وفحص السيارات | كهرباء وميكانيك وفحص كمبيوتر",
   description: "مركز لؤي سعادة لصيانة وفحص السيارات يقدم خدمات كهرباء وميكانيك سيارات، فحص كمبيوتر، إصلاح جير، قطع غيار وتشخيص أعطال السيارات. تواصل الآن على 0788526696.",
   keywords: [
@@ -26,16 +27,30 @@ export const metadata: Metadata = {
   authors: [{ name: "مركز لؤي سعادة" }],
   robots: "index, follow",
   alternates: {
-    canonical: "https://smartscan-garage.com",
+    canonical: "https://loay-saadeh-garage.vercel.app",
   },
   openGraph: {
     type: "website",
     locale: "ar_JO",
-    url: "https://smartscan-garage.com",
+    url: "https://loay-saadeh-garage.vercel.app",
     title: "مركز لؤي سعادة لصيانة وفحص السيارات | كهرباء وميكانيك وفحص كمبيوتر",
     description: "مركز لؤي سعادة لصيانة وفحص السيارات يقدم خدمات كهرباء وميكانيك سيارات، فحص كمبيوتر، إصلاح جير، قطع غيار وتشخيص أعطال السيارات. تواصل الآن على 0788526696.",
     siteName: "مركز لؤي سعادة",
-  }
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "مركز لؤي سعادة لصيانة وفحص السيارات",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "مركز لؤي سعادة لصيانة وفحص السيارات | كهرباء وميكانيك وفحص كمبيوتر",
+    description: "مركز لؤي سعادة لصيانة وفحص السيارات يقدم خدمات كهرباء وميكانيك سيارات، فحص كمبيوتر، إصلاح جير، قطع غيار وتشخيص أعطال السيارات. تواصل الآن على 0788526696.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({
