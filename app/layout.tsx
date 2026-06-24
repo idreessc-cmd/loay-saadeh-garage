@@ -8,7 +8,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://loay-saadeh-garage.vercel.app"),
+  metadataBase: new URL("https://loay-saadeh-garage-mllw.vercel.app"),
   title: "مركز لؤي سعادة لصيانة وفحص السيارات | كهرباء وميكانيك وفحص كمبيوتر",
   description: "مركز لؤي سعادة لصيانة وفحص السيارات يقدم خدمات كهرباء وميكانيك سيارات، فحص كمبيوتر، إصلاح جير، قطع غيار وتشخيص أعطال السيارات. تواصل الآن على 0788526696.",
   keywords: [
@@ -27,12 +27,12 @@ export const metadata: Metadata = {
   authors: [{ name: "مركز لؤي سعادة" }],
   robots: "index, follow",
   alternates: {
-    canonical: "https://loay-saadeh-garage.vercel.app",
+    canonical: "https://loay-saadeh-garage-mllw.vercel.app",
   },
   openGraph: {
     type: "website",
     locale: "ar_JO",
-    url: "https://loay-saadeh-garage.vercel.app",
+    url: "https://loay-saadeh-garage-mllw.vercel.app",
     title: "مركز لؤي سعادة لصيانة وفحص السيارات | كهرباء وميكانيك وفحص كمبيوتر",
     description: "مركز لؤي سعادة لصيانة وفحص السيارات يقدم خدمات كهرباء وميكانيك سيارات، فحص كمبيوتر، إصلاح جير، قطع غيار وتشخيص أعطال السيارات. تواصل الآن على 0788526696.",
     siteName: "مركز لؤي سعادة",
@@ -64,10 +64,10 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "AutoRepair",
-        "@id": "https://loay-saadeh-garage.vercel.app/#localbusiness",
+        "@id": "https://loay-saadeh-garage-mllw.vercel.app/#localbusiness",
         "name": "مركز لؤي سعادة لصيانة وفحص السيارات",
-        "image": "https://loay-saadeh-garage.vercel.app/og-image.png",
-        "url": "https://loay-saadeh-garage.vercel.app",
+        "image": "https://loay-saadeh-garage-mllw.vercel.app/og-image.png",
+        "url": "https://loay-saadeh-garage-mllw.vercel.app",
         "telephone": "0788526696",
         "priceRange": "$$",
         "address": {
@@ -102,7 +102,7 @@ export default function RootLayout({
       },
       {
         "@type": "FAQPage",
-        "@id": "https://loay-saadeh-garage.vercel.app/#faq",
+        "@id": "https://loay-saadeh-garage-mllw.vercel.app/#faq",
         "mainEntity": [
           {
             "@type": "Question",
