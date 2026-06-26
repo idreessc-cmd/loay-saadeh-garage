@@ -149,8 +149,15 @@ body.light-mode h3,
 body.light-mode h4,
 body.light-mode h5,
 body.light-mode h6,
-body.light-mode span.font-extrabold {
+body.light-mode span.font-extrabold,
+body.light-mode .text-white:not(.bg-electric-blue):not(.bg-\[\#25d366\]):not(.bg-warning-amber):not(.bg-warning-orange):not(.bg-green-500) {
   color: #1f2937 !important;
+}
+
+/* CTA Section Background in Light Mode */
+body.light-mode section.py-16.bg-gradient-to-r.from-\[\#0b101d\] {
+  background: linear-gradient(to right, #f1f3f5, #e9ecef, #f1f3f5) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* Keep the title gradient from breaking or look clean in light mode */
