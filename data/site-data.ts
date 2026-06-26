@@ -3,7 +3,7 @@ export const CENTER_DATA = {
   name: "مركز لؤي سعادة",
   slogan: "لا تغيّر قطع قبل أن تعرف سبب العطل الحقيقي.",
   phone: "0788526696",
-  phoneDisplay: "078 852 6696",
+  phoneDisplay: "0788526696",
   whatsapp: "962788526696",
   location: "عمان، الأردن",
   locationDetail: "ماركا الشمالية، خلف مخابز جواد",
