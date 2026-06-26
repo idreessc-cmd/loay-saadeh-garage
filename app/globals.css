@@ -95,3 +95,197 @@ body {
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.02) 75%, transparent 75%, transparent);
   background-size: 40px 40px;
 }
+
+/* --- Light Mode Styling Overrides --- */
+body.light-mode {
+  background-color: #f8f9fa !important;
+  color: #212529 !important;
+}
+
+body.light-mode ::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+/* Overriding section backgrounds */
+body.light-mode section {
+  background-color: #f8f9fa;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode section#services,
+body.light-mode section#why-us,
+body.light-mode section#contact {
+  background-color: #f1f3f5;
+}
+
+/* Glassmorphism Panels in Light Mode */
+body.light-mode .glass-panel {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+}
+
+body.light-mode .glass-panel-glow {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(30, 111, 250, 0.3) !important;
+  box-shadow: 0 10px 30px rgba(30, 111, 250, 0.06) !important;
+}
+
+body.light-mode .glass-panel-glow:hover {
+  border-color: rgba(30, 111, 250, 0.6) !important;
+  box-shadow: 0 10px 30px rgba(30, 111, 250, 0.12) !important;
+}
+
+/* Card layout backgrounds for car types and custom cards */
+body.light-mode .group.relative.overflow-hidden.rounded-2xl.border.border-white\/5 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Text and headings */
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4,
+body.light-mode h5,
+body.light-mode h6,
+body.light-mode span.font-extrabold {
+  color: #1f2937 !important;
+}
+
+/* Keep the title gradient from breaking or look clean in light mode */
+body.light-mode .bg-clip-text {
+  background-image: linear-gradient(to left, #1f2937, #4b5563, #1e6ffa) !important;
+  color: transparent !important;
+}
+
+body.light-mode p,
+body.light-mode .text-gray-400 {
+  color: #4b5563 !important;
+}
+
+body.light-mode .text-gray-300 {
+  color: #374151 !important;
+}
+
+body.light-mode .text-gray-200 {
+  color: #111827 !important;
+}
+
+/* Accordion hover header and icons */
+body.light-mode button:hover span {
+  color: #1e6ffa !important;
+}
+
+body.light-mode .text-gray-400.group-hover\:text-white {
+  color: #4b5563 !important;
+}
+
+/* Map specific styling */
+body.light-mode .absolute.inset-0.bg-\[\#0f1422\] {
+  background-color: #f1f3f5 !important;
+}
+
+body.light-mode .bg-\[\#141b2e\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .bg-\[\#080a0f\] {
+  background-color: #f8f9fa !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .bg-\[\#080a0f\] span {
+  color: #1f2937 !important;
+}
+
+/* Chatbot container in Light Mode */
+body.light-mode .fixed.bottom-20.left-4.right-4.sm\:bottom-24 {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(30, 111, 250, 0.25) !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode .bg-gradient-to-r.from-electric-blue\/20 {
+  background: linear-gradient(to right, rgba(30, 111, 250, 0.1), #f8f9fa, rgba(30, 111, 250, 0.05)) !important;
+}
+
+body.light-mode .bg-\[\#111625\] {
+  background-color: #f1f3f5 !important;
+  color: #4b5563 !important;
+}
+
+body.light-mode .bg-\[\#080a0f\]\/40 {
+  background-color: rgba(248, 249, 250, 0.8) !important;
+}
+
+body.light-mode .bg-\[\#161a24\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #1f2937 !important;
+}
+
+body.light-mode .bg-\[\#0f1422\]\/60 {
+  background-color: rgba(241, 243, 255, 0.8) !important;
+}
+
+body.light-mode .bg-\[\#080a0f\] {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+body.light-mode .bg-\[\#080a0f\] input {
+  color: #1f2937 !important;
+}
+
+/* Chat messages user text */
+body.light-mode .bg-electric-blue.border-electric-blue\/20.text-white {
+  color: #ffffff !important;
+}
+
+/* Mobile Bottom Bar in Light Mode */
+body.light-mode .fixed.bottom-0.left-0.right-0.z-40.bg-\[\#0d0f17\]\/95 {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-top-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure buttons with text-white still have white text on their colored backgrounds */
+body.light-mode .bg-electric-blue.text-white,
+body.light-mode .bg-\[\#25d366\].text-white,
+body.light-mode .bg-warning-amber.text-black {
+  color: #ffffff !important;
+}
+
+body.light-mode .bg-warning-amber.text-black {
+  color: #111827 !important;
+}
+
+body.light-mode .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .text-gray-200.hover\:text-white:hover {
+  color: #111827 !important;
+}
+
+body.light-mode .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+body.light-mode .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Stripe background opacity adjustment for readability */
+body.light-mode .bg-stripes {
+  background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.01) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.01) 50%, rgba(0, 0, 0, 0.01) 75%, transparent 75%, transparent) !important;
+}
+

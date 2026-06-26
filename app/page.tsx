@@ -25,7 +25,9 @@ import {
   HeartPulse,
   DollarSign,
   Bot,
-  Send
+  Send,
+  Sun,
+  Moon
 } from "lucide-react";
 
 import { CENTER_DATA } from "../data/site-data";
@@ -59,6 +61,34 @@ export default function LandingPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [activeService, setActiveService] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
+  
+  // Theme state and mounting check
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      if (savedTheme === 'light') {
+        document.body.classList.add('light-mode');
+      } else {
+        document.body.classList.remove('light-mode');
+      }
+    }
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('theme', nextTheme);
+    if (nextTheme === 'light') {
+      document.body.classList.add('light-mode');
+    } else {
+      document.body.classList.remove('light-mode');
+    }
+  };
   
   // Chatbot State
   const [inputText, setInputText] = useState("");
@@ -179,7 +209,17 @@ export default function LandingPage() {
             </nav>
 
             {/* CTA Button Desktop */}
-            <div className="hidden lg:flex items-center">
+            <div className="hidden lg:flex items-center gap-4">
+              {/* Theme Toggle Button Desktop */}
+              <button
+                onClick={toggleTheme}
+                className="text-gray-400 hover:text-white p-2.5 rounded-lg bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all focus:outline-none cursor-pointer"
+                aria-label="تبديل الوضع"
+                title="تبديل الوضع"
+              >
+                {mounted && theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
+              </button>
+              
               <a
                 href={`https://wa.me/${CENTER_DATA.whatsapp}?text=مرحباً، أرغب في حجز موعد لفحص سيارتي`}
                 target="_blank"
@@ -190,8 +230,18 @@ export default function LandingPage() {
               </a>
             </div>
 
-            {/* Mobile Menu Switch */}
-            <div className="flex lg:hidden">
+            {/* Mobile Menu Switch & Theme Toggle */}
+            <div className="flex lg:hidden items-center gap-3">
+              {/* Theme Toggle Button Mobile */}
+              <button
+                onClick={toggleTheme}
+                className="text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 focus:outline-none cursor-pointer"
+                aria-label="تبديل الوضع"
+                title="تبديل الوضع"
+              >
+                {mounted && theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
+              </button>
+              
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 focus:outline-none"
