@@ -186,7 +186,7 @@ export default function LandingPage() {
                 rel="noopener noreferrer"
                 className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-md shadow-electric-blue/20 hover:shadow-lg hover:shadow-electric-blue/40 border border-white/10 transition-all duration-300 transform hover:-translate-y-0.5"
               >
-                احجز فحصاً الآن
+                تواصل الآن
               </a>
             </div>
 
@@ -213,22 +213,6 @@ export default function LandingPage() {
               <a href="#why-us" className="block px-3 py-2.5 rounded-lg text-base font-semibold text-gray-300 hover:bg-white/5 hover:text-electric-blue transition-all">لماذا نحن</a>
               <a href="#faq" className="block px-3 py-2.5 rounded-lg text-base font-semibold text-gray-300 hover:bg-white/5 hover:text-electric-blue transition-all">الأسئلة الشائعة</a>
               <a href="#contact" className="block px-3 py-2.5 rounded-lg text-base font-semibold text-gray-300 hover:bg-white/5 hover:text-electric-blue transition-all">تواصل معنا</a>
-              <div className="pt-4 px-3 flex flex-col gap-3">
-                <a
-                  href={`https://wa.me/${CENTER_DATA.whatsapp}?text=مرحباً، أرغب في حجز موعد لفحص سيارتي`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-electric-blue hover:bg-electric-blue-hover text-white text-center py-3 rounded-lg text-base font-bold border border-white/10 shadow-lg shadow-electric-blue/25"
-                >
-                  احجز فحصاً عبر واتساب
-                </a>
-                <a
-                  href={`tel:${CENTER_DATA.phone}`}
-                  className="bg-white/5 hover:bg-white/10 text-gray-200 text-center py-3 rounded-lg text-base font-bold border border-white/10"
-                >
-                  اتصل بنا مباشرة
-                </a>
-              </div>
             </div>
           </div>
         )}
@@ -269,7 +253,7 @@ export default function LandingPage() {
                   className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
                 >
                   <Phone className="w-5 h-5 text-warning-amber" />
-                  <span>اتصل الآن: {CENTER_DATA.phoneDisplay}</span>
+                  <span>اتصل الآن</span>
                 </a>
               </div>
 
@@ -464,17 +448,6 @@ export default function LandingPage() {
                       {car.desc}
                     </p>
                   </div>
-
-                  {/* WhatsApp contact triggers direct chat */}
-                  <a
-                    href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في حجز فحص لسيارة ${car.title}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-electric-blue font-bold group-hover:text-warning-amber transition-colors w-fit pt-2"
-                  >
-                    <span>احجز موعد فحص {car.title}</span>
-                    <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition-transform" />
-                  </a>
                 </div>
               </div>
             ))}
@@ -521,15 +494,9 @@ export default function LandingPage() {
                   {service.title}
                 </h3>
                 
-                <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium mb-4">
+                <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium mb-0">
                   {service.desc}
                 </p>
-                
-                {/* Fake link button with transition */}
-                <div className="flex items-center gap-1.5 text-xs text-electric-blue font-bold opacity-70 group-hover:opacity-100 transition-all">
-                  <span>طلب فحص واستشارة</span>
-                  <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1.5 transition-transform" />
-                </div>
               </div>
             ))}
           </div>
@@ -640,7 +607,7 @@ export default function LandingPage() {
       {/* 8. CTA SECTION */}
       <section className="py-16 bg-gradient-to-r from-[#0b101d] via-[#121c33] to-[#0b101d] border-y border-white/5 relative">
         <div className="max-w-5xl mx-auto px-4 text-center space-y-6">
-          <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white">افحص سيارتك قبل أن تدفع أكثر</h2>
+          <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white">جاهز لفحص سيارتك؟</h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto font-medium">
             احجز فحص سيارتك الآن واعرف سبب العطل الحقيقي ووفر على نفسك تكاليف التجارب.
           </p>
@@ -653,14 +620,14 @@ export default function LandingPage() {
               className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-electric-blue/30 border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
             >
               <Zap className="w-5 h-5" />
-              <span>تواصل عبر واتساب</span>
+              <span>واتساب</span>
             </a>
             <a
               href={`tel:${CENTER_DATA.phone}`}
               className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
             >
               <Phone className="w-5 h-5 text-warning-amber" />
-              <span>اتصال مباشر: {CENTER_DATA.phoneDisplay}</span>
+              <span>اتصال</span>
             </a>
           </div>
         </div>
@@ -775,7 +742,7 @@ export default function LandingPage() {
                   href={CENTER_DATA.googleMapsLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all"
+                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
                 >
                   <MapPin className="w-5 h-5 text-warning-orange" />
                   <span>افتح الموقع على خرائط Google</span>
@@ -784,10 +751,19 @@ export default function LandingPage() {
                   href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في الاستفسار عن خدمة فحص السيارات`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 shadow-lg shadow-electric-blue/20 transition-all"
+                  className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 shadow-lg shadow-electric-blue/20 transition-all flex-1"
                 >
-                  <IconMapper name="Zap" className="w-5 h-5" />
-                  <span>تواصل عبر واتساب</span>
+                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.773 1.226h.004c5.505 0 9.989-4.478 9.99-9.984A9.97 9.97 0 0 0 12.012 2zm5.82 14.161c-.3.84-1.491 1.568-2.051 1.621-.56.051-1.11.271-3.6-0.73-3.189-1.28-5.229-4.52-5.389-4.731-.16-.21-1.28-1.7-1.28-3.24 0-1.54.8-2.3 1.09-2.6.29-.3.63-.37.84-.37.21 0 .42.01.6.01.19 0 .44-.08.69.51.26.62.88 2.14.96 2.3.08.16.13.35.03.55-.1.21-.15.34-.3.52-.15.18-.32.41-.45.55-.15.15-.31.32-.13.62.18.3.82 1.36 1.76 2.2 1.21 1.08 2.22 1.41 2.53 1.56.31.15.49.13.67-.08.18-.21.79-.92.99-1.23.21-.31.42-.26.71-.15.3.11 1.89.89 2.21 1.05.32.16.54.24.62.38.08.14.08.82-.22 1.66z" />
+                  </svg>
+                  <span>تواصل واتساب</span>
+                </a>
+                <a
+                  href={`tel:${CENTER_DATA.phone}`}
+                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
+                >
+                  <Phone className="w-5 h-5 text-warning-amber" />
+                  <span>اتصال مباشر</span>
                 </a>
               </div>
             </div>
@@ -964,7 +940,7 @@ export default function LandingPage() {
           className="flex-1 bg-warning-amber hover:bg-orange-500 text-black py-2.5 px-2 rounded-xl text-xs font-bold font-cairo-play flex items-center justify-center gap-1.5 transition-all shadow-md shadow-warning-amber/10"
         >
           <Phone className="w-4 h-4" />
-          <span>اتصال مباشر</span>
+          <span>اتصال</span>
         </a>
 
         {/* AI Chatbot Button */}
@@ -973,7 +949,7 @@ export default function LandingPage() {
           className="flex-1 bg-electric-blue hover:bg-electric-blue-hover text-white py-2.5 px-2 rounded-xl text-xs font-bold font-cairo-play flex items-center justify-center gap-1.5 transition-all shadow-md shadow-electric-blue/10"
         >
           <Bot className="w-4 h-4" />
-          <span>AI شات</span>
+          <span>شات</span>
         </button>
       </div>
 
