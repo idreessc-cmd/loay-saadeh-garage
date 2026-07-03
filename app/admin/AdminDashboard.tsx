@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { 
   Lock, LogOut, Save, Download, Eye, FileCode, Check, AlertCircle, 
-  Plus, Trash2, ArrowUp, ArrowDown, ChevronRight, Info, EyeOff
+  Plus, Trash2, ArrowUp, ArrowDown, ChevronRight, Info, EyeOff,
+  Image, Upload, Copy, RotateCcw, FolderOpen
 } from "lucide-react";
 import siteData from "../../data/site-data.json";
 import { CenterData } from "../../data/site-data";
@@ -377,7 +378,7 @@ export default function AdminDashboard() {
             { id: "cartypes", label: "أنواع السيارات" },
             { id: "faq", label: "الأسئلة الشائعة" },
             { id: "chatbot", label: "ردود الشات بوت" },
-            { id: "images", label: "إدارة الصور" },
+            { id: "images", label: "إدارة الوسائط" },
             { id: "seo", label: "الظهور والـ SEO" }
           ].map((tab) => (
             <button
@@ -871,151 +872,12 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* TAB 7: Images */}
+          {/* TAB 7: Media Management */}
           {activeTab === "images" && (
-            <div className="space-y-6">
-              <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3">إدارة الصور</h2>
-              <p className="text-xs text-gray-400 leading-relaxed">
-                غيّر مسار أو رابط أي صورة في الموقع. إذا كانت الصورة داخل مجلد <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">public</code>، اكتب المسار مبتدئاً بـ <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">/</code>. يمكنك أيضاً استخدام رابط خارجي كامل <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">https://...</code>.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Electric car image */}
-                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white">السيارات الكهربائية</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
-                    </div>
-                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
-                      {formData.images.electric.startsWith("http") || formData.images.electric.startsWith("/") ? (
-                        <img src={formData.images.electric} alt="electric" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
-                    <input
-                      type="text"
-                      value={formData.images.electric}
-                      onChange={(e) => handleChange("images.electric", e.target.value)}
-                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
-                      dir="ltr"
-                    />
-                  </div>
-                </div>
-
-                {/* Hybrid car image */}
-                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white">سيارات الهايبرد</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
-                    </div>
-                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
-                      {formData.images.hybrid.startsWith("http") || formData.images.hybrid.startsWith("/") ? (
-                        <img src={formData.images.hybrid} alt="hybrid" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
-                    <input
-                      type="text"
-                      value={formData.images.hybrid}
-                      onChange={(e) => handleChange("images.hybrid", e.target.value)}
-                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
-                      dir="ltr"
-                    />
-                  </div>
-                </div>
-
-                {/* Default/Petrol-Diesel car image */}
-                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white">سيارات البنزين والديزل</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
-                    </div>
-                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
-                      {formData.images.defaultCar.startsWith("http") || formData.images.defaultCar.startsWith("/") ? (
-                        <img src={formData.images.defaultCar} alt="default" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
-                    <input
-                      type="text"
-                      value={formData.images.defaultCar}
-                      onChange={(e) => handleChange("images.defaultCar", e.target.value)}
-                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
-                      dir="ltr"
-                    />
-                  </div>
-                </div>
-
-                {/* OG Image */}
-                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white">صورة مشاركة الرابط (Open Graph)</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر عند مشاركة رابط الموقع على فيسبوك، واتساب، تلغرام...</p>
-                    </div>
-                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
-                      {formData.images.ogImage.startsWith("http") || formData.images.ogImage.startsWith("/") ? (
-                        <img src={formData.images.ogImage} alt="og" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
-                    <input
-                      type="text"
-                      value={formData.images.ogImage}
-                      onChange={(e) => handleChange("images.ogImage", e.target.value)}
-                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
-                      dir="ltr"
-                    />
-                  </div>
-                </div>
-
-                {/* Favicon */}
-                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
-                  <div className="flex justify-between items-start gap-4">
-                    <div>
-                      <h3 className="text-sm font-bold text-white">أيقونة الموقع (Favicon)</h3>
-                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في تبويب المتصفح بجانب عنوان الصفحة</p>
-                    </div>
-                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
-                      {formData.images.favicon.startsWith("http") || formData.images.favicon.startsWith("/") ? (
-                        <img src={formData.images.favicon} alt="favicon" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
-                      )}
-                    </div>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
-                    <input
-                      type="text"
-                      value={formData.images.favicon}
-                      onChange={(e) => handleChange("images.favicon", e.target.value)}
-                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
-                      dir="ltr"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <MediaManager
+              formData={formData}
+              onFormDataChange={setFormData}
+            />
           )}
 
           {/* TAB 8: Visibility & SEO */}
@@ -1175,6 +1037,293 @@ export default function AdminDashboard() {
                 {isSaving ? "جاري الحفظ..." : "تأكيد ونشر"}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MediaManager({ formData, onFormDataChange }: { formData: CenterData; onFormDataChange: (data: CenterData) => void }) {
+  const [uploading, setUploading] = useState<string | null>(null);
+  const [msg, setMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+
+  const IMAGE_DEFS = [
+    { key: "electric", label: "السيارات الكهربائية", usage: "بطاقة أنواع السيارات", default: "/electric.png" },
+    { key: "hybrid", label: "سيارات الهايبرد", usage: "بطاقة أنواع السيارات", default: "/hybrid.png" },
+    { key: "defaultCar", label: "سيارات البنزين والديزل", usage: "بطاقة أنواع السيارات", default: "/defualt.png" },
+    { key: "ogImage", label: "صورة مشاركة الرابط (Open Graph)", usage: "تظهر عند مشاركة رابط الموقع", default: "/og-image.png" },
+    { key: "favicon", label: "أيقونة الموقع (Favicon)", usage: "تبويب المتصفح", default: "/favicon.ico" },
+    { key: "logo", label: "شعار الموقع (Logo)", usage: "الشعار في رأس الصفحة (اختياري)", default: "" },
+    { key: "hero", label: "صورة الخلفية (Hero Image)", usage: "خلفية قسم البانر الرئيسي (اختياري)", default: "" },
+  ];
+
+  const currentPath = (key: string): string => (formData.images as any)[key] || "";
+
+  const handlePathChange = (key: string, value: string) => {
+    const updated = { ...formData };
+    (updated.images as any)[key] = value;
+    onFormDataChange(updated);
+  };
+
+  const handleFileSelect = (key: string) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/jpeg,image/png,image/webp,image/svg+xml,image/*";
+    input.onchange = async (e) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (!file) return;
+      if (file.size > 2 * 1024 * 1024) {
+        setErrMsg("حجم الملف كبير جداً. الحد الأقصى 2MB.");
+        return;
+      }
+      setUploading(key);
+      setMsg("");
+      setErrMsg("");
+      try {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = async () => {
+          const base64 = reader.result as string;
+          try {
+            const res = await fetch("/api/admin/upload", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ image: base64, filename: file.name, key, contentType: file.type })
+            });
+            const data = await res.json();
+            if (res.ok && data.success) {
+              setMsg(`تم رفع الصورة وتحديث البيانات. سيظهر التغيير بعد انتهاء نشر Cloudflare خلال دقائق.`);
+              handlePathChange(key, data.newPath);
+            } else {
+              setErrMsg(data.error || "فشل رفع الصورة");
+            }
+          } catch {
+            setErrMsg("فشل الاتصال بالخادم");
+          } finally {
+            setUploading(null);
+          }
+        };
+      } catch {
+        setErrMsg("فشل قراءة الملف");
+        setUploading(null);
+      }
+    };
+    input.click();
+  };
+
+  const handleCopyLink = async (key: string) => {
+    const path = currentPath(key);
+    if (!path) return;
+    try {
+      await navigator.clipboard.writeText(path);
+      setCopiedKey(key);
+      setTimeout(() => setCopiedKey(null), 2000);
+    } catch {
+      setErrMsg("فشل نسخ الرابط");
+    }
+  };
+
+  const handleRestoreDefault = async (key: string, defaultVal: string) => {
+    if (!defaultVal) {
+      handlePathChange(key, "");
+      return;
+    }
+    setUploading(key);
+    setMsg("");
+    setErrMsg("");
+    try {
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ restoreDefault: true, imageKey: key })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setMsg("تم استرجاع المسار الافتراضي");
+        handlePathChange(key, data.newPath);
+      } else {
+        setErrMsg(data.error || "فشل استرجاع المسار");
+      }
+    } catch {
+      setErrMsg("فشل الاتصال بالخادم");
+    } finally {
+      setUploading(null);
+    }
+  };
+
+  const mediaHistory = formData.mediaHistory || [];
+
+  const showPreview = (path: string) => {
+    if (!path) return false;
+    return path.startsWith("http") || path.startsWith("/");
+  };
+
+  return (
+    <div className="space-y-8">
+      {/* Messages */}
+      {msg && (
+        <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-xs sm:text-sm text-green-400 flex items-center gap-3">
+          <Check className="w-5 h-5 shrink-0" />
+          <span>{msg}</span>
+        </div>
+      )}
+      {errMsg && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-xl p-4 text-xs sm:text-sm text-red-400 flex items-center gap-3">
+          <AlertCircle className="w-5 h-5 shrink-0" />
+          <span>{errMsg}</span>
+        </div>
+      )}
+
+      {/* Section: Image Cards */}
+      <div>
+        <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3 mb-4">الصور الأساسية</h2>
+        <p className="text-xs text-gray-400 leading-relaxed mb-6">
+          ارفع صورة جديدة أو غيّر المسار يدوياً. الصور المسموحة: JPG, PNG, WebP, SVG. الحد الأقصى: 2MB.
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {IMAGE_DEFS.map(({ key, label, usage, default: defaultVal }) => {
+            const path = currentPath(key);
+            const isUploading = uploading === key;
+            return (
+              <div key={key} className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-4 sm:p-5 space-y-4">
+                {/* Header with preview */}
+                <div className="flex justify-between items-start gap-4">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-sm font-bold text-white truncate">{label}</h3>
+                    <p className="text-[11px] text-gray-400 mt-0.5">{usage}</p>
+                    {path && (
+                      <p className="text-[10px] text-gray-500 font-mono mt-1 truncate" dir="ltr">{path}</p>
+                    )}
+                  </div>
+                  <div className="w-20 h-20 rounded-xl bg-slate-900 border border-white/5 overflow-hidden shrink-0 flex items-center justify-center">
+                    {showPreview(path) ? (
+                      <img src={path} alt={label} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                    ) : (
+                      <Image className="w-6 h-6 text-gray-600" />
+                    )}
+                  </div>
+                </div>
+
+                {/* Path input */}
+                <div>
+                  <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار أو الرابط</label>
+                  <input
+                    type="text"
+                    value={path}
+                    onChange={(e) => handlePathChange(key, e.target.value)}
+                    className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                    dir="ltr"
+                    placeholder={defaultVal || "أدخل المسار أو الرابط..."}
+                  />
+                </div>
+
+                {/* Action buttons */}
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleFileSelect(key)}
+                    disabled={isUploading}
+                    className="bg-electric-blue hover:bg-electric-blue-hover text-white px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1.5 disabled:opacity-50"
+                  >
+                    {isUploading ? (
+                      <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <Upload className="w-3.5 h-3.5" />
+                    )}
+                    <span>{isUploading ? "جاري الرفع..." : "رفع صورة"}</span>
+                  </button>
+                  {path && (
+                    <button
+                      type="button"
+                      onClick={() => handleCopyLink(key)}
+                      className="bg-white/5 hover:bg-white/10 text-gray-300 px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1.5 border border-white/5"
+                    >
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>{copiedKey === key ? "تم النسخ" : "نسخ الرابط"}</span>
+                    </button>
+                  )}
+                  {defaultVal !== undefined && path !== defaultVal && (
+                    <button
+                      type="button"
+                      onClick={() => handleRestoreDefault(key, defaultVal)}
+                      className="bg-warning-orange/10 hover:bg-warning-orange/20 text-warning-amber px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all flex items-center gap-1.5 border border-warning-amber/20"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>استرجاع الافتراضي</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Section: Media Library */}
+      <div>
+        <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3 mb-4 flex items-center gap-2">
+          <FolderOpen className="w-5 h-5 text-electric-blue" />
+          <span>مكتبة الصور</span>
+        </h2>
+        <p className="text-xs text-gray-400 leading-relaxed mb-4">
+          جميع الصور المسجلة حالياً في بيانات الموقع.
+        </p>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+          {(Object.entries(formData.images) as [string, string][]).filter(([, path]) => path).map(([key, path]) => (
+            <div key={key} className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-3 space-y-2 group">
+              <div className="w-full aspect-square rounded-lg bg-slate-900 border border-white/5 overflow-hidden flex items-center justify-center">
+                {showPreview(path) ? (
+                  <img src={path} alt={key} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                ) : (
+                  <Image className="w-6 h-6 text-gray-600" />
+                )}
+              </div>
+              <p className="text-[10px] font-mono text-gray-400 truncate" dir="ltr">{path.split("/").pop()}</p>
+              <p className="text-[10px] text-gray-500">{key}</p>
+              <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <button
+                  type="button"
+                  onClick={() => handleCopyLink(key)}
+                  className="flex-1 bg-white/5 hover:bg-white/10 text-gray-400 py-1 rounded text-[10px] font-bold transition-all"
+                >
+                  {copiedKey === key ? "تم" : "نسخ"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Section: Media History */}
+      {mediaHistory.length > 0 && (
+        <div>
+          <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3 mb-4">آخر التغييرات على الصور</h2>
+          <div className="space-y-2">
+            {mediaHistory.map((entry: { timestamp: string; key: string; oldPath: string; newPath: string }, idx: number) => (
+              <div key={idx} className="bg-[#080a0f]/40 border border-white/5 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-xs font-bold text-electric-blue">{IMAGE_DEFS.find(d => d.key === entry.key)?.label || entry.key}</span>
+                    <span className="text-[10px] text-gray-500">{new Date(entry.timestamp).toLocaleString("ar-JO")}</span>
+                  </div>
+                  <div className="text-[11px] font-mono text-gray-400 truncate" dir="ltr">
+                    {entry.oldPath || "(فارغ)"} <span className="text-gray-600">→</span> {entry.newPath}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handlePathChange(entry.key, entry.oldPath)}
+                  className="shrink-0 bg-white/5 hover:bg-white/10 text-gray-400 px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
+                >
+                  استرجاع
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       )}

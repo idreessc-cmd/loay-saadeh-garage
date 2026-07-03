@@ -73,7 +73,15 @@ export interface CenterData {
     defaultCar: string;
     ogImage: string;
     favicon: string;
+    logo: string;
+    hero: string;
   };
+  mediaHistory: {
+    timestamp: string;
+    key: string;
+    oldPath: string;
+    newPath: string;
+  }[];
   carTypes: {
     title: string;
     desc: string;
