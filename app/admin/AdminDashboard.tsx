@@ -20,7 +20,7 @@ export default function AdminDashboard() {
 
   // Tab State
   const [activeTab, setActiveTab] = useState<
-    "basic" | "hero" | "services" | "cartypes" | "faq" | "chatbot" | "seo"
+    "basic" | "hero" | "services" | "cartypes" | "faq" | "chatbot" | "images" | "seo"
   >("basic");
 
   // UI State
@@ -377,6 +377,7 @@ export default function AdminDashboard() {
             { id: "cartypes", label: "أنواع السيارات" },
             { id: "faq", label: "الأسئلة الشائعة" },
             { id: "chatbot", label: "ردود الشات بوت" },
+            { id: "images", label: "إدارة الصور" },
             { id: "seo", label: "الظهور والـ SEO" }
           ].map((tab) => (
             <button
@@ -870,7 +871,154 @@ export default function AdminDashboard() {
             </div>
           )}
 
-          {/* TAB 7: Visibility & SEO */}
+          {/* TAB 7: Images */}
+          {activeTab === "images" && (
+            <div className="space-y-6">
+              <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3">إدارة الصور</h2>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                غيّر مسار أو رابط أي صورة في الموقع. إذا كانت الصورة داخل مجلد <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">public</code>، اكتب المسار مبتدئاً بـ <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">/</code>. يمكنك أيضاً استخدام رابط خارجي كامل <code className="text-electric-blue bg-white/5 px-1 py-0.5 rounded font-mono">https://...</code>.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Electric car image */}
+                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-white">السيارات الكهربائية</h3>
+                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
+                    </div>
+                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
+                      {formData.images.electric.startsWith("http") || formData.images.electric.startsWith("/") ? (
+                        <img src={formData.images.electric} alt="electric" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
+                    <input
+                      type="text"
+                      value={formData.images.electric}
+                      onChange={(e) => handleChange("images.electric", e.target.value)}
+                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+
+                {/* Hybrid car image */}
+                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-white">سيارات الهايبرد</h3>
+                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
+                    </div>
+                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
+                      {formData.images.hybrid.startsWith("http") || formData.images.hybrid.startsWith("/") ? (
+                        <img src={formData.images.hybrid} alt="hybrid" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
+                    <input
+                      type="text"
+                      value={formData.images.hybrid}
+                      onChange={(e) => handleChange("images.hybrid", e.target.value)}
+                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+
+                {/* Default/Petrol-Diesel car image */}
+                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-white">سيارات البنزين والديزل</h3>
+                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في بطاقة أنواع السيارات</p>
+                    </div>
+                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
+                      {formData.images.defaultCar.startsWith("http") || formData.images.defaultCar.startsWith("/") ? (
+                        <img src={formData.images.defaultCar} alt="default" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
+                    <input
+                      type="text"
+                      value={formData.images.defaultCar}
+                      onChange={(e) => handleChange("images.defaultCar", e.target.value)}
+                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+
+                {/* OG Image */}
+                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-white">صورة مشاركة الرابط (Open Graph)</h3>
+                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر عند مشاركة رابط الموقع على فيسبوك، واتساب، تلغرام...</p>
+                    </div>
+                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
+                      {formData.images.ogImage.startsWith("http") || formData.images.ogImage.startsWith("/") ? (
+                        <img src={formData.images.ogImage} alt="og" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
+                    <input
+                      type="text"
+                      value={formData.images.ogImage}
+                      onChange={(e) => handleChange("images.ogImage", e.target.value)}
+                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+
+                {/* Favicon */}
+                <div className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-5 space-y-4">
+                  <div className="flex justify-between items-start gap-4">
+                    <div>
+                      <h3 className="text-sm font-bold text-white">أيقونة الموقع (Favicon)</h3>
+                      <p className="text-[11px] text-gray-400 mt-0.5">تظهر في تبويب المتصفح بجانب عنوان الصفحة</p>
+                    </div>
+                    <div className="w-16 h-16 rounded-lg bg-slate-900 border border-white/5 overflow-hidden shrink-0">
+                      {formData.images.favicon.startsWith("http") || formData.images.favicon.startsWith("/") ? (
+                        <img src={formData.images.favicon} alt="favicon" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; (e.target as HTMLImageElement).parentElement!.classList.add("flex","items-center","justify-center","text-gray-600","text-[10px]"); (e.target as HTMLImageElement).parentElement!.textContent = "معاينة" }} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-600 text-[10px]">معاينة</div>
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-[11px] font-bold text-gray-400 mb-1.5">المسار الحالي</label>
+                    <input
+                      type="text"
+                      value={formData.images.favicon}
+                      onChange={(e) => handleChange("images.favicon", e.target.value)}
+                      className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 8: Visibility & SEO */}
           {activeTab === "seo" && (
             <div className="space-y-6">
               <div>

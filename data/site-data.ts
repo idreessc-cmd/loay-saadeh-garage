@@ -67,6 +67,13 @@ export interface CenterData {
     q: string;
     a: string;
   }[];
+  images: {
+    electric: string;
+    hybrid: string;
+    defaultCar: string;
+    ogImage: string;
+    favicon: string;
+  };
   carTypes: {
     title: string;
     desc: string;

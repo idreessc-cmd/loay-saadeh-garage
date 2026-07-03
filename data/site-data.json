@@ -268,6 +268,13 @@
       "a": "نعم، نقوم بتوفير وتأمين قطع الغيار الأصلية والبديلة ذات الجودة العالية والمكفولة التي تناسب احتياجات مركبتك وتضمن سلامتك."
     }
   ],
+  "images": {
+    "electric": "/electric.png",
+    "hybrid": "/hybrid.png",
+    "defaultCar": "/defualt.png",
+    "ogImage": "/og-image.png",
+    "favicon": "/favicon.ico"
+  },
   "carTypes": [
     {
       "title": "السيارات الكهربائية",
