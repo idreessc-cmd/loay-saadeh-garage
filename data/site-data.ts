@@ -1,148 +1,78 @@
-// Central Configuration Object for Loay Saadeh Garage (مركز لؤي سعادة)
-export const CENTER_DATA = {
-  name: "مركز لؤي سعادة",
-  slogan: "لا تغيّر قطع قبل أن تعرف سبب العطل الحقيقي.",
-  phone: "0788526696",
-  phoneDisplay: "0788526696",
-  whatsapp: "962788526696",
-  location: "عمان، الأردن",
-  locationDetail: "ماركا الشمالية، خلف مخابز جواد",
-  googleMapsLink: "https://maps.app.goo.gl/ackCDRYh28uRPkv99",
-  workingHoursDisplay: "من السبت إلى الأربعاء: 8:00 ص - 5:00 م | الخميس: 8:00 ص - 1:00 م | الجمعة: عطلة",
-  workingHoursShort: "السبت - الأربعاء: 8 ص - 5 م | الخميس: 8 ص - 1 م",
-  email: "info@luaysaadeh-garage.com",
-  
-  services: [
-    {
-      id: "ac-system",
-      title: "نظام التكييف",
-      desc: "فحص وتعبئة غاز التكييف، تشخيص أعطال الكمبريسور، صيانة وتتبع تسريب غاز الفريون وتنظيف الدورة بأحدث الأجهزة.",
-      icon: "Activity"
-    },
-    {
-      id: "brakes-system",
-      title: "نظام الفرامل",
-      desc: "صيانة وتغيير الفرامل (الفحمات والديسكات)، فحص وتصليح أنظمة ABS، ومعالجة مشاكل استجابة ودعسة الفرامل لسلامتك.",
-      icon: "ShieldAlert"
-    },
-    {
-      id: "engine-gear",
-      title: "المحرك والجير",
-      desc: "تشخيص وصيانة مشاكل المحرك الميكانيكية والكهربائية، معالجة مشاكل تبديلات الجير، الارتجاج، وضعف العزم والسحب.",
-      icon: "Gauge"
-    },
-    {
-      id: "oil-filters",
-      title: "الزيوت والفلاتر",
-      desc: "تغيير زيت المحرك وزيت الجير والأنظمة الهيدروليكية باستخدام زيوت معتمدة، مع تبديل فلاتر الزيت، الهواء، والمكيف.",
-      icon: "Wrench"
-    },
-    {
-      id: "hv-batteries",
-      title: "بطاريات HV",
-      desc: "فحص وتشخيص كفاءة بطاريات الجهد العالي (HV) لسيارات الهايبرد والكهرباء، تحديد الخلايا التالفة، وصيانة أنظمة الشحن.",
-      icon: "Battery"
-    },
-    {
-      id: "computer-diagnostics",
-      title: "تشخيص الأعطال",
-      desc: "فحص كمبيوتر شامل لجميع أنظمة وحساسات السيارة، قراءة وتحليل أكواد الأعطال (DTC) لمعرفة السبب الحقيقي للمشكلة.",
-      icon: "Cpu"
-    },
-    {
-      id: "spare-parts",
-      title: "قطع غيار",
-      desc: "توفير وتأمين قطع الغيار الأصلية والمكفولة والبدائل عالية الجودة التي تناسب موديل مركبتك لضمان كفاءة الصيانة.",
-      icon: "DollarSign"
-    }
-  ],
-  
-  problems: [
-    { title: "ضعف تبريد المكيف أو خروج هواء حار", code: "AC Issues" },
-    { title: "ضعف استجابة الفرامل أو أصوات صفير", code: "Brake Failure" },
-    { title: "تقطيع (تفتفة) أو ضعف عزم المحرك", code: "Engine Misfire" },
-    { title: "تأخر أو خشونة في تبديلات الجير", code: "Transmission Lag" },
-    { title: "ظهور لمبة التحذير Check Engine", code: "Trouble Codes" },
-    { title: "ضعف بطارية الهايبرد والكهرباء (HV)", code: "HV Battery Status" },
-    { title: "مشاكل الشحن في سيارات الكهرباء", code: "EV Charging" },
-    { title: "أعطال الحساسات والكهرباء العامة", code: "Sensor Failure" }
-  ],
-  
-  whyUs: [
-    {
-      title: "تشخيص دقيق قبل الصيانة",
-      desc: "نعرف أصل العطل ونحدده بدقة لكي لا تدفع ثمن قطع لا تحتاجها، التزاماً بشعارنا.",
-      icon: "ShieldAlert"
-    },
-    {
-      title: "أجهزة فحص حديثة",
-      desc: "نستخدم أحدث أجهزة تشخيص وقراءة أنظمة السيارات وحساسات الكمبيوتر بدقة عالية.",
-      icon: "Cpu"
-    },
-    {
-      title: "صيانة جميع السيارات",
-      desc: "نقدم خدمات الصيانة والتشخيص لسيارات البنزين، الديزل، الهايبرد، والكهربائية كمركز متكامل.",
-      icon: "HeartPulse"
-    },
-    {
-      title: "ميزة تخصص سيارات الكهرباء",
-      desc: "نتميز بالقدرة الفنية على تشخيص وصيانة الأنظمة الإلكترونية وبطاريات الجهد العالي HV لسيارات الكهرباء.",
-      icon: "Battery"
-    },
-    {
-      title: "توفير الوقت والمال",
-      desc: "الفحص الصحيح من المرة الأولى ينهي المشكلة ويوفر عليك تكاليف التجارب العشوائية.",
-      icon: "DollarSign"
-    },
-    {
-      title: "شرح كامل للعميل",
-      desc: "نشرح لك المشكلة وسببها وخطوات الصيانة المناسبة قبل البدء بأي عمل في مركبتك.",
-      icon: "CheckCircle"
-    }
-  ],
-  
-  faqs: [
-    {
-      q: "ما أوقات دوام مركز لؤي سعادة؟",
-      a: "نستقبلكم من السبت إلى الأربعاء من الساعة 8:00 صباحاً حتى 5:00 عصراً، ويوم الخميس من الساعة 8:00 صباحاً حتى 1:00 ظهراً، والجمعة عطلة رسمية."
-    },
-    {
-      q: "أين يقع مركز لؤي سعادة؟",
-      a: "يقع المركز في عمان - ماركا الشمالية، خلف مخابز جواد. يمكنك الضغط على زر الخريطة لفتح الموقع مباشرة على خرائط Google وتحديد الاتجاهات."
-    },
-    {
-      q: "هل يقدم المركز تشخيص أعطال؟",
-      a: "نعم، نقدم خدمة فحص الكمبيوتر وتشخيص أعطال السيارات وقراءة الأنظمة والحساسات لتحديد السبب الحقيقي للعطل بدقة قبل تغيير أي قطعة."
-    },
-    {
-      q: "هل يخدم المركز جميع أنواع السيارات؟",
-      a: "نعم، نحن نخدم ونقوم بصيانة جميع أنواع السيارات (بنزين، ديزل، هايبرد، وكهرباء) مع تقديم الدعم الفني اللازم لكافة الأنظمة."
-    },
-    {
-      q: "هل يتعامل المركز مع سيارات الكهرباء وبطاريات HV؟",
-      a: "نعم، نتميز بالتخصص في فحص وتشخيص سيارات الكهرباء وصيانة بطاريات الجهد العالي (HV) وأنظمة الشحن الخاصة بها بجانب الميكانيك والكهرباء العامة."
-    },
-    {
-      q: "هل تتوفر قطع غيار؟",
-      a: "نعم، نقوم بتوفير وتأمين قطع الغيار الأصلية والبديلة ذات الجودة العالية والمكفولة التي تناسب احتياجات مركبتك وتضمن سلامتك."
-    }
-  ],
-  
-  carTypes: [
-    {
-      title: "السيارات الكهربائية",
-      desc: "اهتمام خاص بسيارات الكهرباء وفحص بطاريات الجهد العالي HV وتشخيص أنظمتها الإلكترونية.",
-      image: "/electric.png"
-    },
-    {
-      title: "سيارات الهايبرد",
-      desc: "فحص وتشخيص أنظمة الهايبرد، بطارية الهايبرد، وأنظمة الشحن حسب حالة السيارة.",
-      image: "/hybrid.png"
-    },
-    {
-      title: "سيارات البنزين والديزل",
-      desc: "خدمات صيانة شاملة للميكانيك، الكهرباء العامة، وتغيير الزيوت وتشخيص السيارات العادية.",
-      image: "/defualt.png"
-    }
-  ]
-};
+import siteData from "./site-data.json";
+
+export interface CenterData {
+  name: string;
+  slogan: string;
+  phone: string;
+  phoneDisplay: string;
+  whatsapp: string;
+  location: string;
+  locationDetail: string;
+  googleMapsLink: string;
+  workingHoursDisplay: string;
+  workingHoursShort: string;
+  email: string;
+  hero: {
+    badge: string;
+    title: string;
+    desc: string;
+    btn1Text: string;
+    btn2Text: string;
+  };
+  metadata: {
+    title: string;
+    description: string;
+    keywords: string[];
+    canonical: string;
+    metadataBase: string;
+    ogImage: string;
+  };
+  sectionsVisibility: {
+    hero: boolean;
+    carTypes: boolean;
+    services: boolean;
+    problems: boolean;
+    whyUs: boolean;
+    faq: boolean;
+    contact: boolean;
+    cta: boolean;
+    chatbot: boolean;
+  };
+  chatbot: {
+    welcomeMessage: string;
+    defaultReply: string;
+    rules: {
+      keywords: string[];
+      reply: string;
+      active: boolean;
+    }[];
+  };
+  services: {
+    id: string;
+    title: string;
+    desc: string;
+    icon: string;
+    active: boolean;
+  }[];
+  problems: {
+    title: string;
+    code: string;
+  }[];
+  whyUs: {
+    title: string;
+    desc: string;
+    icon: string;
+  }[];
+  faqs: {
+    q: string;
+    a: string;
+  }[];
+  carTypes: {
+    title: string;
+    desc: string;
+    image: string;
+    active: boolean;
+  }[];
+}
+
+export const CENTER_DATA = siteData as CenterData;

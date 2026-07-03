@@ -269,163 +269,167 @@ export default function LandingPage() {
       </header>
 
       {/* 2. HERO SECTION */}
-      <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden bg-stripes">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-            
-            {/* Hero Text */}
-            <div className="lg:col-span-7 space-y-8 text-center lg:text-right z-10">
+      {CENTER_DATA.sectionsVisibility.hero && (
+        <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden bg-stripes">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               
-              {/* Specialized Tech Tag */}
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-electric-blue/10 border border-electric-blue/30 text-electric-blue text-xs sm:text-sm font-bold mx-auto lg:mx-0">
-                <Zap className="w-4 h-4 animate-bounce" />
-                <span>فحص وتشخيص هندسي ذكي وحديث للسيارات</span>
-              </div>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                {CENTER_DATA.name} لصيانة وفحص السيارات
-              </h1>
-              
-              <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-semibold">
-                كهرباء، ميكانيك، فحص كمبيوتر، إصلاح جير وتشخيص أعطال السيارات بدقة. <span className="text-warning-amber font-cairo-play">{CENTER_DATA.slogan}</span>
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <a
-                  href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في حجز موعد لفحص سيارتي`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-electric-blue/30 border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                >
-                  <IconMapper name="Zap" className="w-5 h-5" />
-                  <span>احجز فحص عبر واتساب</span>
-                </a>
-                <a
-                  href={`tel:${CENTER_DATA.phone}`}
-                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
-                >
-                  <Phone className="w-5 h-5 text-warning-amber" />
-                  <span>اتصل الآن</span>
-                </a>
+              {/* Hero Text */}
+              <div className="lg:col-span-7 space-y-8 text-center lg:text-right z-10">
+                
+                {/* Specialized Tech Tag */}
+                {CENTER_DATA.hero.badge && (
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-electric-blue/10 border border-electric-blue/30 text-electric-blue text-xs sm:text-sm font-bold mx-auto lg:mx-0">
+                    <Zap className="w-4 h-4 animate-bounce" />
+                    <span>{CENTER_DATA.hero.badge}</span>
+                  </div>
+                )}
+                <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                  {CENTER_DATA.name} {CENTER_DATA.hero.title}
+                </h1>
+                
+                <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-semibold">
+                  {CENTER_DATA.hero.desc} <span className="text-warning-amber font-cairo-play">{CENTER_DATA.slogan}</span>
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <a
+                    href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في حجز موعد لفحص سيارتي`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-electric-blue/30 border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  >
+                    <IconMapper name="Zap" className="w-5 h-5" />
+                    <span>{CENTER_DATA.hero.btn1Text}</span>
+                  </a>
+                  <a
+                    href={`tel:${CENTER_DATA.phone}`}
+                    className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                  >
+                    <Phone className="w-5 h-5 text-warning-amber" />
+                    <span>{CENTER_DATA.hero.btn2Text}</span>
+                  </a>
+                </div>
+
+                {/* Trust Indicators */}
+                <div className="pt-8 border-t border-white/5">
+                  <p className="text-xs sm:text-sm text-gray-400 font-bold mb-4">فحوصات متكاملة تغطي كافة الاحتياجات:</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    {[
+                      { text: "فحص كمبيوتر", label: "Scanner diag" },
+                      { text: "تشخيص أعطال", label: "Fault analysis" },
+                      { text: "برمجة سيارات", label: "ECU Coding" },
+                      { text: "بنزين وهايبرد وكهرباء", label: "All drivetrains" }
+                    ].map((badge, idx) => (
+                      <div key={idx} className="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-electric-blue/20 transition-colors text-right">
+                        <div className="text-xs text-electric-blue font-bold tracking-wider uppercase mb-1">{badge.label}</div>
+                        <div className="text-sm font-bold text-gray-200">{badge.text}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
-              {/* Trust Indicators */}
-              <div className="pt-8 border-t border-white/5">
-                <p className="text-xs sm:text-sm text-gray-400 font-bold mb-4">فحوصات متكاملة تغطي كافة الاحتياجات:</p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                  {[
-                    { text: "فحص كمبيوتر", label: "Scanner diag" },
-                    { text: "تشخيص أعطال", label: "Fault analysis" },
-                    { text: "برمجة سيارات", label: "ECU Coding" },
-                    { text: "بنزين وهايبرد وكهرباء", label: "All drivetrains" }
-                  ].map((badge, idx) => (
-                    <div key={idx} className="bg-white/5 rounded-lg p-3 border border-white/5 hover:border-electric-blue/20 transition-colors text-right">
-                      <div className="text-xs text-electric-blue font-bold tracking-wider uppercase mb-1">{badge.label}</div>
-                      <div className="text-sm font-bold text-gray-200">{badge.text}</div>
+              {/* Hero Visual - Premium SVG Diagnostics Wireframe */}
+              <div className="lg:col-span-5 relative w-full flex justify-center items-center z-10">
+                <div className="relative w-full max-w-[450px] aspect-square rounded-2xl glass-panel-glow border border-electric-blue/20 p-6 flex flex-col justify-between overflow-hidden">
+                  
+                  {/* SVG Scanning Grid */}
+                  <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa10_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
+                  
+                  {/* Laser scan line animates over the car SVG */}
+                  <div className="absolute left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-electric-blue to-transparent shadow-[0_0_15px_#1e6ffa] z-20 animate-scan pointer-events-none" />
+
+                  {/* Tech Dashboard Top Bar */}
+                  <div className="flex justify-between items-center text-[10px] sm:text-xs text-gray-400 font-mono border-b border-white/5 pb-3">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
+                      <span className="text-gray-300 font-bold">SMART DIAGNOSTIC V4.6</span>
                     </div>
-                  ))}
+                    <div>OBDII CONNECTED</div>
+                  </div>
+
+                  {/* SVG Car Wireframe */}
+                  <div className="my-auto w-full flex justify-center items-center relative py-4">
+                    <svg className="w-full h-auto max-h-[220px]" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      {/* Background glows */}
+                      <ellipse cx="200" cy="115" rx="140" ry="40" fill="url(#blueGlow)" opacity="0.4" />
+                      
+                      {/* Car Outline Wireframe */}
+                      <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
+                        stroke="#1e6ffa" strokeWidth="2.5" strokeDasharray="3 3" className="opacity-90" />
+                      <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
+                        stroke="#1e6ffa" strokeWidth="1.5" className="animate-pulse" />
+
+                      {/* Windshield & Windows */}
+                      <path d="M165,66 L210,53 L265,53 L303,85 L260,85 L200,85 Z" stroke="#00d4ff" strokeWidth="1.5" />
+                      <line x1="230" y1="53" x2="230" y2="85" stroke="#00d4ff" strokeWidth="1" />
+
+                      {/* Wheels */}
+                      <circle cx="130" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
+                      <circle cx="130" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
+                      <circle cx="130" cy="135" r="6" fill="#1e6ffa" />
+
+                      <circle cx="330" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
+                      <circle cx="330" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
+                      <circle cx="330" cy="135" r="6" fill="#1e6ffa" />
+
+                      {/* Sensor Scanning Nodes (glowing dots) */}
+                      {/* Engine block sensor */}
+                      <circle cx="90" cy="100" r="4" fill="#ff5c00" className="animate-ping" />
+                      <circle cx="90" cy="100" r="3" fill="#ff5c00" />
+                      <line x1="90" y1="100" x2="65" y2="60" stroke="#ff5c00" strokeWidth="1" />
+                      <text x="50" y="52" fill="#ff5c00" fontSize="10" fontFamily="monospace" fontWeight="bold">ENGINE FAULT</text>
+
+                      {/* Hybrid battery pack sensor */}
+                      <circle cx="215" cy="115" r="4" fill="#00d4ff" className="animate-ping" />
+                      <circle cx="215" cy="115" r="3" fill="#00d4ff" />
+                      <line x1="215" y1="115" x2="215" y2="155" stroke="#00d4ff" strokeWidth="1" />
+                      <text x="195" y="167" fill="#00d4ff" fontSize="10" fontFamily="monospace" fontWeight="bold">BATTERY: 94%</text>
+
+                      {/* ABS / Brake sensor */}
+                      <circle cx="330" cy="135" r="4" fill="#ff9f1c" className="animate-ping" />
+                      <circle cx="330" cy="135" r="3" fill="#ff9f1c" />
+
+                      {/* ECU Node */}
+                      <circle cx="150" cy="95" r="4" fill="#1e6ffa" className="animate-ping" />
+                      <circle cx="150" cy="95" r="3" fill="#1e6ffa" />
+                      <line x1="150" y1="95" x2="165" y2="40" stroke="#1e6ffa" strokeWidth="1" />
+                      <text x="145" y="32" fill="#1e6ffa" fontSize="10" fontFamily="monospace" fontWeight="bold">ECU: ONLINE</text>
+
+                      {/* Gradient Definitions */}
+                      <defs>
+                        <radialGradient id="blueGlow" cx="50%" cy="50%" r="50%">
+                          <stop offset="0%" stopColor="#1e6ffa" stopOpacity="0.3" />
+                          <stop offset="100%" stopColor="#1e6ffa" stopOpacity="0" />
+                        </radialGradient>
+                      </defs>
+                    </svg>
+                  </div>
+
+                  {/* Tech Dashboard Bottom Bar */}
+                  <div className="border-t border-white/5 pt-3 grid grid-cols-3 gap-2 text-center text-[10px] font-mono text-gray-400">
+                    <div>
+                      <div className="text-gray-300 font-bold">SYSTEM</div>
+                      <div className="text-green-500 font-bold">SECURE</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-300 font-bold">DIAGNOSIS</div>
+                      <div className="text-electric-blue font-bold">SCANNING</div>
+                    </div>
+                    <div>
+                      <div className="text-gray-300 font-bold">ERRORS</div>
+                      <div className="text-[#ff5c00] font-bold">02 DETECTED</div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
             </div>
-
-            {/* Hero Visual - Premium SVG Diagnostics Wireframe */}
-            <div className="lg:col-span-5 relative w-full flex justify-center items-center z-10">
-              <div className="relative w-full max-w-[450px] aspect-square rounded-2xl glass-panel-glow border border-electric-blue/20 p-6 flex flex-col justify-between overflow-hidden">
-                
-                {/* SVG Scanning Grid */}
-                <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa10_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
-                
-                {/* Laser scan line animates over the car SVG */}
-                <div className="absolute left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-electric-blue to-transparent shadow-[0_0_15px_#1e6ffa] z-20 animate-scan pointer-events-none" />
-
-                {/* Tech Dashboard Top Bar */}
-                <div className="flex justify-between items-center text-[10px] sm:text-xs text-gray-400 font-mono border-b border-white/5 pb-3">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-green-500 animate-ping" />
-                    <span className="text-gray-300 font-bold">SMART DIAGNOSTIC V4.6</span>
-                  </div>
-                  <div>OBDII CONNECTED</div>
-                </div>
-
-                {/* SVG Car Wireframe */}
-                <div className="my-auto w-full flex justify-center items-center relative py-4">
-                  <svg className="w-full h-auto max-h-[220px]" viewBox="0 0 400 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    {/* Background glows */}
-                    <ellipse cx="200" cy="115" rx="140" ry="40" fill="url(#blueGlow)" opacity="0.4" />
-                    
-                    {/* Car Outline Wireframe */}
-                    <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
-                      stroke="#1e6ffa" strokeWidth="2.5" strokeDasharray="3 3" className="opacity-90" />
-                    <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
-                      stroke="#1e6ffa" strokeWidth="1.5" className="animate-pulse" />
-
-                    {/* Windshield & Windows */}
-                    <path d="M165,66 L210,53 L265,53 L303,85 L260,85 L200,85 Z" stroke="#00d4ff" strokeWidth="1.5" />
-                    <line x1="230" y1="53" x2="230" y2="85" stroke="#00d4ff" strokeWidth="1" />
-
-                    {/* Wheels */}
-                    <circle cx="130" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
-                    <circle cx="130" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
-                    <circle cx="130" cy="135" r="6" fill="#1e6ffa" />
-
-                    <circle cx="330" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
-                    <circle cx="330" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
-                    <circle cx="330" cy="135" r="6" fill="#1e6ffa" />
-
-                    {/* Sensor Scanning Nodes (glowing dots) */}
-                    {/* Engine block sensor */}
-                    <circle cx="90" cy="100" r="4" fill="#ff5c00" className="animate-ping" />
-                    <circle cx="90" cy="100" r="3" fill="#ff5c00" />
-                    <line x1="90" y1="100" x2="65" y2="60" stroke="#ff5c00" strokeWidth="1" />
-                    <text x="50" y="52" fill="#ff5c00" fontSize="10" fontFamily="monospace" fontWeight="bold">ENGINE FAULT</text>
-
-                    {/* Hybrid battery pack sensor */}
-                    <circle cx="215" cy="115" r="4" fill="#00d4ff" className="animate-ping" />
-                    <circle cx="215" cy="115" r="3" fill="#00d4ff" />
-                    <line x1="215" y1="115" x2="215" y2="155" stroke="#00d4ff" strokeWidth="1" />
-                    <text x="195" y="167" fill="#00d4ff" fontSize="10" fontFamily="monospace" fontWeight="bold">BATTERY: 94%</text>
-
-                    {/* ABS / Brake sensor */}
-                    <circle cx="330" cy="135" r="4" fill="#ff9f1c" className="animate-ping" />
-                    <circle cx="330" cy="135" r="3" fill="#ff9f1c" />
-
-                    {/* ECU Node */}
-                    <circle cx="150" cy="95" r="4" fill="#1e6ffa" className="animate-ping" />
-                    <circle cx="150" cy="95" r="3" fill="#1e6ffa" />
-                    <line x1="150" y1="95" x2="165" y2="40" stroke="#1e6ffa" strokeWidth="1" />
-                    <text x="145" y="32" fill="#1e6ffa" fontSize="10" fontFamily="monospace" fontWeight="bold">ECU: ONLINE</text>
-
-                    {/* Gradient Definitions */}
-                    <defs>
-                      <radialGradient id="blueGlow" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stopColor="#1e6ffa" stopOpacity="0.3" />
-                        <stop offset="100%" stopColor="#1e6ffa" stopOpacity="0" />
-                      </radialGradient>
-                    </defs>
-                  </svg>
-                </div>
-
-                {/* Tech Dashboard Bottom Bar */}
-                <div className="border-t border-white/5 pt-3 grid grid-cols-3 gap-2 text-center text-[10px] font-mono text-gray-400">
-                  <div>
-                    <div className="text-gray-300 font-bold">SYSTEM</div>
-                    <div className="text-green-500 font-bold">SECURE</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-300 font-bold">DIAGNOSIS</div>
-                    <div className="text-electric-blue font-bold">SCANNING</div>
-                  </div>
-                  <div>
-                    <div className="text-gray-300 font-bold">ERRORS</div>
-                    <div className="text-[#ff5c00] font-bold">02 DETECTED</div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 3. EDUCATIONAL SLOGAN SECTION */}
       <section className="relative -mt-10 mb-20 z-20 max-w-5xl mx-auto px-4">
@@ -454,172 +458,180 @@ export default function LandingPage() {
       </section>
 
       {/* 3.5. VEHICLE TYPES WE SERVE */}
-      <section className="py-20 relative bg-stripes">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تخصصنا شامل ومتكامل</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              أنواع السيارات التي نخدمها في المركز
-            </h1>
-            <p className="text-base text-gray-400 font-medium">
-              سواء كنت تقود سيارة تقليدية أو حديثة صديقة للبيئة، نوفر لك تشخيصاً هندسياً وصيانة متكاملة.
-            </p>
-          </div>
+      {CENTER_DATA.sectionsVisibility.carTypes && (
+        <section className="py-20 relative bg-stripes">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تخصصنا شامل ومتكامل</h2>
+              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                أنواع السيارات التي نخدمها في المركز
+              </h1>
+              <p className="text-base text-gray-400 font-medium">
+                سواء كنت تقود سيارة تقليدية أو حديثة صديقة للبيئة، نوفر لك تشخيصاً هندسياً وصيانة متكاملة.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {CENTER_DATA.carTypes.map((car, idx) => (
-              <div 
-                key={idx} 
-                className="group relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-b from-[#11141d]/80 to-[#0c0f17]/80 hover:border-electric-blue/25 hover:shadow-2xl hover:shadow-electric-blue/5 transition-all duration-300 flex flex-col h-full"
-              >
-                {/* Image container with next/image */}
-                <div className="relative w-full h-[220px] bg-slate-950 overflow-hidden shrink-0">
-                  <Image 
-                    src={car.image} 
-                    alt={car.title}
-                    fill
-                    sizes="(max-w-768px) 100vw, (max-w-1024px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
-                  />
-                  {/* Overlay shadow gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0c0f17] via-[#0c0f17]/20 to-transparent" />
-                  {/* Glowing border line at the bottom of the image */}
-                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-electric-blue/40 to-transparent" />
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {CENTER_DATA.carTypes.filter(car => car.active !== false).map((car, idx) => (
+                <div 
+                  key={idx} 
+                  className="group relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-b from-[#11141d]/80 to-[#0c0f17]/80 hover:border-electric-blue/25 hover:shadow-2xl hover:shadow-electric-blue/5 transition-all duration-300 flex flex-col h-full"
+                >
+                  {/* Image container with next/image */}
+                  <div className="relative w-full h-[220px] bg-slate-950 overflow-hidden shrink-0">
+                    <Image 
+                      src={car.image} 
+                      alt={car.title}
+                      fill
+                      sizes="(max-w-768px) 100vw, (max-w-1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+                    />
+                    {/* Overlay shadow gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c0f17] via-[#0c0f17]/20 to-transparent" />
+                    {/* Glowing border line at the bottom of the image */}
+                    <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-electric-blue/40 to-transparent" />
+                  </div>
 
-                {/* Content */}
-                <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="text-xl font-bold text-white group-hover:text-electric-blue transition-colors">
-                      {car.title}
-                    </h3>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium">
-                      {car.desc}
-                    </p>
+                  {/* Content */}
+                  <div className="p-6 flex flex-col justify-between flex-grow space-y-4">
+                    <div className="space-y-2">
+                      <h3 className="text-xl font-bold text-white group-hover:text-electric-blue transition-colors">
+                        {car.title}
+                      </h3>
+                      <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium">
+                        {car.desc}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 4. SERVICES SECTION */}
-      <section id="services" className="py-20 bg-[#0c0f17] border-y border-white/5 relative bg-stripes">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">ماذا يقدم المركز؟</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              خدمات الفحص والصيانة الذكية
-            </h1>
-            <p className="text-base text-gray-400 font-medium">
-              نقدم باقة متكاملة من فحوصات السيارات الكهربائية، الهايبرد، والبنزين بأحدث الأنظمة الإلكترونية والأجهزة الهندسية لضمان كفاءة التشخيص.
-            </p>
-          </div>
+      {CENTER_DATA.sectionsVisibility.services && (
+        <section id="services" className="py-20 bg-[#0c0f17] border-y border-white/5 relative bg-stripes">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">ماذا يقدم المركز؟</h2>
+              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                خدمات الفحص والصيانة الذكية
+              </h1>
+              <p className="text-base text-gray-400 font-medium">
+                نقدم باقة متكاملة من فحوصات السيارات الكهربائية، الهايبرد، والبنزين بأحدث الأنظمة الإلكترونية والأجهزة الهندسية لضمان كفاءة التشخيص.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CENTER_DATA.services.map((service) => (
-              <div
-                key={service.id}
-                onMouseEnter={() => setActiveService(service.id)}
-                onMouseLeave={() => setActiveService(null)}
-                className={`group relative rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
-                  activeService === service.id 
-                    ? "glass-panel-glow border-electric-blue/40 -translate-y-1" 
-                    : "glass-panel border-white/5"
-                }`}
-              >
-                {/* Decorative border accent */}
-                <div className="absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-l from-electric-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
-                
-                {/* Icon Container */}
-                <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue mb-6 group-hover:bg-electric-blue group-hover:text-white group-hover:border-electric-blue/20 transition-all duration-300">
-                  <IconMapper name={service.icon} className="w-6 h-6" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {CENTER_DATA.services.filter(service => service.active !== false).map((service) => (
+                <div
+                  key={service.id}
+                  onMouseEnter={() => setActiveService(service.id)}
+                  onMouseLeave={() => setActiveService(null)}
+                  className={`group relative rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
+                    activeService === service.id 
+                      ? "glass-panel-glow border-electric-blue/40 -translate-y-1" 
+                      : "glass-panel border-white/5"
+                  }`}
+                >
+                  {/* Decorative border accent */}
+                  <div className="absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-l from-electric-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
+                  
+                  {/* Icon Container */}
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue mb-6 group-hover:bg-electric-blue group-hover:text-white group-hover:border-electric-blue/20 transition-all duration-300">
+                    <IconMapper name={service.icon} className="w-6 h-6" />
+                  </div>
+                  
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-3 group-hover:text-electric-blue transition-colors">
+                    {service.title}
+                  </h3>
+                  
+                  <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium mb-0">
+                    {service.desc}
+                  </p>
                 </div>
-                
-                <h3 className="text-lg sm:text-xl font-bold text-white mb-3 group-hover:text-electric-blue transition-colors">
-                  {service.title}
-                </h3>
-                
-                <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium mb-0">
-                  {service.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 5. PROBLEMS SECTION */}
-      <section id="problems" className="py-20 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-[#ff5c00] uppercase tracking-widest">هل تعاني من هذه المشاكل؟</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              أعطال شائعة نقوم بتشخيصها وحلها
-            </h1>
-            <p className="text-base text-gray-400 font-medium">
-              السيارات الحديثة مليئة بالحساسات والأنظمة المتداخلة. نحن هنا لنكتشف السبب الدقيق للمشكلة وليس مجرد قراءة أكواد.
-            </p>
-          </div>
+      {CENTER_DATA.sectionsVisibility.problems && (
+        <section id="problems" className="py-20 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <h2 className="text-xs sm:text-sm font-extrabold text-[#ff5c00] uppercase tracking-widest">هل تعاني من هذه المشاكل؟</h2>
+              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                أعطال شائعة نقوم بتشخيصها وحلها
+              </h1>
+              <p className="text-base text-gray-400 font-medium">
+                السيارات الحديثة مليئة بالحساسات والأنظمة المتداخلة. نحن هنا لنكتشف السبب الدقيق للمشكلة وليس مجرد قراءة أكواد.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {CENTER_DATA.problems.map((problem, idx) => (
-              <div 
-                key={idx} 
-                className="glass-panel hover:bg-white/5 rounded-xl p-5 border-r-4 border-r-warning-orange border-y border-white/5 hover:border-y-white/10 transition-all duration-200"
-              >
-                <div className="text-[10px] font-mono text-warning-amber font-bold mb-1 tracking-wider">{problem.code}</div>
-                <h4 className="text-base font-bold text-white group-hover:text-warning-amber transition-colors">
-                  {problem.title}
-                </h4>
-              </div>
-            ))}
-          </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              {CENTER_DATA.problems.map((problem, idx) => (
+                <div 
+                  key={idx} 
+                  className="glass-panel hover:bg-white/5 rounded-xl p-5 border-r-4 border-r-warning-orange border-y border-white/5 hover:border-y-white/10 transition-all duration-200"
+                >
+                  <div className="text-[10px] font-mono text-warning-amber font-bold mb-1 tracking-wider">{problem.code}</div>
+                  <h4 className="text-base font-bold text-white group-hover:text-warning-amber transition-colors">
+                    {problem.title}
+                  </h4>
+                </div>
+              ))}
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 6. WHY US SECTION */}
-      <section id="why-us" className="py-20 bg-[#0c0f17] border-y border-white/5 relative bg-stripes">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              لماذا تختار {CENTER_DATA.name}؟
-            </h1>
-            <p className="text-base text-gray-400 font-medium">
-              لسنا مجرد كراج عشوائي؛ بل نعتمد على العلم والهندسة والأجهزة التقنية لتشخيص المشاكل بدقة وتجنب الخسائر المالية.
-            </p>
-          </div>
+      {CENTER_DATA.sectionsVisibility.whyUs && (
+        <section id="why-us" className="py-20 bg-[#0c0f17] border-y border-white/5 relative bg-stripes">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</h2>
+              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                لماذا تختار {CENTER_DATA.name}؟
+              </h1>
+              <p className="text-base text-gray-400 font-medium">
+                لسنا مجرد كراج عشوائي؛ بل نعتمد على العلم والهندسة والأجهزة التقنية لتشخيص المشاكل بدقة وتجنب الخسائر المالية.
+              </p>
+            </div>
 
-          {/* Hexagon/Circle Featured Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-            {CENTER_DATA.whyUs.map((item, idx) => (
-              <div key={idx} className="flex flex-col items-center text-center space-y-4 p-6 glass-panel rounded-2xl relative border border-white/5 hover:border-electric-blue/15 transition-all">
-                {/* Hexagonal styled icon container */}
-                <div className="relative w-16 h-16 flex items-center justify-center text-white shrink-0">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-electric-blue to-[#00d4ff] transform rotate-45 rounded-xl opacity-20" />
-                  <div className="absolute inset-0 border border-electric-blue/30 transform -rotate-12 rounded-xl" />
-                  <div className="relative z-10 text-electric-blue">
-                    <IconMapper name={item.icon} className="w-8 h-8" />
+            {/* Hexagon/Circle Featured Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {CENTER_DATA.whyUs.map((item, idx) => (
+                <div key={idx} className="flex flex-col items-center text-center space-y-4 p-6 glass-panel rounded-2xl relative border border-white/5 hover:border-electric-blue/15 transition-all">
+                  {/* Hexagonal styled icon container */}
+                  <div className="relative w-16 h-16 flex items-center justify-center text-white shrink-0">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-electric-blue to-[#00d4ff] transform rotate-45 rounded-xl opacity-20" />
+                    <div className="absolute inset-0 border border-electric-blue/30 transform -rotate-12 rounded-xl" />
+                    <div className="relative z-10 text-electric-blue">
+                      <IconMapper name={item.icon} className="w-8 h-8" />
+                    </div>
                   </div>
+
+                  <h3 className="text-lg sm:text-xl font-bold text-white pt-2">{item.title}</h3>
+                  <p className="text-sm text-gray-400 leading-relaxed font-medium">{item.desc}</p>
                 </div>
+              ))}
+            </div>
 
-                <h3 className="text-lg sm:text-xl font-bold text-white pt-2">{item.title}</h3>
-                <p className="text-sm text-gray-400 leading-relaxed font-medium">{item.desc}</p>
-              </div>
-            ))}
           </div>
-
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 7. SALES / VALUE MESSAGE SECTION */}
       <section className="py-20 relative overflow-hidden bg-stripes">
@@ -655,227 +667,233 @@ export default function LandingPage() {
       </section>
 
       {/* 8. CTA SECTION */}
-      <section className="py-16 bg-gradient-to-r from-[#0b101d] via-[#121c33] to-[#0b101d] border-y border-white/5 relative">
-        <div className="max-w-5xl mx-auto px-4 text-center space-y-6">
-          <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white">جاهز لفحص سيارتك؟</h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto font-medium">
-            احجز فحص سيارتك الآن واعرف سبب العطل الحقيقي ووفر على نفسك تكاليف التجارب.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <a
-              href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في حجز موعد لفحص سيارتي`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-electric-blue/30 border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
-            >
-              <Zap className="w-5 h-5" />
-              <span>واتساب</span>
-            </a>
-            <a
-              href={`tel:${CENTER_DATA.phone}`}
-              className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
-            >
-              <Phone className="w-5 h-5 text-warning-amber" />
-              <span>اتصال</span>
-            </a>
+      {CENTER_DATA.sectionsVisibility.cta && (
+        <section className="py-16 bg-gradient-to-r from-[#0b101d] via-[#121c33] to-[#0b101d] border-y border-white/5 relative">
+          <div className="max-w-5xl mx-auto px-4 text-center space-y-6">
+            <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white">جاهز لفحص سيارتك؟</h2>
+            <p className="text-lg text-gray-300 max-w-2xl mx-auto font-medium">
+              احجز فحص سيارتك الآن واعرف سبب العطل الحقيقي ووفر على نفسك تكاليف التجارب.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <a
+                href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في حجز موعد لفحص سيارتي`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white px-8 py-4 rounded-xl text-base font-bold shadow-lg shadow-electric-blue/30 border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+              >
+                <Zap className="w-5 h-5" />
+                <span>واتساب</span>
+              </a>
+              <a
+                href={`tel:${CENTER_DATA.phone}`}
+                className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white px-8 py-4 rounded-xl text-base font-bold border border-white/10 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-2"
+              >
+                <Phone className="w-5 h-5 text-warning-amber" />
+                <span>اتصال</span>
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 9. FAQ SECTION */}
-      <section id="faq" className="py-20 relative bg-stripes">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تساؤلات فنية وإجابات واضحة</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-              الأسئلة الشائعة حول فحص وصيانة السيارات
-            </h1>
-            <p className="text-base text-gray-400 font-medium">
-              إليك إجابات الأسئلة الهامة التي تساعدك في فهم آليات الفحص المتبعة ومستويات الدقة التي نوفرها.
-            </p>
-          </div>
+      {CENTER_DATA.sectionsVisibility.faq && (
+        <section id="faq" className="py-20 relative bg-stripes">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تساؤلات فنية وإجابات واضحة</h2>
+              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                الأسئلة الشائعة حول فحص وصيانة السيارات
+              </h1>
+              <p className="text-base text-gray-400 font-medium">
+                إليك إجابات الأسئلة الهامة التي تساعدك في فهم آليات الفحص المتبعة ومستويات الدقة التي نوفرها.
+              </p>
+            </div>
 
-          {/* Accordion list */}
-          <div className="space-y-4">
-            {CENTER_DATA.faqs.map((faq, idx) => {
-              const isOpen = activeFaq === idx;
-              return (
-                <div 
-                  key={idx} 
-                  className={`rounded-2xl transition-all duration-300 border ${
-                    isOpen 
-                      ? "glass-panel-glow border-electric-blue/20" 
-                      : "glass-panel border-white/5 hover:border-white/10"
-                  }`}
-                >
-                  <button
-                    onClick={() => toggleFaq(idx)}
-                    className="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-white text-base sm:text-lg hover:text-electric-blue transition-colors focus:outline-none"
+            {/* Accordion list */}
+            <div className="space-y-4">
+              {CENTER_DATA.faqs.map((faq, idx) => {
+                const isOpen = activeFaq === idx;
+                return (
+                  <div 
+                    key={idx} 
+                    className={`rounded-2xl transition-all duration-300 border ${
+                      isOpen 
+                        ? "glass-panel-glow border-electric-blue/20" 
+                        : "glass-panel border-white/5 hover:border-white/10"
+                    }`}
                   >
-                    <span>{faq.q}</span>
-                    <span className={`p-1 rounded-lg bg-white/5 text-gray-400 group-hover:text-white transition-transform ${isOpen ? "rotate-180 text-electric-blue" : ""}`}>
-                      {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                    </span>
-                  </button>
-                  
-                  {isOpen && (
-                    <div className="px-6 pb-6 text-sm sm:text-base text-gray-400 leading-relaxed font-medium border-t border-white/5 pt-4 animate-fadeIn">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+                    <button
+                      onClick={() => toggleFaq(idx)}
+                      className="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-white text-base sm:text-lg hover:text-electric-blue transition-colors focus:outline-none"
+                    >
+                      <span>{faq.q}</span>
+                      <span className={`p-1 rounded-lg bg-white/5 text-gray-400 group-hover:text-white transition-transform ${isOpen ? "rotate-180 text-electric-blue" : ""}`}>
+                        {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                      </span>
+                    </button>
+                    
+                    {isOpen && (
+                      <div className="px-6 pb-6 text-sm sm:text-base text-gray-400 leading-relaxed font-medium border-t border-white/5 pt-4 animate-fadeIn">
+                        {faq.a}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 10. CONTACT SECTION */}
-      <section id="contact" className="py-20 bg-[#0c0f17] border-t border-white/5 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+      {CENTER_DATA.sectionsVisibility.contact && (
+        <section id="contact" className="py-20 bg-[#0c0f17] border-t border-white/5 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            {/* Contact Details Column */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">معلومات الاتصال والموقع</h2>
-                <h1 className="font-cairo-play text-3xl sm:text-4xl font-bold text-white leading-tight">تفضل بزيارتنا أو تواصل معنا</h1>
-                <p className="text-base text-gray-400 font-medium leading-relaxed">
-                  نحن متواجدون لمساعدتك في فحص وتشخيص سيارتك. تواصل معنا مسبقاً لحجز موعد لضمان عدم الانتظار وتلقي الخدمة في أسرع وقت.
-                </p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+              
+              {/* Contact Details Column */}
+              <div className="lg:col-span-5 space-y-8">
+                <div className="space-y-4">
+                  <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">معلومات الاتصال والموقع</h2>
+                  <h1 className="font-cairo-play text-3xl sm:text-4xl font-bold text-white leading-tight">تفضل بزيارتنا أو تواصل معنا</h1>
+                  <p className="text-base text-gray-400 font-medium leading-relaxed">
+                    نحن متواجدون لمساعدتك في فحص وتشخيص سيارتك. تواصل معنا مسبقاً لحجز موعد لضمان عدم الانتظار وتلقي الخدمة في أسرع وقت.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {/* Location */}
+                  <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
+                    <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
+                      <MapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs text-gray-400 font-bold mb-1">الموقع الجغرافي</h4>
+                      <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.location}</p>
+                      <p className="text-xs text-gray-400 font-medium pt-1">{CENTER_DATA.locationDetail}</p>
+                    </div>
+                  </div>
+
+                  {/* Working Hours */}
+                  <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
+                    <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
+                      <Clock className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs text-gray-400 font-bold mb-1">ساعات العمل</h4>
+                      <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.workingHoursDisplay}</p>
+                    </div>
+                  </div>
+
+                  {/* Direct Contact */}
+                  <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
+                    <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs text-gray-400 font-bold mb-1">الهاتف وواتساب</h4>
+                      <p className="text-sm sm:text-base font-bold text-white">هاتف: {CENTER_DATA.phoneDisplay}</p>
+                      <p className="text-xs text-gray-400 font-medium pt-1">واتساب: {CENTER_DATA.phoneDisplay}</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Instant Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 pt-2">
+                  <a
+                    href={CENTER_DATA.googleMapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
+                  >
+                    <MapPin className="w-5 h-5 text-warning-orange" />
+                    <span>افتح الموقع على خرائط Google</span>
+                  </a>
+                  <a
+                    href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في الاستفسار عن خدمة فحص السيارات`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 shadow-lg shadow-electric-blue/20 transition-all flex-1"
+                  >
+                    <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                      <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.773 1.226h.004c5.505 0 9.989-4.478 9.99-9.984A9.97 9.97 0 0 0 12.012 2zm5.82 14.161c-.3.84-1.491 1.568-2.051 1.621-.56.051-1.11.271-3.6-0.73-3.189-1.28-5.229-4.52-5.389-4.731-.16-.21-1.28-1.7-1.28-3.24 0-1.54.8-2.3 1.09-2.6.29-.3.63-.37.84-.37.21 0 .42.01.6.01.19 0 .44-.08.69.51.26.62.88 2.14.96 2.3.08.16.13.35.03.55-.1.21-.15.34-.3.52-.15.18-.32.41-.45.55-.15.15-.31.32-.13.62.18.3.82 1.36 1.76 2.2 1.21 1.08 2.22 1.41 2.53 1.56.31.15.49.13.67-.08.18-.21.79-.92.99-1.23.21-.31.42-.26.71-.15.3.11 1.89.89 2.21 1.05.32.16.54.24.62.38.08.14.08.82-.22 1.66z" />
+                    </svg>
+                    <span>تواصل واتساب</span>
+                  </a>
+                  <a
+                    href={`tel:${CENTER_DATA.phone}`}
+                    className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
+                  >
+                    <Phone className="w-5 h-5 text-warning-amber" />
+                    <span>اتصال مباشر</span>
+                  </a>
+                </div>
               </div>
 
-              <div className="space-y-4">
-                {/* Location */}
-                <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
-                  <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
-                    <MapPin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs text-gray-400 font-bold mb-1">الموقع الجغرافي</h4>
-                    <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.location}</p>
-                    <p className="text-xs text-gray-400 font-medium pt-1">{CENTER_DATA.locationDetail}</p>
-                  </div>
-                </div>
-
-                {/* Working Hours */}
-                <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
-                  <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
-                    <Clock className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs text-gray-400 font-bold mb-1">ساعات العمل</h4>
-                    <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.workingHoursDisplay}</p>
-                  </div>
-                </div>
-
-                {/* Direct Contact */}
-                <div className="flex items-start gap-4 p-4 glass-panel rounded-xl border border-white/5">
-                  <div className="w-10 h-10 rounded-lg bg-electric-blue/10 flex items-center justify-center text-electric-blue border border-electric-blue/20 shrink-0">
-                    <Phone className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs text-gray-400 font-bold mb-1">الهاتف وواتساب</h4>
-                    <p className="text-sm sm:text-base font-bold text-white">هاتف: {CENTER_DATA.phoneDisplay}</p>
-                    <p className="text-xs text-gray-400 font-medium pt-1">واتساب: {CENTER_DATA.phoneDisplay}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Instant Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                <a
-                  href={CENTER_DATA.googleMapsLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
-                >
-                  <MapPin className="w-5 h-5 text-warning-orange" />
-                  <span>افتح الموقع على خرائط Google</span>
-                </a>
-                <a
-                  href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في الاستفسار عن خدمة فحص السيارات`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-cairo-play bg-electric-blue hover:bg-electric-blue-hover text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 shadow-lg shadow-electric-blue/20 transition-all flex-1"
-                >
-                  <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.773 1.226h.004c5.505 0 9.989-4.478 9.99-9.984A9.97 9.97 0 0 0 12.012 2zm5.82 14.161c-.3.84-1.491 1.568-2.051 1.621-.56.051-1.11.271-3.6-0.73-3.189-1.28-5.229-4.52-5.389-4.731-.16-.21-1.28-1.7-1.28-3.24 0-1.54.8-2.3 1.09-2.6.29-.3.63-.37.84-.37.21 0 .42.01.6.01.19 0 .44-.08.69.51.26.62.88 2.14.96 2.3.08.16.13.35.03.55-.1.21-.15.34-.3.52-.15.18-.32.41-.45.55-.15.15-.31.32-.13.62.18.3.82 1.36 1.76 2.2 1.21 1.08 2.22 1.41 2.53 1.56.31.15.49.13.67-.08.18-.21.79-.92.99-1.23.21-.31.42-.26.71-.15.3.11 1.89.89 2.21 1.05.32.16.54.24.62.38.08.14.08.82-.22 1.66z" />
-                  </svg>
-                  <span>تواصل واتساب</span>
-                </a>
-                <a
-                  href={`tel:${CENTER_DATA.phone}`}
-                  className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-200 hover:text-white py-3.5 px-6 rounded-xl text-sm font-bold border border-white/10 flex items-center justify-center gap-2 transition-all flex-1"
-                >
-                  <Phone className="w-5 h-5 text-warning-amber" />
-                  <span>اتصال مباشر</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Map Placeholder or Visual Illustration */}
-            <div className="lg:col-span-7 w-full h-full min-h-[350px] lg:min-h-[480px] relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-              {/* Modern UI map representation with real-world layout design style */}
-              <div className="absolute inset-0 bg-[#0f1422] flex flex-col justify-between p-6">
-                
-                {/* Tech navigation header bar */}
-                <div className="glass-panel border border-white/5 rounded-xl p-4 flex items-center justify-between text-xs sm:text-sm text-gray-300">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-electric-blue" />
-                    <span className="font-bold">موقع {CENTER_DATA.name}</span>
-                  </div>
-                  <div className="text-gray-400">عمّان، الأردن</div>
-                </div>
-                
-                {/* Visual map graphics (grid, roads, pins) */}
-                <div className="my-auto relative w-full h-[220px] sm:h-[300px] overflow-hidden rounded-xl border border-white/5 bg-[#141b2e]">
-                  <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+              {/* Map Placeholder or Visual Illustration */}
+              <div className="lg:col-span-7 w-full h-full min-h-[350px] lg:min-h-[480px] relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+                {/* Modern UI map representation with real-world layout design style */}
+                <div className="absolute inset-0 bg-[#0f1422] flex flex-col justify-between p-6">
                   
-                  {/* Road 1 */}
-                  <div className="absolute left-[30%] top-0 bottom-0 w-[40px] bg-slate-800/60 transform rotate-12" />
-                  {/* Road 2 */}
-                  <div className="absolute left-0 right-0 top-[40%] h-[35px] bg-slate-800/60 transform -rotate-6" />
-                  {/* Intersection Road */}
-                  <div className="absolute left-[70%] top-0 bottom-0 w-[45px] bg-slate-800/60 transform -rotate-45" />
+                  {/* Tech navigation header bar */}
+                  <div className="glass-panel border border-white/5 rounded-xl p-4 flex items-center justify-between text-xs sm:text-sm text-gray-300">
+                    <div className="flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-electric-blue" />
+                      <span className="font-bold">موقع {CENTER_DATA.name}</span>
+                    </div>
+                    <div className="text-gray-400">عمّان، الأردن</div>
+                  </div>
+                  
+                  {/* Visual map graphics (grid, roads, pins) */}
+                  <div className="my-auto relative w-full h-[220px] sm:h-[300px] overflow-hidden rounded-xl border border-white/5 bg-[#141b2e]">
+                    <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+                    
+                    {/* Road 1 */}
+                    <div className="absolute left-[30%] top-0 bottom-0 w-[40px] bg-slate-800/60 transform rotate-12" />
+                    {/* Road 2 */}
+                    <div className="absolute left-0 right-0 top-[40%] h-[35px] bg-slate-800/60 transform -rotate-6" />
+                    {/* Intersection Road */}
+                    <div className="absolute left-[70%] top-0 bottom-0 w-[45px] bg-slate-800/60 transform -rotate-45" />
 
-                  {/* Marker Pin */}
-                  <div className="absolute left-[45%] top-[38%] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
-                    <span className="absolute w-8 h-8 rounded-full bg-electric-blue/30 animate-ping" />
-                    <span className="absolute w-12 h-12 rounded-full bg-electric-blue/15 animate-pulse" />
-                    <div className="relative z-10 w-10 h-10 rounded-full bg-electric-blue flex items-center justify-center text-white border-2 border-white shadow-lg">
-                      <Cpu className="w-5 h-5" />
+                    {/* Marker Pin */}
+                    <div className="absolute left-[45%] top-[38%] transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
+                      <span className="absolute w-8 h-8 rounded-full bg-electric-blue/30 animate-ping" />
+                      <span className="absolute w-12 h-12 rounded-full bg-electric-blue/15 animate-pulse" />
+                      <div className="relative z-10 w-10 h-10 rounded-full bg-electric-blue flex items-center justify-center text-white border-2 border-white shadow-lg">
+                        <Cpu className="w-5 h-5" />
+                      </div>
+                      <div className="mt-2.5 px-3 py-1 rounded bg-[#080a0f] border border-electric-blue/30 text-[10px] font-bold text-white whitespace-nowrap shadow-md">
+                        {CENTER_DATA.name}
+                      </div>
                     </div>
-                    <div className="mt-2.5 px-3 py-1 rounded bg-[#080a0f] border border-electric-blue/30 text-[10px] font-bold text-white whitespace-nowrap shadow-md">
-                      {CENTER_DATA.name}
-                    </div>
+
+                    {/* Surrounding landmarks */}
+                    <div className="absolute left-[15%] top-[20%] text-[9px] text-gray-500 font-bold bg-white/5 px-2 py-0.5 rounded border border-white/5">طريق الملك عبدالله الثاني</div>
+                    <div className="absolute left-[75%] top-[75%] text-[9px] text-gray-500 font-bold bg-white/5 px-2 py-0.5 rounded border border-white/5">المنطقة الصناعية</div>
                   </div>
 
-                  {/* Surrounding landmarks */}
-                  <div className="absolute left-[15%] top-[20%] text-[9px] text-gray-500 font-bold bg-white/5 px-2 py-0.5 rounded border border-white/5">طريق الملك عبدالله الثاني</div>
-                  <div className="absolute left-[75%] top-[75%] text-[9px] text-gray-500 font-bold bg-white/5 px-2 py-0.5 rounded border border-white/5">المنطقة الصناعية</div>
+                  {/* Tech navigation footer bar */}
+                  <a
+                    href={CENTER_DATA.googleMapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-cairo-play w-full bg-electric-blue hover:bg-electric-blue-hover text-white text-center py-3.5 rounded-xl text-sm font-bold border border-white/10 transition-all flex items-center justify-center gap-2"
+                  >
+                    <MapPin className="w-4 h-4" />
+                    <span>انقر هنا لفتح الموقع الجغرافي على خرائط Google وتحديد الاتجاهات</span>
+                  </a>
                 </div>
-
-                {/* Tech navigation footer bar */}
-                <a
-                  href={CENTER_DATA.googleMapsLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-cairo-play w-full bg-electric-blue hover:bg-electric-blue-hover text-white text-center py-3.5 rounded-xl text-sm font-bold border border-white/10 transition-all flex items-center justify-center gap-2"
-                >
-                  <MapPin className="w-4 h-4" />
-                  <span>انقر هنا لفتح الموقع الجغرافي على خرائط Google وتحديد الاتجاهات</span>
-                </a>
               </div>
-            </div>
 
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* 11. FOOTER SECTION */}
       <footer className="bg-[#080a0f] border-t border-white/5 pt-12 pb-24 sm:pb-12 text-sm text-gray-400">
@@ -960,14 +978,16 @@ export default function LandingPage() {
       </a>
 
       {/* Floating Chatbot Button (Bottom Right - Desktop Only) */}
-      <button
-        onClick={() => setChatOpen(true)}
-        className="hidden sm:flex fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-electric-blue hover:bg-electric-blue-hover text-white items-center justify-center shadow-xl shadow-electric-blue/20 hover:shadow-electric-blue/40 border border-white/10 hover:scale-110 transition-all duration-300"
-        title="المساعد الذكي"
-        aria-label="Open Chatbot"
-      >
-        <Bot className="w-7 h-7" />
-      </button>
+      {CENTER_DATA.sectionsVisibility.chatbot && (
+        <button
+          onClick={() => setChatOpen(true)}
+          className="hidden sm:flex fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-electric-blue hover:bg-electric-blue-hover text-white items-center justify-center shadow-xl shadow-electric-blue/20 hover:shadow-electric-blue/40 border border-white/10 hover:scale-110 transition-all duration-300"
+          title="المساعد الذكي"
+          aria-label="Open Chatbot"
+        >
+          <Bot className="w-7 h-7" />
+        </button>
+      )}
 
       {/* Unified Mobile Bottom Bar (Mobile Only) */}
       <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0d0f17]/95 backdrop-blur-md border-t border-white/10 py-2.5 px-4 flex justify-between items-center gap-3 sm:hidden animate-slideUp">
@@ -994,17 +1014,19 @@ export default function LandingPage() {
         </a>
 
         {/* AI Chatbot Button */}
-        <button
-          onClick={() => setChatOpen(true)}
-          className="flex-1 bg-electric-blue hover:bg-electric-blue-hover text-white py-2.5 px-2 rounded-xl text-xs font-bold font-cairo-play flex items-center justify-center gap-1.5 transition-all shadow-md shadow-electric-blue/10"
-        >
-          <Bot className="w-4 h-4" />
-          <span>شات</span>
-        </button>
+        {CENTER_DATA.sectionsVisibility.chatbot && (
+          <button
+            onClick={() => setChatOpen(true)}
+            className="flex-1 bg-electric-blue hover:bg-electric-blue-hover text-white py-2.5 px-2 rounded-xl text-xs font-bold font-cairo-play flex items-center justify-center gap-1.5 transition-all shadow-md shadow-electric-blue/10"
+          >
+            <Bot className="w-4 h-4" />
+            <span>شات</span>
+          </button>
+        )}
       </div>
 
       {/* Chatbot Window (Modal/Card Popup) */}
-      {chatOpen && (
+      {CENTER_DATA.sectionsVisibility.chatbot && chatOpen && (
         <div className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 sm:w-[380px] h-[460px] z-50 glass-panel-glow border border-electric-blue/20 rounded-2xl flex flex-col overflow-hidden shadow-2xl animate-slideUp">
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-electric-blue/20 via-[#0f1422] to-electric-blue/10 px-4 py-3.5 flex items-center justify-between border-b border-white/5">
@@ -1022,7 +1044,7 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-3">
               <a
-                href="https://wa.me/962788526696"
+                href={`https://wa.me/${CENTER_DATA.whatsapp}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25d366] hover:bg-[#20ba5a] text-white px-2.5 py-1 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-all"
