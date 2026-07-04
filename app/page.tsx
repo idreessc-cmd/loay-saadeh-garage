@@ -190,17 +190,27 @@ export default function LandingPage() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-electric-blue flex items-center justify-center text-white shadow-lg shadow-electric-blue/30 border border-white/10 overflow-hidden">
-                {CENTER_DATA.images.logo || CENTER_DATA.images.favicon ? (
+              {CENTER_DATA.images.logo ? (
+                <div className="h-10 flex items-center">
                   <img 
-                    src={`${CENTER_DATA.images.logo || CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
-                    className="w-full h-full object-cover" 
+                    src={`${CENTER_DATA.images.logo}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                    className="h-10 w-auto max-w-[160px] object-contain rounded-lg" 
                     alt={CENTER_DATA.name} 
                   />
-                ) : (
-                  <Cpu className="w-6 h-6 animate-pulse" />
-                )}
-              </div>
+                </div>
+              ) : (
+                <div className="w-10 h-10 rounded-lg bg-electric-blue flex items-center justify-center text-white shadow-lg shadow-electric-blue/30 border border-white/10 overflow-hidden">
+                  {CENTER_DATA.images.favicon ? (
+                    <img 
+                      src={`${CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                      className="w-full h-full object-cover" 
+                      alt={CENTER_DATA.name} 
+                    />
+                  ) : (
+                    <Cpu className="w-6 h-6 animate-pulse" />
+                  )}
+                </div>
+              )}
               <span className="font-cairo-play font-bold text-xl sm:text-2xl tracking-tight bg-gradient-to-l from-white via-gray-200 to-electric-blue bg-clip-text text-transparent">
                 {CENTER_DATA.name}
               </span>
@@ -917,17 +927,27 @@ export default function LandingPage() {
             {/* Column 1 - Brand */}
             <div className="md:col-span-5 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden">
-                  {CENTER_DATA.images.logo || CENTER_DATA.images.favicon ? (
+                {CENTER_DATA.images.logo ? (
+                  <div className="h-8 flex items-center">
                     <img 
-                      src={`${CENTER_DATA.images.logo || CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
-                      className="w-full h-full object-cover" 
+                      src={`${CENTER_DATA.images.logo}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                      className="h-8 w-auto max-w-[120px] object-contain rounded-lg" 
                       alt={CENTER_DATA.name} 
                     />
-                  ) : (
-                    <Cpu className="w-5 h-5" />
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden">
+                    {CENTER_DATA.images.favicon ? (
+                      <img 
+                        src={`${CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                        className="w-full h-full object-cover" 
+                        alt={CENTER_DATA.name} 
+                      />
+                    ) : (
+                      <Cpu className="w-5 h-5" />
+                    )}
+                  </div>
+                )}
                 <span className="font-extrabold text-lg sm:text-xl text-white">
                   {CENTER_DATA.name}
                 </span>
