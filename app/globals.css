@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Cairo+Play:wght@200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Cairo+Play:wght@200..1000&family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Geist:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-cairo: "Cairo", sans-serif;
-  --font-cairo-play: "Cairo Play", sans-serif;
-  --color-dark-bg: #080a0f;
-  --color-dark-card: #11141d;
-  --color-dark-card-hover: #161b27;
-  --color-electric-blue: #1e6ffa;
-  --color-electric-blue-hover: #0d5de6;
-  --color-glow-blue: rgba(30, 111, 250, 0.15);
+  --font-cairo: "Cairo", "Inter", sans-serif;
+  --font-cairo-play: "Montserrat", "Cairo Play", sans-serif;
+  --font-data-mono: "Geist", monospace;
+  --color-dark-bg: #0b1326;
+  --color-dark-card: #131b2e;
+  --color-dark-card-hover: #171f33;
+  --color-electric-blue: #00daf3;
+  --color-electric-blue-hover: #00b8cc;
+  --color-glow-blue: rgba(0, 218, 243, 0.15);
   --color-warning-amber: #ff9f1c;
   --color-warning-orange: #ff5c00;
   
@@ -31,22 +32,22 @@
 
 @keyframes glow {
   from {
-    box-shadow: 0 0 10px rgba(30, 111, 250, 0.15), 0 0 15px rgba(30, 111, 250, 0.05);
+    box-shadow: 0 0 10px rgba(0, 218, 243, 0.15), 0 0 15px rgba(0, 218, 243, 0.05);
   }
   to {
-    box-shadow: 0 0 18px rgba(30, 111, 250, 0.25), 0 0 25px rgba(30, 111, 250, 0.1);
+    box-shadow: 0 0 18px rgba(0, 218, 243, 0.25), 0 0 25px rgba(0, 218, 243, 0.1);
   }
 }
 
 /* Custom Utilities and Styles */
 :root {
-  --font-cairo: "Cairo", sans-serif;
+  --font-cairo: "Cairo", "Inter", sans-serif;
 }
 
 body {
   font-family: var(--font-cairo), system-ui, -apple-system, sans-serif;
-  background-color: #080a0f;
-  color: #f3f4f6;
+  background-color: #0b1326;
+  color: #dae2fd;
   overflow-x: hidden;
 }
 
@@ -56,37 +57,37 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #080a0f;
+  background: #0b1326;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e6ffa;
+  background: #00daf3;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0d5de6;
+  background: #00b8cc;
 }
 
 /* Glassmorphism Styles */
 .glass-panel {
-  background: rgba(17, 20, 29, 0.7);
+  background: rgba(19, 27, 46, 0.7);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .glass-panel-glow {
-  background: rgba(17, 20, 29, 0.75);
+  background: rgba(19, 27, 46, 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(30, 111, 250, 0.15);
+  border: 1px solid rgba(0, 218, 243, 0.15);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
 }
 
 .glass-panel-glow:hover {
-  border-color: rgba(30, 111, 250, 0.35);
-  box-shadow: 0 0 20px rgba(30, 111, 250, 0.1);
+  border-color: rgba(0, 218, 243, 0.3);
+  box-shadow: 0 0 20px rgba(0, 218, 243, 0.08);
   transition: all 0.3s ease-in-out;
 }
 

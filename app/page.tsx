@@ -301,9 +301,9 @@ export default function LandingPage() {
                 
                 {/* Specialized Tech Tag */}
                 {CENTER_DATA.hero.badge && (
-                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-electric-blue/10 border border-electric-blue/30 text-electric-blue text-xs sm:text-sm font-bold mx-auto lg:mx-0">
-                    <Zap className="w-4 h-4 animate-bounce" />
-                    <span>{CENTER_DATA.hero.badge}</span>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-electric-blue/10 border border-electric-blue/30 text-electric-blue mx-auto lg:mx-0">
+                    <span className="w-2 h-2 rounded-full bg-electric-blue animate-ping" />
+                    <span className="font-data-mono text-xs uppercase tracking-wider font-semibold">{CENTER_DATA.hero.badge}</span>
                   </div>
                 )}
                 <h1 className="font-cairo-play text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
@@ -583,8 +583,11 @@ export default function LandingPage() {
                   <div className="absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-l from-electric-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
                   
                   {/* Icon Container */}
-                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue mb-6 group-hover:bg-electric-blue group-hover:text-white group-hover:border-electric-blue/20 transition-all duration-300">
-                    <IconMapper name={service.icon} className="w-6 h-6" />
+                  <div className="flex justify-between items-start mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue group-hover:bg-electric-blue group-hover:text-white group-hover:border-electric-blue/20 transition-all duration-300">
+                      <IconMapper name={service.icon} className="w-6 h-6" />
+                    </div>
+                    <span className="w-2 h-2 rounded-full bg-electric-blue opacity-30 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-300" />
                   </div>
                   
                   <h3 className="text-lg sm:text-xl font-bold text-white mb-3 group-hover:text-electric-blue transition-colors">
