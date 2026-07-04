@@ -248,6 +248,9 @@ export default function AdminDashboard() {
       const data = await res.json();
       if (res.ok && data.success) {
         setSaveMessage(data.message || "تم حفظ البيانات بنجاح!");
+        if (data.updatedAt) {
+          setFormData((prev) => ({ ...prev, updatedAt: data.updatedAt }));
+        }
       } else {
         setSaveError(data.error || "فشل حفظ البيانات");
       }
@@ -1062,9 +1065,12 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
 
   const currentPath = (key: string): string => (formData.images as any)[key] || "";
 
-  const handlePathChange = (key: string, value: string) => {
+  const handlePathChange = (key: string, value: string, updatedAt?: string) => {
     const updated = { ...formData };
     (updated.images as any)[key] = value;
+    if (updatedAt) {
+      updated.updatedAt = updatedAt;
+    }
     onFormDataChange(updated);
   };
 
@@ -1095,8 +1101,8 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
             });
             const data = await res.json();
             if (res.ok && data.success) {
-              setMsg(`تم رفع الصورة وتحديث البيانات. سيظهر التغيير بعد انتهاء نشر Cloudflare خلال دقائق.`);
-              handlePathChange(key, data.newPath);
+              setMsg(`تم رفع الصورة وتحديث البيانات. سيظهر التغيير بعد انتهاء نشر Cloudflare. إذا لم تظهر فورًا جرّب تحديث الصفحة أو فتحها في نافذة خاصة.`);
+              handlePathChange(key, data.newPath, data.updatedAt);
             } else {
               setErrMsg(data.error || "فشل رفع الصورة");
             }
@@ -1142,8 +1148,8 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        setMsg("تم استرجاع المسار الافتراضي");
-        handlePathChange(key, data.newPath);
+        setMsg("تم استرجاع المسار الافتراضي وتحديث البيانات.");
+        handlePathChange(key, data.newPath, data.updatedAt);
       } else {
         setErrMsg(data.error || "فشل استرجاع المسار");
       }
@@ -1201,7 +1207,7 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
                   </div>
                   <div className="w-20 h-20 rounded-xl bg-slate-900 border border-white/5 overflow-hidden shrink-0 flex items-center justify-center">
                     {showPreview(path) ? (
-                      <img src={path} alt={label} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      <img src={`${path}?v=${formData.updatedAt || "1"}`} alt={label} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                     ) : (
                       <Image className="w-6 h-6 text-gray-600" />
                     )}
@@ -1278,7 +1284,7 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
             <div key={key} className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-3 space-y-2 group">
               <div className="w-full aspect-square rounded-lg bg-slate-900 border border-white/5 overflow-hidden flex items-center justify-center">
                 {showPreview(path) ? (
-                  <img src={path} alt={key} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                  <img src={`${path}?v=${formData.updatedAt || "1"}`} alt={key} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
                 ) : (
                   <Image className="w-6 h-6 text-gray-600" />
                 )}

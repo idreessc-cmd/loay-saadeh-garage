@@ -88,6 +88,7 @@ export interface CenterData {
     image: string;
     active: boolean;
   }[];
+  updatedAt?: string;
 }
 
 export const CENTER_DATA = siteData as CenterData;

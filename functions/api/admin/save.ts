@@ -144,6 +144,7 @@ export const onRequestPost = async (context: {
       });
     }
 
+    data.updatedAt = new Date().toISOString();
     const formattedJson = JSON.stringify(data, null, 2);
 
     // 3. Get existing file SHA from GitHub
@@ -197,7 +198,7 @@ export const onRequestPost = async (context: {
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: "تم تحديث البيانات وجاري بدء عملية بناء جديدة على Cloudflare" }),
+      JSON.stringify({ success: true, message: "تم تحديث البيانات وجاري بدء عملية بناء جديدة على Cloudflare", updatedAt: data.updatedAt }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
 

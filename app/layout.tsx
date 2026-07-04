@@ -16,7 +16,9 @@ export const metadata: Metadata = {
   authors: [{ name: CENTER_DATA.name }],
   robots: "index, follow",
   icons: {
-    icon: CENTER_DATA.images.favicon,
+    icon: `${CENTER_DATA.images.favicon || "/favicon.ico"}?v=${CENTER_DATA.updatedAt || "1"}`,
+    shortcut: `${CENTER_DATA.images.favicon || "/favicon.ico"}?v=${CENTER_DATA.updatedAt || "1"}`,
+    apple: `${CENTER_DATA.images.favicon || "/favicon.ico"}?v=${CENTER_DATA.updatedAt || "1"}`,
   },
   alternates: {
     canonical: CENTER_DATA.metadata.canonical,
@@ -30,7 +32,7 @@ export const metadata: Metadata = {
     siteName: CENTER_DATA.name,
     images: [
       {
-        url: CENTER_DATA.images.ogImage,
+        url: `${CENTER_DATA.images.ogImage || "/og-image.png"}?v=${CENTER_DATA.updatedAt || "1"}`,
         width: 1200,
         height: 630,
         alt: CENTER_DATA.metadata.title,
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: CENTER_DATA.metadata.title,
     description: CENTER_DATA.metadata.description,
-    images: [CENTER_DATA.images.ogImage],
+    images: [`${CENTER_DATA.images.ogImage || "/og-image.png"}?v=${CENTER_DATA.updatedAt || "1"}`],
   },
 };
 

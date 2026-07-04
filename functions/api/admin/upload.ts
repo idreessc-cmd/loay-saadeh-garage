@@ -148,8 +148,9 @@ export const onRequestPost = async (context: {
 
       const oldPath = jsonData.images[safeKey] || "";
       jsonData.images[safeKey] = defaultPath;
+      jsonData.updatedAt = new Date().toISOString();
       if (!jsonData.mediaHistory) jsonData.mediaHistory = [];
-      jsonData.mediaHistory.unshift({ timestamp: new Date().toISOString(), key: safeKey, oldPath, newPath: defaultPath });
+      jsonData.mediaHistory.unshift({ timestamp: jsonData.updatedAt, key: safeKey, oldPath, newPath: defaultPath });
       if (jsonData.mediaHistory.length > 5) jsonData.mediaHistory.length = 5;
 
       const formattedJson = JSON.stringify(jsonData, null, 2);
@@ -166,7 +167,7 @@ export const onRequestPost = async (context: {
         return new Response(JSON.stringify({ success: false, error: `فشل حفظ البيانات: ${errText}` }), { status: 500, headers: { "Content-Type": "application/json" } });
       }
 
-      return new Response(JSON.stringify({ success: true, message: "تم استرجاع المسار الافتراضي", newPath: defaultPath }), { status: 200, headers: { "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ success: true, message: "تم استرجاع المسار الافتراضي", newPath: defaultPath, updatedAt: jsonData.updatedAt }), { status: 200, headers: { "Content-Type": "application/json" } });
     }
 
     // Validate file upload
@@ -233,8 +234,9 @@ export const onRequestPost = async (context: {
     const oldPath = jsonData.images[safeKey] || "";
     const newPath = `/uploads/${safeFilename}`;
     jsonData.images[safeKey] = newPath;
+    jsonData.updatedAt = now.toISOString();
     if (!jsonData.mediaHistory) jsonData.mediaHistory = [];
-    jsonData.mediaHistory.unshift({ timestamp: now.toISOString(), key: safeKey, oldPath, newPath });
+    jsonData.mediaHistory.unshift({ timestamp: jsonData.updatedAt, key: safeKey, oldPath, newPath });
     if (jsonData.mediaHistory.length > 5) jsonData.mediaHistory.length = 5;
 
     const formattedJson = JSON.stringify(jsonData, null, 2);
@@ -312,7 +314,8 @@ export const onRequestPost = async (context: {
       success: true,
       message: "تم رفع الصورة وتحديث البيانات. سيظهر التغيير بعد انتهاء نشر Cloudflare خلال دقائق.",
       newPath,
-      filename: safeFilename
+      filename: safeFilename,
+      updatedAt: jsonData.updatedAt
     }), { status: 200, headers: { "Content-Type": "application/json" } });
 
   } catch (err: any) {

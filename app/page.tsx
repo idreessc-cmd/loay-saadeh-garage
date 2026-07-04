@@ -481,7 +481,13 @@ export default function LandingPage() {
                   {/* Image container with next/image */}
                   <div className="relative w-full h-[220px] bg-slate-950 overflow-hidden shrink-0">
                     <Image 
-                      src={CENTER_DATA.images[["electric","hybrid","defaultCar"][CENTER_DATA.carTypes.findIndex(ct => ct.title === car.title)] as keyof typeof CENTER_DATA.images] || car.image} 
+                      src={
+                        car.title.includes("كهرب") 
+                          ? (CENTER_DATA.images.electric || "/electric.png")
+                          : car.title.includes("هايب")
+                            ? (CENTER_DATA.images.hybrid || "/hybrid.png")
+                            : (CENTER_DATA.images.defaultCar || "/defualt.png")
+                      } 
                       alt={car.title}
                       fill
                       sizes="(max-w-768px) 100vw, (max-w-1024px) 50vw, 33vw"
