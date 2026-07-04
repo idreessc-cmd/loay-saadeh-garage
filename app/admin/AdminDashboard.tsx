@@ -281,12 +281,22 @@ export default function AdminDashboard() {
           <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa08_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
           
           <div className="flex flex-col items-center mb-8 relative z-10">
-            <div className="w-16 h-16 bg-electric-blue/10 border border-electric-blue/30 rounded-2xl flex items-center justify-center text-electric-blue mb-4">
-              <Lock className="w-8 h-8" />
-            </div>
+            {formData.images.logo || formData.images.favicon ? (
+              <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-white/10 overflow-hidden flex items-center justify-center mb-4">
+                <img 
+                  src={`${formData.images.logo || formData.images.favicon}?v=${formData.updatedAt || "1"}`} 
+                  className="w-full h-full object-cover" 
+                  alt={formData.name || "مركز لؤي سعادة"} 
+                />
+              </div>
+            ) : (
+              <div className="w-16 h-16 bg-electric-blue/10 border border-electric-blue/30 rounded-2xl flex items-center justify-center text-electric-blue mb-4">
+                <Lock className="w-8 h-8" />
+              </div>
+            )}
             <h1 className="text-2xl font-bold text-white mb-2">لوحة تحكم المبرمج</h1>
             <p className="text-xs text-gray-400 text-center leading-relaxed">
-              هذه الصفحة مخصصة فقط لتعديل محتوى موقع مركز لؤي سعادة. يرجى إدخال كلمة المرور للمتابعة.
+              هذه الصفحة مخصصة فقط لتعديل محتوى موقع {formData.name || "مركز لؤي سعادة"}. يرجى إدخال كلمة المرور للمتابعة.
             </p>
           </div>
 
@@ -330,12 +340,20 @@ export default function AdminDashboard() {
       <header className="bg-[#0c0f17] border-b border-white/5 py-4 px-6 sticky top-0 z-30 shadow-lg shadow-[#080a0f]/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white font-bold text-sm">
-              M
+            <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden shrink-0">
+              {formData.images.logo || formData.images.favicon ? (
+                <img 
+                  src={`${formData.images.logo || formData.images.favicon}?v=${formData.updatedAt || "1"}`} 
+                  className="w-full h-full object-cover" 
+                  alt="Logo" 
+                />
+              ) : (
+                <span className="font-bold text-sm">L</span>
+              )}
             </div>
             <div>
               <h1 className="text-sm sm:text-base font-extrabold text-white">لوحة تحكم المحتوى</h1>
-              <p className="text-[10px] text-gray-400">مركز لؤي سعادة لصيانة السيارات</p>
+              <p className="text-[10px] text-gray-400">{formData.name || "مركز لؤي سعادة لصيانة السيارات"}</p>
             </div>
           </div>
 
