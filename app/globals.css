@@ -164,7 +164,9 @@ body.light-mode h4,
 body.light-mode h5,
 body.light-mode h6,
 body.light-mode span.font-extrabold,
-body.light-mode .text-white:not(.bg-electric-blue):not(.bg-\[\#25d366\]):not(.bg-warning-amber):not(.bg-warning-orange):not(.bg-green-500):not(.text-white) {
+body.light-mode .text-white:not(button):not(a):not(.bg-electric-blue):not(.bg-\[\#25d366\]):not(.bg-warning-amber):not(.bg-warning-orange):not(.bg-green-500),
+body.light-mode button.text-white:not(.bg-electric-blue):not(.bg-\[\#25d366\]):not(.bg-warning-amber):not(.bg-warning-orange):not(.bg-green-500),
+body.light-mode a.text-white:not(.bg-electric-blue):not(.bg-\[\#25d366\]):not(.bg-warning-amber):not(.bg-warning-orange):not(.bg-green-500) {
   color: #1a1e26 !important;
 }
 
