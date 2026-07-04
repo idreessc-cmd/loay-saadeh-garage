@@ -45,7 +45,14 @@ export const onRequestGet = async (context: {
   };
 }) => {
   const { request, env } = context;
-  const sessionSecret = env.SESSION_SECRET || "default_session_secret_change_me";
+
+  if (!env.SESSION_SECRET) {
+    return new Response(JSON.stringify({ authenticated: false }), {
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+
+  const sessionSecret = env.SESSION_SECRET;
 
   const token = getCookie(request, "admin_session");
   if (!token) {

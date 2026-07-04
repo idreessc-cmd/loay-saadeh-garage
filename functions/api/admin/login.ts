@@ -30,8 +30,16 @@ export const onRequestPost = async (context: {
   };
 }) => {
   const { request, env } = context;
-  const adminPassword = env.ADMIN_PASSWORD || "admin123";
-  const sessionSecret = env.SESSION_SECRET || "default_session_secret_change_me";
+
+  if (!env.ADMIN_PASSWORD || !env.SESSION_SECRET) {
+    return new Response(
+      JSON.stringify({ success: false, error: "لم يتم تكوين متغيرات البيئة المطلوبة" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  }
+
+  const adminPassword = env.ADMIN_PASSWORD;
+  const sessionSecret = env.SESSION_SECRET;
 
   try {
     const body = (await request.json()) as { password?: string };

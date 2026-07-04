@@ -106,19 +106,23 @@ export const onRequestPost = async (context: {
   };
 }) => {
   const { request, env } = context;
-  const sessionSecret = env.SESSION_SECRET || "default_session_secret_change_me";
+
+  if (!env.SESSION_SECRET || !env.GITHUB_TOKEN || !env.GITHUB_OWNER || !env.GITHUB_REPO || !env.GITHUB_BRANCH || !env.SITE_DATA_PATH) {
+    return new Response(JSON.stringify({ success: false, error: "لم يتم تكوين متغيرات البيئة المطلوبة" }), {
+      status: 500, headers: { "Content-Type": "application/json" }
+    });
+  }
+
+  const sessionSecret = env.SESSION_SECRET;
   const githubToken = env.GITHUB_TOKEN;
-  const owner = env.GITHUB_OWNER || "idreessc-cmd";
-  const repo = env.GITHUB_REPO || "loay-saadeh-garage";
-  const branch = env.GITHUB_BRANCH || "main";
-  const siteDataPath = env.SITE_DATA_PATH || "data/site-data.json";
+  const owner = env.GITHUB_OWNER;
+  const repo = env.GITHUB_REPO;
+  const branch = env.GITHUB_BRANCH;
+  const siteDataPath = env.SITE_DATA_PATH;
 
   const token = getCookie(request, "admin_session");
   if (!token || !(await verifySessionCookie(sessionSecret, token))) {
     return new Response(JSON.stringify({ success: false, error: "غير مصرح بالدخول" }), { status: 403, headers: { "Content-Type": "application/json" } });
-  }
-  if (!githubToken) {
-    return new Response(JSON.stringify({ success: false, error: "لم يتم تكوين GITHUB_TOKEN" }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
 
   try {
