@@ -27,7 +27,9 @@ import {
   Bot,
   Send,
   Sun,
-  Moon
+  Moon,
+  MessageSquare,
+  Calendar
 } from "lucide-react";
 
 import { CENTER_DATA } from "../data/site-data";
@@ -50,7 +52,9 @@ const IconMapper = ({ name, className }: { name: string; className?: string }) =
     Gauge,
     Activity,
     HeartPulse,
-    DollarSign
+    DollarSign,
+    MessageSquare,
+    Calendar
   };
   const IconComponent = icons[name] || Settings;
   return <IconComponent className={className} />;
@@ -597,6 +601,74 @@ export default function LandingPage() {
           </div>
         </section>
       )}
+
+      {/* 4.5. PROCESS SECTION (كيف تتم الخدمة؟) */}
+      <section id="process" className="py-20 relative border-b border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">آلية العمل</h2>
+            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              كيف تتم الخدمة في مركزنا؟
+            </h1>
+            <p className="text-base text-gray-400 font-medium">
+              منهجية هندسية واضحة ومبسطة تضمن لك دقة التشخيص وتجنب الصيانة العشوائية.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {/* Connecting line on desktop */}
+            <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-0.5 border-t border-dashed border-white/10 -translate-y-12 z-0" />
+            
+            {[
+              {
+                step: "01",
+                title: "التواصل والطلب",
+                desc: "تواصل معنا مباشرة عبر الهاتف أو الواتساب، وأرسل لنا وصف المشكلة أو الأعطال.",
+                icon: <MessageSquare className="w-6 h-6 text-electric-blue" />
+              },
+              {
+                step: "02",
+                title: "حجز موعد فحص",
+                desc: "نحدد لك موعداً دقيقاً للفحص لتفادي الانتظار وتوفير وقتك الثمين.",
+                icon: <Calendar className="w-6 h-6 text-[#00d4ff]" />
+              },
+              {
+                step: "03",
+                title: "فحص وتشخيص دقيق",
+                desc: "نقوم بفحص السيارة بأحدث الأنظمة الذكية لتشخيص السبب الحقيقي للعطل.",
+                icon: <Search className="w-6 h-6 text-warning-amber" />
+              },
+              {
+                step: "04",
+                title: "شرح الحل والتكلفة",
+                desc: "نشرح لك المشكلة وخطة الإصلاح مع التكلفة بالتفصيل قبل أن نبدأ بأي عمل.",
+                icon: <CheckCircle className="w-6 h-6 text-green-400" />
+              }
+            ].map((item, idx) => (
+              <div key={idx} className="group relative overflow-hidden rounded-2xl border border-white/5 bg-gradient-to-b from-[#11141d]/80 to-[#0c0f17]/80 hover:border-electric-blue/25 hover:shadow-2xl hover:shadow-electric-blue/5 transition-all duration-300 p-6 flex flex-col space-y-4 z-10">
+                <div className="flex justify-between items-center">
+                  <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    {item.icon}
+                  </div>
+                  <span className="text-3xl font-black font-cairo-play text-white/5 group-hover:text-electric-blue/25 transition-colors">
+                    {item.step}
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-bold text-white group-hover:text-electric-blue transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
 
       {/* 5. PROBLEMS SECTION */}
       {CENTER_DATA.sectionsVisibility.problems && (
