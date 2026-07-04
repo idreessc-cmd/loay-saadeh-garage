@@ -211,7 +211,7 @@ export default function LandingPage() {
                   )}
                 </div>
               )}
-              <span className="font-cairo-play font-bold text-xl sm:text-2xl tracking-tight bg-gradient-to-l from-white via-gray-200 to-electric-blue bg-clip-text text-transparent">
+              <span className="font-cairo-play font-bold text-lg sm:text-xl md:text-2xl tracking-tight bg-gradient-to-l from-white via-gray-200 to-electric-blue bg-clip-text text-transparent">
                 {CENTER_DATA.name}
               </span>
             </div>
@@ -302,12 +302,24 @@ export default function LandingPage() {
                     <span>{CENTER_DATA.hero.badge}</span>
                   </div>
                 )}
-                <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                  {CENTER_DATA.name} {CENTER_DATA.hero.title}
+                <h1 className="font-cairo-play text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight">
+                  {CENTER_DATA.name}
+                  <span className="block text-2xl sm:text-3xl lg:text-4xl font-bold text-electric-blue mt-2 sm:mt-3">
+                    {CENTER_DATA.hero.title}
+                  </span>
                 </h1>
                 
-                <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-semibold">
-                  {CENTER_DATA.hero.desc} <span className="text-warning-amber font-cairo-play">{CENTER_DATA.slogan}</span>
+                <div className="bg-electric-blue/5 border-r-4 border-r-electric-blue rounded-xl p-4 sm:p-5 my-6 text-right max-w-2xl mx-auto lg:mx-0 shadow-md">
+                  <p className="text-base sm:text-lg font-bold text-gray-200">
+                    🔬 فحص وتشخيص أعطال السيارات بدقة قبل تغيير القطع
+                  </p>
+                  <p className="text-xs sm:text-sm text-gray-400 mt-1.5 font-medium leading-relaxed">
+                    {CENTER_DATA.slogan}
+                  </p>
+                </div>
+
+                <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed font-semibold">
+                  {CENTER_DATA.hero.desc}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <a
