@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
+import { Cairo, Geist } from "next/font/google";
 import "./globals.css";
 import { CENTER_DATA } from "../data/site-data";
+
+const cairo = Cairo({
+  subsets: ["arabic", "latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-cairo",
+  display: "swap",
+});
+
+const geist = Geist({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-geist",
+  display: "swap",
+});
 
 export const viewport = {
   width: "device-width",
@@ -112,7 +127,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="ar" dir="rtl" className="scroll-smooth">
+    <html lang="ar" dir="rtl" className={`scroll-smooth ${cairo.variable} ${geist.variable}`}>
       <head>
         <script
           type="application/ld+json"

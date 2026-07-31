@@ -292,8 +292,19 @@ export default function LandingPage() {
 
       {/* 2. HERO SECTION */}
       {CENTER_DATA.sectionsVisibility.hero && (
-        <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden bg-stripes">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden">
+          {/* High-tech photographic workshop background from the new design */}
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0b1326]/60 via-[#0b1326]/85 to-[#0b1326] z-10" />
+            <Image
+              src="/images/hero-bg.png"
+              alt="High Tech EV Workshop"
+              fill
+              priority
+              className="object-cover opacity-20"
+            />
+          </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
               
               {/* Hero Text */}
@@ -369,10 +380,10 @@ export default function LandingPage() {
                 <div className="relative w-full max-w-[450px] aspect-square rounded-2xl glass-panel-glow border border-electric-blue/20 p-6 flex flex-col justify-between overflow-hidden">
                   
                   {/* SVG Scanning Grid */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa10_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
+                  <div className="absolute inset-0 bg-[radial-gradient(#00daf310_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none opacity-40" />
                   
                   {/* Laser scan line animates over the car SVG */}
-                  <div className="absolute left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-electric-blue to-transparent shadow-[0_0_15px_#1e6ffa] z-20 animate-scan pointer-events-none" />
+                  <div className="absolute left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-electric-blue to-transparent shadow-[0_0_15px_#00daf3] z-20 animate-scan pointer-events-none" />
 
                   {/* Tech Dashboard Top Bar */}
                   <div className="flex justify-between items-center text-[10px] sm:text-xs text-gray-400 font-mono border-b border-white/5 pb-3">
@@ -391,22 +402,22 @@ export default function LandingPage() {
                       
                       {/* Car Outline Wireframe */}
                       <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
-                        stroke="#1e6ffa" strokeWidth="2.5" strokeDasharray="3 3" className="opacity-90" />
+                        stroke="#00daf3" strokeWidth="2.5" strokeDasharray="3 3" className="opacity-90" />
                       <path d="M40,115 L60,115 C60,100 80,85 100,85 L140,85 C145,85 150,75 160,65 L210,50 L270,50 L310,85 L350,95 L375,108 C382,111 385,117 385,123 L385,135 L360,135 C360,123 345,115 330,115 C315,115 300,123 300,135 L160,135 C160,123 145,115 130,115 C115,115 100,123 100,135 L50,135 C42,135 35,128 35,120 L35,117 C35,116 38,115 40,115 Z" 
-                        stroke="#1e6ffa" strokeWidth="1.5" className="animate-pulse" />
+                        stroke="#00daf3" strokeWidth="1.5" className="animate-pulse" />
 
                       {/* Windshield & Windows */}
                       <path d="M165,66 L210,53 L265,53 L303,85 L260,85 L200,85 Z" stroke="#00d4ff" strokeWidth="1.5" />
                       <line x1="230" y1="53" x2="230" y2="85" stroke="#00d4ff" strokeWidth="1" />
 
                       {/* Wheels */}
-                      <circle cx="130" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
+                      <circle cx="130" cy="135" r="24" stroke="#00daf3" strokeWidth="2" fill="#0b1326" />
                       <circle cx="130" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
-                      <circle cx="130" cy="135" r="6" fill="#1e6ffa" />
+                      <circle cx="130" cy="135" r="6" fill="#00daf3" />
 
-                      <circle cx="330" cy="135" r="24" stroke="#1e6ffa" strokeWidth="2" fill="#080a0f" />
+                      <circle cx="330" cy="135" r="24" stroke="#00daf3" strokeWidth="2" fill="#0b1326" />
                       <circle cx="330" cy="135" r="16" stroke="#00d4ff" strokeWidth="1" strokeDasharray="2 2" />
-                      <circle cx="330" cy="135" r="6" fill="#1e6ffa" />
+                      <circle cx="330" cy="135" r="6" fill="#00daf3" />
 
                       {/* Sensor Scanning Nodes (glowing dots) */}
                       {/* Engine block sensor */}
@@ -516,11 +527,13 @@ export default function LandingPage() {
                   <div className="relative w-full h-[220px] bg-slate-950 overflow-hidden shrink-0">
                     <Image 
                       src={
-                        car.title.includes("كهرب") 
-                          ? (CENTER_DATA.images.electric || "/electric.png")
-                          : car.title.includes("هايب")
-                            ? (CENTER_DATA.images.hybrid || "/hybrid.png")
-                            : (CENTER_DATA.images.defaultCar || "/defualt.png")
+                        car.image && car.image !== "/electric.png" && car.image !== "/hybrid.png" && car.image !== "/defualt.png"
+                          ? car.image
+                          : car.title.includes("كهرب") 
+                            ? (CENTER_DATA.images.electric || "/images/car-types-split.png")
+                            : car.title.includes("هايب")
+                              ? (CENTER_DATA.images.hybrid || "/images/hv-battery.png")
+                              : (CENTER_DATA.images.defaultCar || "/images/diagnostics-tablet.png")
                       } 
                       alt={car.title}
                       fill
@@ -528,7 +541,7 @@ export default function LandingPage() {
                       className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
                     />
                     {/* Overlay shadow gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0c0f17] via-[#0c0f17]/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-[#0b1326]/20 to-transparent" />
                     {/* Glowing border line at the bottom of the image */}
                     <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-electric-blue/40 to-transparent" />
                   </div>
@@ -567,38 +580,66 @@ export default function LandingPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {CENTER_DATA.services.filter(service => service.active !== false).map((service) => (
-                <div
-                  key={service.id}
-                  onMouseEnter={() => setActiveService(service.id)}
-                  onMouseLeave={() => setActiveService(null)}
-                  className={`group relative rounded-2xl p-6 transition-all duration-300 cursor-pointer ${
-                    activeService === service.id 
-                      ? "glass-panel-glow border-electric-blue/40 -translate-y-1" 
-                      : "glass-panel border-white/5"
-                  }`}
-                >
-                  {/* Decorative border accent */}
-                  <div className="absolute top-0 right-0 left-0 h-[2px] bg-gradient-to-l from-electric-blue/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-t-2xl" />
-                  
-                  {/* Icon Container */}
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue group-hover:bg-electric-blue group-hover:text-white group-hover:border-electric-blue/20 transition-all duration-300">
-                      <IconMapper name={service.icon} className="w-6 h-6" />
+            <div className="space-y-16">
+              {CENTER_DATA.services.filter(service => service.active !== false).map((service, idx) => {
+                const isEven = idx % 2 === 0;
+                return (
+                  <div 
+                    key={service.id} 
+                    className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+                  >
+                    {/* Visual Image Card (lg:col-span-5) */}
+                    <div className={`lg:col-span-5 relative group order-2 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+                      <div className="absolute -inset-4 bg-electric-blue/5 rounded-2xl blur-2xl group-hover:bg-electric-blue/10 transition-all duration-500" />
+                      <div className="relative rounded-2xl overflow-hidden glass-panel border border-white/10 h-[240px] sm:h-[280px] w-full">
+                        <Image 
+                          src={(service as any).image || "/images/diagnostics-tablet.png"}
+                          alt={service.title}
+                          fill
+                          sizes="(max-w-768px) 100vw, 40vw"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent opacity-80" />
+                      </div>
                     </div>
-                    <span className="w-2 h-2 rounded-full bg-electric-blue opacity-30 group-hover:opacity-100 group-hover:animate-pulse transition-all duration-300" />
+
+                    {/* Content Section (lg:col-span-7) */}
+                    <div className={`lg:col-span-7 space-y-6 order-1 ${isEven ? 'lg:order-2' : 'lg:order-1'} text-right`}>
+                      <div className="flex items-center gap-4 justify-start">
+                        <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue">
+                          <IconMapper name={service.icon} className="w-8 h-8" />
+                        </div>
+                        <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-cairo-play">
+                          {service.title}
+                        </h2>
+                      </div>
+                      
+                      <p className="text-base text-gray-300 leading-relaxed font-medium">
+                        {service.desc}
+                      </p>
+
+                      <div className="pt-4 flex flex-wrap gap-4 justify-start">
+                        <a
+                          href={`https://wa.me/${CENTER_DATA.whatsapp}?text=أرغب في الاستفسار عن خدمة: ${service.title}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-cairo-play bg-electric-blue/10 hover:bg-electric-blue text-electric-blue hover:text-black px-6 py-3 rounded-xl text-sm font-bold border border-electric-blue/30 transition-all duration-300 flex items-center gap-2"
+                        >
+                          <MessageSquare className="w-4 h-4" />
+                          <span>استفسر عبر واتساب</span>
+                        </a>
+                        <a
+                          href={`tel:${CENTER_DATA.phone}`}
+                          className="font-cairo-play bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white px-6 py-3 rounded-xl text-sm font-bold border border-white/10 transition-all duration-300 flex items-center gap-2"
+                        >
+                          <Phone className="w-4 h-4 text-warning-amber" />
+                          <span>احجز موعد فحص</span>
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  
-                  <h3 className="text-lg sm:text-xl font-bold text-white mb-3 group-hover:text-electric-blue transition-colors">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed font-medium mb-0">
-                    {service.desc}
-                  </p>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
           </div>
@@ -837,8 +878,12 @@ export default function LandingPage() {
                     }`}
                   >
                     <button
+                      id={`faq-btn-${idx}`}
+                      type="button"
                       onClick={() => toggleFaq(idx)}
-                      className="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-white text-base sm:text-lg hover:text-electric-blue transition-colors focus:outline-none"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-answer-${idx}`}
+                      className="w-full px-6 py-5 flex items-center justify-between text-right font-bold text-white text-base sm:text-lg hover:text-electric-blue transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1326] rounded-t-2xl"
                     >
                       <span>{faq.q}</span>
                       <span className={`p-1 rounded-lg bg-white/5 text-gray-400 group-hover:text-white transition-transform ${isOpen ? "rotate-180 text-electric-blue" : ""}`}>
@@ -847,7 +892,12 @@ export default function LandingPage() {
                     </button>
                     
                     {isOpen && (
-                      <div className="px-6 pb-6 text-sm sm:text-base text-gray-400 leading-relaxed font-medium border-t border-white/5 pt-4 animate-fadeIn">
+                      <div 
+                        id={`faq-answer-${idx}`}
+                        role="region"
+                        aria-labelledby={`faq-btn-${idx}`}
+                        className="px-6 pb-6 text-sm sm:text-base text-gray-400 leading-relaxed font-medium border-t border-white/5 pt-4 animate-fadeIn"
+                      >
                         {faq.a}
                       </div>
                     )}
@@ -949,10 +999,20 @@ export default function LandingPage() {
               {/* Map Placeholder or Visual Illustration */}
               <div className="lg:col-span-7 w-full h-full min-h-[350px] lg:min-h-[480px] relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                 {/* Modern UI map representation with real-world layout design style */}
-                <div className="absolute inset-0 bg-[#0f1422] flex flex-col justify-between p-6">
+                <div className="absolute inset-0 flex flex-col justify-between p-6">
+                  {/* Map background image from the new design */}
+                  <div className="absolute inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0b1326]/70 via-[#0b1326]/55 to-[#0b1326]/85 z-10" />
+                    <Image
+                      src="/images/map-bg.png"
+                      alt=""
+                      fill
+                      className="object-cover opacity-20 grayscale"
+                    />
+                  </div>
                   
                   {/* Tech navigation header bar */}
-                  <div className="glass-panel border border-white/5 rounded-xl p-4 flex items-center justify-between text-xs sm:text-sm text-gray-300">
+                  <div className="glass-panel border border-white/5 rounded-xl p-4 flex items-center justify-between text-xs sm:text-sm text-gray-300 relative z-10">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-electric-blue" />
                       <span className="font-bold">موقع {CENTER_DATA.name}</span>
@@ -961,8 +1021,8 @@ export default function LandingPage() {
                   </div>
                   
                   {/* Visual map graphics (grid, roads, pins) */}
-                  <div className="my-auto relative w-full h-[220px] sm:h-[300px] overflow-hidden rounded-xl border border-white/5 bg-[#141b2e]">
-                    <div className="absolute inset-0 bg-[radial-gradient(#1e6ffa15_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+                  <div className="my-auto relative w-full h-[220px] sm:h-[300px] overflow-hidden rounded-xl border border-white/5 bg-[#131b2e]/40 backdrop-blur-sm z-10">
+                    <div className="absolute inset-0 bg-[radial-gradient(#00daf315_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
                     
                     {/* Road 1 */}
                     <div className="absolute left-[30%] top-0 bottom-0 w-[40px] bg-slate-800/60 transform rotate-12" />
@@ -993,7 +1053,7 @@ export default function LandingPage() {
                     href={CENTER_DATA.googleMapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-cairo-play w-full bg-electric-blue hover:bg-electric-blue-hover text-white text-center py-3.5 rounded-xl text-sm font-bold border border-white/10 transition-all flex items-center justify-center gap-2"
+                    className="font-cairo-play w-full bg-electric-blue hover:bg-electric-blue-hover text-white text-center py-3.5 rounded-xl text-sm font-bold border border-white/10 transition-all flex items-center justify-center gap-2 relative z-10"
                   >
                     <MapPin className="w-4 h-4" />
                     <span>انقر هنا لفتح الموقع الجغرافي على خرائط Google وتحديد الاتجاهات</span>

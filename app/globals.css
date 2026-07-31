@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Cairo+Play:wght@200..1000&family=Montserrat:wght@400;600;700;800&family=Inter:wght@400;500;600&family=Geist:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-cairo: "Cairo", "Inter", sans-serif;
-  --font-cairo-play: "Montserrat", "Cairo Play", sans-serif;
-  --font-data-mono: "Geist", monospace;
+  --font-cairo: var(--font-cairo), sans-serif;
+  --font-cairo-play: var(--font-cairo), sans-serif;
+  --font-data-mono: var(--font-geist), monospace;
   --color-dark-bg: #0b1326;
   --color-dark-card: #131b2e;
   --color-dark-card-hover: #171f33;
@@ -330,4 +329,17 @@ body.light-mode .border-white\/10 {
 /* Stripe background opacity adjustment for readability */
 body.light-mode .bg-stripes {
   background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.005) 25%, transparent 25%, transparent 50%, rgba(0, 0, 0, 0.005) 50%, rgba(0, 0, 0, 0.005) 75%, transparent 75%, transparent) !important;
+}
+
+/* Accessibility: Support prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: scroll !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
 }

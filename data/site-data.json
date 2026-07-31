@@ -131,6 +131,7 @@
       "title": "نظام التكييف",
       "desc": "فحص وتعبئة غاز التكييف، تشخيص أعطال الكمبريسور، صيانة وتتبع تسريب غاز الفريون وتنظيف الدورة بأحدث الأجهزة.",
       "icon": "Activity",
+      "image": "/images/ac-service.png",
       "active": true
     },
     {
@@ -138,6 +139,7 @@
       "title": "نظام الفرامل",
       "desc": "صيانة وتغيير الفرامل (الفحمات والديسكات)، فحص وتصليح أنظمة ABS، ومعالجة مشاكل استجابة ودعسة الفرامل لسلامتك.",
       "icon": "ShieldAlert",
+      "image": "/images/brakes-service.png",
       "active": true
     },
     {
@@ -145,6 +147,7 @@
       "title": "المحرك والجير",
       "desc": "تشخيص وصيانة مشاكل المحرك الميكانيكية والكهربائية، معالجة مشاكل تبديلات الجير، الارتجاج، وضعف العزم والسحب.",
       "icon": "Gauge",
+      "image": "/images/diagnostics-tablet.png",
       "active": true
     },
     {
@@ -152,6 +155,7 @@
       "title": "الزيوت والفلاتر",
       "desc": "تغيير زيت المحرك وزيت الجير والأنظمة الهيدروليكية باستخدام زيوت معتمدة، مع تبديل فلاتر الزيت، الهواء، والمكيف.",
       "icon": "Wrench",
+      "image": "/images/diagnostics-hud.png",
       "active": true
     },
     {
@@ -159,6 +163,7 @@
       "title": "بطاريات HV",
       "desc": "فحص وتشخيص كفاءة بطاريات الجهد العالي (HV) لسيارات الهايبرد والكهرباء، تحديد الخلايا التالفة، وصيانة أنظمة الشحن.",
       "icon": "Battery",
+      "image": "/images/hv-battery.png",
       "active": true
     },
     {
@@ -166,6 +171,7 @@
       "title": "تشخيص الأعطال",
       "desc": "فحص كمبيوتر شامل لجميع أنظمة وحساسات السيارة، قراءة وتحليل أكواد الأعطال (DTC) لمعرفة السبب الحقيقي للمشكلة.",
       "icon": "Cpu",
+      "image": "/images/hero-bg.png",
       "active": true
     },
     {
@@ -173,6 +179,7 @@
       "title": "قطع غيار",
       "desc": "توفير وتأمين قطع الغيار الأصلية والمكفولة والبدائل عالية الجودة التي تناسب موديل مركبتك لضمان كفاءة الصيانة.",
       "icon": "DollarSign",
+      "image": "/images/about-workshop.png",
       "active": true
     }
   ],
@@ -269,9 +276,9 @@
     }
   ],
   "images": {
-    "electric": "/electric.png",
-    "hybrid": "/hybrid.png",
-    "defaultCar": "/defualt.png",
+    "electric": "/images/car-types-split.png",
+    "hybrid": "/images/hv-battery.png",
+    "defaultCar": "/images/diagnostics-tablet.png",
     "ogImage": "/og-image.png",
     "favicon": "/uploads/favicon-20260704-0755.png",
     "logo": "/uploads/logo-20260704-0755.png",
