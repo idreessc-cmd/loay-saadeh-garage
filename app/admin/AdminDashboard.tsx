@@ -673,6 +673,20 @@ export default function AdminDashboard() {
                           className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 focus:outline-none focus:border-electric-blue/50 leading-relaxed"
                         />
                       </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-[11px] font-bold text-gray-400 mb-1.5">مسار صورة الخدمة</label>
+                        <input
+                          type="text"
+                          value={service.image || ""}
+                          onChange={(e) => handleServiceChange(index, "image", e.target.value)}
+                          placeholder="/uploads/service-name.webp"
+                          dir="ltr"
+                          className="w-full bg-[#080a0f] border border-white/10 rounded-xl px-3 py-2 text-xs sm:text-sm text-gray-100 placeholder-gray-600 focus:outline-none focus:border-electric-blue/50 font-mono text-left"
+                        />
+                        <p className="mt-1.5 text-[10px] leading-relaxed text-gray-500">
+                          استخدم مسار صورة مملوكة للمركز بصيغة JPG أو PNG أو WebP.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1214,7 +1228,7 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
       <div>
         <h2 className="text-lg font-bold text-white border-b border-white/5 pb-3 mb-4">الصور الأساسية</h2>
         <p className="text-xs text-gray-400 leading-relaxed mb-6">
-          ارفع صورة جديدة أو غيّر المسار يدوياً. الصور المسموحة: JPG, PNG, WebP, SVG. الحد الأقصى: 2MB.
+          ارفع صورة جديدة أو غيّر المسار يدوياً. الصور المسموحة: JPG, PNG, WebP فقط. الحد الأقصى: 2MB.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
