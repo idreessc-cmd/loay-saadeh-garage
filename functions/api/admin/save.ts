@@ -47,50 +47,51 @@ function utf8ToBase64(str: string): string {
   return btoa(binString);
 }
 
-function validateData(data: any): string | null {
+function validateData(data: unknown): string | null {
   if (typeof data !== 'object' || data === null) return "تنسيق البيانات غير صحيح";
+  const candidate = data as Partial<CenterData>;
   
-  if (!data.name || typeof data.name !== 'string' || data.name.trim().length < 3) {
+  if (!candidate.name || typeof candidate.name !== 'string' || candidate.name.trim().length < 3) {
     return "اسم المركز يجب أن يكون 3 حروف على الأقل";
   }
   
-  if (!data.phone || typeof data.phone !== 'string' || data.phone.trim().length < 7) {
+  if (!candidate.phone || typeof candidate.phone !== 'string' || candidate.phone.trim().length < 7) {
     return "رقم الهاتف غير صحيح";
   }
   
-  if (!data.whatsapp || typeof data.whatsapp !== 'string' || data.whatsapp.trim().length < 7) {
+  if (!candidate.whatsapp || typeof candidate.whatsapp !== 'string' || candidate.whatsapp.trim().length < 7) {
     return "رقم الواتساب غير صحيح";
   }
   
-  if (!Array.isArray(data.services) || data.services.length < 3) {
+  if (!Array.isArray(candidate.services) || candidate.services.length < 3) {
     return "يجب وجود 3 خدمات على الأقل";
   }
   
-  for (const s of data.services) {
+  for (const s of candidate.services) {
     if (!s.id || !s.title || !s.desc) {
       return `بيانات الخدمة (${s.title || 'غير مسماة'}) غير مكتملة`;
     }
   }
   
-  if (!Array.isArray(data.faqs) || data.faqs.length < 2) {
+  if (!Array.isArray(candidate.faqs) || candidate.faqs.length < 2) {
     return "يجب وجود سؤالين شائعين على الأقل";
   }
   
-  for (const f of data.faqs) {
+  for (const f of candidate.faqs) {
     if (!f.q || !f.a) {
       return "هناك أسئلة أو أجوبة فارغة في الأسئلة الشائعة";
     }
   }
   
-  if (!data.metadata || typeof data.metadata !== 'object') {
+  if (!candidate.metadata || typeof candidate.metadata !== 'object') {
     return "إعدادات SEO غير موجودة";
   }
   
-  if (!data.metadata.title || data.metadata.title.trim().length < 10) {
+  if (!candidate.metadata.title || candidate.metadata.title.trim().length < 10) {
     return "عنوان SEO قصير جداً (10 حروف على الأقل)";
   }
   
-  if (!data.metadata.description || data.metadata.description.trim().length < 20) {
+  if (!candidate.metadata.description || candidate.metadata.description.trim().length < 20) {
     return "وصف SEO قصير جداً (20 حرفاً على الأقل)";
   }
   
@@ -133,7 +134,7 @@ export const onRequestPost = async (context: {
   }
 
   try {
-    const { data } = (await request.json()) as { data?: any };
+    const { data } = (await request.json()) as { data?: unknown };
     
     // 2. Validate Data
     const validationError = validateData(data);
@@ -144,8 +145,9 @@ export const onRequestPost = async (context: {
       });
     }
 
-    data.updatedAt = new Date().toISOString();
-    const formattedJson = JSON.stringify(data, null, 2);
+    const validData = data as CenterData;
+    validData.updatedAt = new Date().toISOString();
+    const formattedJson = JSON.stringify(validData, null, 2);
 
     // 3. Get existing file SHA from GitHub
     const getUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
@@ -198,14 +200,16 @@ export const onRequestPost = async (context: {
     }
 
     return new Response(
-      JSON.stringify({ success: true, message: "تم تحديث البيانات وجاري بدء عملية بناء جديدة على Cloudflare", updatedAt: data.updatedAt }),
+      JSON.stringify({ success: true, message: "تم تحديث البيانات وجاري بدء عملية بناء جديدة على Cloudflare", updatedAt: validData.updatedAt }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
 
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "حدث خطأ غير متوقع";
     return new Response(
-      JSON.stringify({ success: false, error: err.message }),
+      JSON.stringify({ success: false, error: message }),
       { status: 500, headers: { "Content-Type": "application/json" } }
     );
   }
 };
+import type { CenterData } from "../../../data/site-data";

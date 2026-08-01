@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cairo, Geist } from "next/font/google";
 import "./globals.css";
 import { CENTER_DATA } from "../data/site-data";
+import { serializeJsonForHtmlScript } from "../lib/security";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -20,7 +21,6 @@ const geist = Geist({
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1.2,
 };
 
 export const metadata: Metadata = {
@@ -125,13 +125,14 @@ export default function RootLayout({
       }
     ]
   };
+  const safeJsonLd = serializeJsonForHtmlScript(jsonLd);
 
   return (
     <html lang="ar" dir="rtl" className={`scroll-smooth ${cairo.variable} ${geist.variable}`}>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd }}
         />
       </head>
       <body className="min-h-screen bg-[#080a0f] text-gray-100 antialiased font-cairo">

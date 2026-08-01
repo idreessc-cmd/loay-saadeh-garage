@@ -1,13 +1,20 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import NextImage from "next/image";
 import { 
-  Lock, LogOut, Save, Download, Eye, FileCode, Check, AlertCircle, 
-  Plus, Trash2, ArrowUp, ArrowDown, ChevronRight, Info, EyeOff,
-  Image, Upload, Copy, RotateCcw, FolderOpen
+  Lock, LogOut, Save, Download, FileCode, Check, AlertCircle,
+  Plus, Trash2, ArrowUp, ArrowDown, ChevronRight, Info,
+  ImageIcon, Upload, Copy, RotateCcw, FolderOpen
 } from "lucide-react";
 import siteData from "../../data/site-data.json";
 import { CenterData } from "../../data/site-data";
+
+type TabId = "basic" | "hero" | "services" | "cartypes" | "faq" | "chatbot" | "images" | "seo";
+type FormValue = string | boolean | string[];
+type ChatbotRule = CenterData["chatbot"]["rules"][number];
+type Service = CenterData["services"][number];
+type CarType = CenterData["carTypes"][number];
 
 export default function AdminDashboard() {
   // Authentication State
@@ -20,9 +27,7 @@ export default function AdminDashboard() {
   const [formData, setFormData] = useState<CenterData>(siteData as CenterData);
 
   // Tab State
-  const [activeTab, setActiveTab] = useState<
-    "basic" | "hero" | "services" | "cartypes" | "faq" | "chatbot" | "images" | "seo"
-  >("basic");
+  const [activeTab, setActiveTab] = useState<TabId>("basic");
 
   // UI State
   const [showJsonPreview, setShowJsonPreview] = useState(false);
@@ -87,13 +92,13 @@ export default function AdminDashboard() {
   };
 
   // Handle Basic Field Change
-  const handleChange = (path: string, value: any) => {
+  const handleChange = (path: string, value: FormValue) => {
     setFormData((prev) => {
-      const updated = { ...prev };
+      const updated = structuredClone(prev);
       const parts = path.split(".");
-      let current: any = updated;
+      let current: Record<string, unknown> = updated as unknown as Record<string, unknown>;
       for (let i = 0; i < parts.length - 1; i++) {
-        current = current[parts[i]];
+        current = current[parts[i]] as Record<string, unknown>;
       }
       current[parts[parts.length - 1]] = value;
       return updated;
@@ -101,14 +106,14 @@ export default function AdminDashboard() {
   };
 
   // Chatbot Rules Helpers
-  const handleRuleChange = (index: number, field: string, value: any) => {
+  const handleRuleChange = <K extends keyof ChatbotRule>(index: number, field: K, value: ChatbotRule[K] | string) => {
     setFormData((prev) => {
       const updated = { ...prev };
       const updatedRules = [...updated.chatbot.rules];
       if (field === "keywords") {
         updatedRules[index] = {
           ...updatedRules[index],
-          keywords: value.split(",").map((k: string) => k.trim()).filter(Boolean)
+          keywords: String(value).split(",").map((k) => k.trim()).filter(Boolean)
         };
       } else {
         updatedRules[index] = {
@@ -145,7 +150,7 @@ export default function AdminDashboard() {
   };
 
   // Services Helpers
-  const handleServiceChange = (index: number, field: string, value: any) => {
+  const handleServiceChange = <K extends keyof Service>(index: number, field: K, value: Service[K]) => {
     setFormData((prev) => {
       const updated = { ...prev };
       const updatedServices = [...updated.services];
@@ -159,7 +164,7 @@ export default function AdminDashboard() {
   };
 
   // Car Types Helpers
-  const handleCarTypeChange = (index: number, field: string, value: any) => {
+  const handleCarTypeChange = <K extends keyof CarType>(index: number, field: K, value: CarType[K]) => {
     setFormData((prev) => {
       const updated = { ...prev };
       const updatedCarTypes = [...updated.carTypes];
@@ -282,9 +287,11 @@ export default function AdminDashboard() {
           
           <div className="flex flex-col items-center mb-8 relative z-10">
             {formData.images.logo || formData.images.favicon ? (
-              <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-white/10 overflow-hidden flex items-center justify-center mb-4">
-                <img 
+              <div className="relative w-20 h-20 rounded-2xl bg-slate-900 border border-white/10 overflow-hidden flex items-center justify-center mb-4">
+                <NextImage
                   src={`${formData.images.logo || formData.images.favicon}?v=${formData.updatedAt || "1"}`} 
+                  fill
+                  sizes="80px"
                   className="w-full h-full object-cover" 
                   alt={formData.name || "مركز لؤي سعادة"} 
                 />
@@ -340,10 +347,12 @@ export default function AdminDashboard() {
       <header className="bg-[#0c0f17] border-b border-white/5 py-4 px-6 sticky top-0 z-30 shadow-lg shadow-[#080a0f]/20">
         <div className="max-w-7xl mx-auto flex justify-between items-center gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden shrink-0">
+            <div className="relative w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden shrink-0">
               {formData.images.logo || formData.images.favicon ? (
-                <img 
+                <NextImage
                   src={`${formData.images.logo || formData.images.favicon}?v=${formData.updatedAt || "1"}`} 
+                  fill
+                  sizes="32px"
                   className="w-full h-full object-cover" 
                   alt="Logo" 
                 />
@@ -404,7 +413,7 @@ export default function AdminDashboard() {
           ].map((tab) => (
             <button
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
+              onClick={() => setActiveTab(tab.id as TabId)}
               className={`w-full text-right px-4 py-3 rounded-xl text-xs sm:text-sm font-bold border transition-all flex items-center justify-between ${
                 activeTab === tab.id
                   ? "bg-electric-blue border-electric-blue/30 text-white shadow-lg shadow-electric-blue/15"
@@ -924,7 +933,7 @@ export default function AdminDashboard() {
                     >
                       <input
                         type="checkbox"
-                        checked={(formData.sectionsVisibility as any)[section.key] !== false}
+                        checked={formData.sectionsVisibility[section.key as keyof CenterData["sectionsVisibility"]] !== false}
                         onChange={(e) => handleChange(`sectionsVisibility.${section.key}`, e.target.checked)}
                         className="w-4 h-4 text-electric-blue bg-slate-900 border-white/10 rounded focus:ring-electric-blue cursor-pointer"
                       />
@@ -1081,11 +1090,11 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
     { key: "hero", label: "صورة الخلفية (Hero Image)", usage: "خلفية قسم البانر الرئيسي (اختياري)", default: "" },
   ];
 
-  const currentPath = (key: string): string => (formData.images as any)[key] || "";
+  const currentPath = (key: string): string => formData.images[key as keyof CenterData["images"]] || "";
 
   const handlePathChange = (key: string, value: string, updatedAt?: string) => {
     const updated = { ...formData };
-    (updated.images as any)[key] = value;
+    updated.images[key as keyof CenterData["images"]] = value;
     if (updatedAt) {
       updated.updatedAt = updatedAt;
     }
@@ -1095,7 +1104,7 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
   const handleFileSelect = (key: string) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = "image/jpeg,image/png,image/webp,image/svg+xml,image/*";
+    input.accept = "image/jpeg,image/png,image/webp";
     input.onchange = async (e) => {
       const file = (e.target as HTMLInputElement).files?.[0];
       if (!file) return;
@@ -1223,11 +1232,11 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
                       <p className="text-[10px] text-gray-500 font-mono mt-1 truncate" dir="ltr">{path}</p>
                     )}
                   </div>
-                  <div className="w-20 h-20 rounded-xl bg-slate-900 border border-white/5 overflow-hidden shrink-0 flex items-center justify-center">
+                  <div className="relative w-20 h-20 rounded-xl bg-slate-900 border border-white/5 overflow-hidden shrink-0 flex items-center justify-center">
                     {showPreview(path) ? (
-                      <img src={`${path}?v=${formData.updatedAt || "1"}`} alt={label} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                      <NextImage fill sizes="80px" src={`${path}?v=${formData.updatedAt || "1"}`} alt={label} className="object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
                     ) : (
-                      <Image className="w-6 h-6 text-gray-600" />
+                      <ImageIcon aria-hidden="true" className="w-6 h-6 text-gray-600" />
                     )}
                   </div>
                 </div>
@@ -1300,11 +1309,11 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {(Object.entries(formData.images) as [string, string][]).filter(([, path]) => path).map(([key, path]) => (
             <div key={key} className="bg-[#080a0f]/60 border border-white/5 rounded-xl p-3 space-y-2 group">
-              <div className="w-full aspect-square rounded-lg bg-slate-900 border border-white/5 overflow-hidden flex items-center justify-center">
+              <div className="relative w-full aspect-square rounded-lg bg-slate-900 border border-white/5 overflow-hidden flex items-center justify-center">
                 {showPreview(path) ? (
-                  <img src={`${path}?v=${formData.updatedAt || "1"}`} alt={key} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
+                  <NextImage fill sizes="160px" src={`${path}?v=${formData.updatedAt || "1"}`} alt={key} className="object-cover" onError={(e) => { e.currentTarget.style.display = "none"; }} />
                 ) : (
-                  <Image className="w-6 h-6 text-gray-600" />
+                  <ImageIcon aria-hidden="true" className="w-6 h-6 text-gray-600" />
                 )}
               </div>
               <p className="text-[10px] font-mono text-gray-400 truncate" dir="ltr">{path.split("/").pop()}</p>

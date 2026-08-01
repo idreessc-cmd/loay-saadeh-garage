@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# موقع مركز لؤي سعادة لخدمات السيارات
 
-## Getting Started
+موقع تعريفي وتسويقي عربي لمركز لؤي سعادة في عمّان، يركز على فحص وتشخيص وصيانة سيارات البنزين والديزل والهايبرد والكهرباء قبل تغيير القطع.
 
-First, run the development server:
+## التقنية
+
+- Next.js 16 وReact 19 وTypeScript.
+- Tailwind CSS 4.
+- Static Export إلى مجلد `out`.
+- Cloudflare Pages للاستضافة وCloudflare Pages Functions للوحة الإدارة.
+- GitHub كمصدر للمحتوى وتشغيل النشر التلقائي.
+
+## التشغيل المحلي
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+الموقع: `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+لوحة الإدارة: `http://localhost:3000/admin`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> واجهات `/api/admin/*` هي Cloudflare Pages Functions، ولذلك لا تعمل عبر خادم Next.js المحلي وحده. لاختبارها محليًا استخدم Wrangler Pages أو اختبارات الأمان المرفقة.
 
-## Learn More
+## الفحوصات
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run test:security
+npm run lint
+npm run build
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## النشر
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- عنوان الإنتاج الحالي: `https://loay-saadeh-garage.pages.dev`
+- أمر البناء: `npm run build`
+- مجلد الناتج: `out`
+- فرع الإنتاج: `main`
 
-## Deploy on Vercel
+تُضبط أسرار لوحة الإدارة من إعدادات Cloudflare ولا تُحفظ في المستودع. راجع [ADMIN_GUIDE.md](./ADMIN_GUIDE.md) للقيم المطلوبة وخطوات الحماية والنشر.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## النطاق الرسمي
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+النطاق `luaysaadeh-garage.com` غير موجود في DNS حتى تاريخ 1 أغسطس 2026. يجب شراؤه وربطه بـ Cloudflare Pages قبل تحويل canonical وSitemap إليه.

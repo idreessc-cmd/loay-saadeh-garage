@@ -24,12 +24,11 @@ function getCookie(request: Request, name: string): string | null {
   return null;
 }
 
-const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/svg+xml"];
+const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const ALLOWED_EXTENSIONS: Record<string, string> = {
   "image/jpeg": ".jpg",
   "image/png": ".png",
-  "image/webp": ".webp",
-  "image/svg+xml": ".svg"
+  "image/webp": ".webp"
 };
 const MAX_SIZE = 2 * 1024 * 1024;
 
@@ -57,7 +56,7 @@ async function getRefSha(owner: string, repo: string, branch: string, token: str
   return data.object.sha;
 }
 
-async function getCommitTree(owner: string, repo: string, commitSha: string, token: string): Promise<{ treeSha: string; tree: any[] }> {
+async function getCommitTree(owner: string, repo: string, commitSha: string, token: string): Promise<{ treeSha: string; tree: GitTreeEntry[] }> {
   const url = `https://api.github.com/repos/${owner}/${repo}/git/commits/${commitSha}`;
   const res = await fetch(url, {
     headers: { Authorization: `Bearer ${token}`, "User-Agent": "Cloudflare-Pages-Function", Accept: "application/vnd.github.v3+json" }
@@ -69,14 +68,13 @@ async function getCommitTree(owner: string, repo: string, commitSha: string, tok
     headers: { Authorization: `Bearer ${token}`, "User-Agent": "Cloudflare-Pages-Function", Accept: "application/vnd.github.v3+json" }
   });
   if (!treeRes.ok) throw new Error("فشل في قراءة tree من GitHub");
-  const treeData = (await treeRes.json()) as { sha: string; tree: any[] };
+  const treeData = (await treeRes.json()) as { sha: string; tree: GitTreeEntry[] };
   return { treeSha: treeData.sha, tree: treeData.tree };
 }
 
 async function createBlob(owner: string, repo: string, content: string, encoding: "base64" | "utf-8", token: string): Promise<string> {
   const url = `https://api.github.com/repos/${owner}/${repo}/git/blobs`;
-  const body: any = { content, encoding };
-  if (encoding === "base64") body.encoding = "base64";
+  const body: { content: string; encoding: "base64" | "utf-8" } = { content, encoding };
   const res = await fetch(url, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "User-Agent": "Cloudflare-Pages-Function", "Content-Type": "application/json", Accept: "application/vnd.github.v3+json" },
@@ -90,8 +88,35 @@ async function createBlob(owner: string, repo: string, content: string, encoding
   return data.sha;
 }
 
-function base64ToBase64Url(base64: string): string {
-  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+export function hasValidImageSignature(base64: string, mimeType: string): boolean {
+  try {
+    const prefix = base64.replace(/\s/g, "").slice(0, 32);
+    const binary = atob(prefix);
+    const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+
+    if (mimeType === "image/png") {
+      return bytes.length >= 4 &&
+        bytes[0] === 0x89 && bytes[1] === 0x50 &&
+        bytes[2] === 0x4e && bytes[3] === 0x47;
+    }
+
+    if (mimeType === "image/jpeg") {
+      return bytes.length >= 3 &&
+        bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;
+    }
+
+    if (mimeType === "image/webp") {
+      return bytes.length >= 12 &&
+        bytes[0] === 0x52 && bytes[1] === 0x49 &&
+        bytes[2] === 0x46 && bytes[3] === 0x46 &&
+        bytes[8] === 0x57 && bytes[9] === 0x45 &&
+        bytes[10] === 0x42 && bytes[11] === 0x50;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
 }
 
 export const onRequestPost = async (context: {
@@ -192,18 +217,22 @@ export const onRequestPost = async (context: {
       mimeType = contentType;
     } else {
       const ext = filename.split(".").pop()?.toLowerCase();
-      const extMap: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp", svg: "image/svg+xml" };
+      const extMap: Record<string, string> = { jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" };
       mimeType = extMap[ext || ""] || "image/png";
     }
 
     if (!ALLOWED_TYPES.includes(mimeType)) {
-      return new Response(JSON.stringify({ success: false, error: `نوع الملف غير مسموح: ${mimeType}. المسموح: jpg, png, webp, svg` }), { status: 400, headers: { "Content-Type": "application/json" } });
+      return new Response(JSON.stringify({ success: false, error: `نوع الملف غير مسموح: ${mimeType}. المسموح: jpg, png, webp` }), { status: 400, headers: { "Content-Type": "application/json" } });
     }
 
     // Extract raw base64 data
     let rawBase64 = image;
     if (rawBase64.includes("base64,")) {
       rawBase64 = rawBase64.substring(rawBase64.indexOf("base64,") + 7);
+    }
+
+    if (!hasValidImageSignature(rawBase64, mimeType)) {
+      return new Response(JSON.stringify({ success: false, error: "محتوى الملف لا يطابق نوع الصورة المحدد" }), { status: 400, headers: { "Content-Type": "application/json" } });
     }
 
     // Validate size
@@ -249,7 +278,6 @@ export const onRequestPost = async (context: {
     // Create blobs for both files
     const imageBlobSha = await createBlob(owner, repo, rawBase64, "base64", githubToken);
 
-    let jsonBase64: string;
     const uint8Array = new Uint8Array(jsonBytes.length);
     for (let i = 0; i < jsonBytes.length; i++) {
       uint8Array[i] = jsonBytes[i];
@@ -258,7 +286,7 @@ export const onRequestPost = async (context: {
     for (let i = 0; i < uint8Array.length; i++) {
       binaryString += String.fromCharCode(uint8Array[i]);
     }
-    jsonBase64 = btoa(binaryString);
+    const jsonBase64 = btoa(binaryString);
 
     const jsonBlobSha = await createBlob(owner, repo, jsonBase64, "base64", githubToken);
 
@@ -267,8 +295,8 @@ export const onRequestPost = async (context: {
 
     // Build new tree: keep all existing entries, add/update the image and site-data.json
     const newTree = tree
-      .filter((entry: any) => entry.path !== uploadPath && entry.path !== siteDataPath)
-      .map((entry: any) => ({ path: entry.path, mode: entry.mode, type: entry.type, sha: entry.sha }));
+      .filter((entry) => entry.path !== uploadPath && entry.path !== siteDataPath)
+      .map((entry) => ({ path: entry.path, mode: entry.mode, type: entry.type, sha: entry.sha }));
     newTree.push({ path: uploadPath, mode: "100644", type: "blob", sha: imageBlobSha });
     newTree.push({ path: siteDataPath, mode: "100644", type: "blob", sha: jsonBlobSha });
 
@@ -322,7 +350,14 @@ export const onRequestPost = async (context: {
       updatedAt: jsonData.updatedAt
     }), { status: 200, headers: { "Content-Type": "application/json" } });
 
-  } catch (err: any) {
-    return new Response(JSON.stringify({ success: false, error: err.message }), { status: 500, headers: { "Content-Type": "application/json" } });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "حدث خطأ غير متوقع";
+    return new Response(JSON.stringify({ success: false, error: message }), { status: 500, headers: { "Content-Type": "application/json" } });
   }
+};
+type GitTreeEntry = {
+  path: string;
+  mode: string;
+  type: string;
+  sha: string;
 };

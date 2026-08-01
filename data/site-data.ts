@@ -53,6 +53,7 @@ export interface CenterData {
     desc: string;
     icon: string;
     active: boolean;
+    image?: string;
   }[];
   problems: {
     title: string;

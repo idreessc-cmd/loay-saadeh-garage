@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useSyncExternalStore } from "react";
 import Image from "next/image";
+import type { LucideIcon } from "lucide-react";
 import {
   Cpu,
   Wrench,
@@ -17,7 +18,6 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
-  ArrowLeft,
   Menu,
   X,
   Gauge,
@@ -36,7 +36,7 @@ import { CENTER_DATA } from "../data/site-data";
 
 // Map Icon Strings to Lucide Components
 const IconMapper = ({ name, className }: { name: string; className?: string }) => {
-  const icons: Record<string, React.ComponentType<any>> = {
+  const icons: Record<string, LucideIcon> = {
     Cpu,
     Wrench,
     Zap,
@@ -63,35 +63,29 @@ const IconMapper = ({ name, className }: { name: string; className?: string }) =
 export default function LandingPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const [activeService, setActiveService] = useState<string | null>(null);
   const [chatOpen, setChatOpen] = useState(false);
   
-  // Theme state and mounting check
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(
+    (onStoreChange) => {
+      window.addEventListener("storage", onStoreChange);
+      window.addEventListener("theme-change", onStoreChange);
+      return () => {
+        window.removeEventListener("storage", onStoreChange);
+        window.removeEventListener("theme-change", onStoreChange);
+      };
+    },
+    () => localStorage.getItem("theme") === "light" ? "light" : "dark",
+    () => "dark"
+  );
 
   useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-      } else {
-        document.body.classList.remove('light-mode');
-      }
-    }
-  }, []);
+    document.body.classList.toggle("light-mode", theme === "light");
+  }, [theme]);
 
   const toggleTheme = () => {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    setTheme(nextTheme);
     localStorage.setItem('theme', nextTheme);
-    if (nextTheme === 'light') {
-      document.body.classList.add('light-mode');
-    } else {
-      document.body.classList.remove('light-mode');
-    }
+    window.dispatchEvent(new Event("theme-change"));
   };
   
   // Chatbot State
@@ -105,7 +99,7 @@ export default function LandingPage() {
   }[]>([
     {
       id: "welcome",
-      text: "مرحباً بك في مركز لؤي سعادة. كيف يمكننا مساعدتك بخصوص فحص أو صيانة سيارتك؟",
+      text: CENTER_DATA.chatbot.welcomeMessage,
       sender: "bot",
       timestamp: new Date()
     }
@@ -153,20 +147,10 @@ export default function LandingPage() {
       return keywords.some(keyword => userText.includes(keyword.toLowerCase()));
     };
 
-    let reply = "";
-    if (matches(["دوام", "وقت", "ساعات", "متى", "ساعة", "يوم", "ايام"])) {
-      reply = "دوام مركز لؤي سعادة من السبت إلى الأربعاء من 8 صباحًا حتى 5 عصرًا، ويوم الخميس من 8 صباحًا حتى 1 ظهرًا، والجمعة عطلة.";
-    } else if (matches(["موقع", "لوكيشن", "مكان", "عنوان", "وين", "خرائط", "خريطة", "جواد", "ماركا"])) {
-      reply = "يقع مركز لؤي سعادة في ماركا الشمالية، خلف مخابز جواد. يمكنك فتح الموقع من زر الخريطة في الموقع.";
-    } else if (matches(["تكييف", "فرامل", "جير", "قير", "محرك", "زيت", "فلاتر", "بطارية", "hv", "هايبرد", "كهرباء", "قطع غيار", "تشخيص", "أعطال", "فحص", "كمبيوتر", "خدمات"])) {
-      reply = "يقدم مركز لؤي سعادة خدمات نظام التكييف، نظام الفرامل، المحرك والجير، الزيوت والفلاتر، بطاريات HV، تشخيص الأعطال، وقطع الغيار.";
-    } else if (matches(["سعر", "كم", "تكلفة", "بكلف", "الاسعار"])) {
-      reply = "تختلف تكلفة الفحص أو الصيانة حسب نوع السيارة والمشكلة. الأفضل إرسال تفاصيل السيارة والعطل عبر واتساب ليتم توجيهك بشكل أدق.";
-    } else if (matches(["حجز", "موعد", "متوفر"])) {
-      reply = "يمكنك حجز موعد أو الاستفسار مباشرة عبر واتساب من زر التواصل الموجود في الموقع.";
-    } else {
-      reply = "أهلاً بك في مركز لؤي سعادة. يمكنني مساعدتك في الاستفسار عن فحص الكمبيوتر، الخدمات (التكييف، الفرامل، الجير، المحرك، الزيوت، الفلاتر، بطاريات HV)، موقع المركز، أوقات الدوام، أو الحجز. اكتب سؤالك أو تواصل معنا عبر واتساب.";
-    }
+    const matchingRule = CENTER_DATA.chatbot.rules.find(
+      (rule) => rule.active !== false && matches(rule.keywords)
+    );
+    const reply = matchingRule?.reply || CENTER_DATA.chatbot.defaultReply;
 
     setTimeout(() => {
       const botMsg = {
@@ -182,6 +166,7 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen selection:bg-electric-blue selection:text-white overflow-hidden">
+      <a href="#main-content" className="skip-link">تجاوز القائمة والانتقال إلى المحتوى</a>
       
       {/* Dynamic Background Effects */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-electric-blue/10 to-transparent pointer-events-none z-0" />
@@ -196,8 +181,10 @@ export default function LandingPage() {
             <div className="flex-shrink-0 flex items-center gap-3">
               {CENTER_DATA.images.logo ? (
                 <div className="h-10 flex items-center">
-                  <img 
+                  <Image
                     src={`${CENTER_DATA.images.logo}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                    width={160}
+                    height={40}
                     className="h-10 w-auto max-w-[160px] object-contain rounded-lg" 
                     alt={CENTER_DATA.name} 
                   />
@@ -205,8 +192,10 @@ export default function LandingPage() {
               ) : (
                 <div className="w-10 h-10 rounded-lg bg-electric-blue flex items-center justify-center text-white shadow-lg shadow-electric-blue/30 border border-white/10 overflow-hidden">
                   {CENTER_DATA.images.favicon ? (
-                    <img 
+                    <Image
                       src={`${CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                      width={40}
+                      height={40}
                       className="w-full h-full object-cover" 
                       alt={CENTER_DATA.name} 
                     />
@@ -235,11 +224,11 @@ export default function LandingPage() {
               {/* Theme Toggle Button Desktop */}
               <button
                 onClick={toggleTheme}
-                className="text-gray-400 hover:text-white p-2.5 rounded-lg bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all focus:outline-none cursor-pointer"
+                className="min-w-11 min-h-11 text-gray-400 hover:text-white p-2.5 rounded-lg bg-white/5 border border-white/5 hover:border-white/10 hover:bg-white/10 transition-all cursor-pointer"
                 aria-label="تبديل الوضع"
                 title="تبديل الوضع"
               >
-                {mounted && theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
+                {theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
               </button>
               
               <a
@@ -257,17 +246,19 @@ export default function LandingPage() {
               {/* Theme Toggle Button Mobile */}
               <button
                 onClick={toggleTheme}
-                className="text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 focus:outline-none cursor-pointer"
+                className="min-w-11 min-h-11 text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 cursor-pointer"
                 aria-label="تبديل الوضع"
                 title="تبديل الوضع"
               >
-                {mounted && theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
+                {theme === 'light' ? <Sun className="w-5 h-5 text-warning-amber" /> : <Moon className="w-5 h-5" />}
               </button>
               
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 focus:outline-none"
-                aria-label="Toggle Menu"
+                className="min-w-11 min-h-11 text-gray-400 hover:text-white p-2 rounded-lg bg-white/5 border border-white/5 cursor-pointer"
+                aria-label={mobileMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-navigation"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -277,7 +268,7 @@ export default function LandingPage() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden glass-panel border-b border-white/5 animate-fadeIn">
+          <div id="mobile-navigation" className="lg:hidden glass-panel border-b border-white/5 animate-fadeIn">
             <div className="px-4 pt-2 pb-6 space-y-3">
               <a href="#" className="block px-3 py-2.5 rounded-lg text-base font-semibold text-gray-300 hover:bg-white/5 hover:text-electric-blue transition-all">الرئيسية</a>
               <a href="#services" className="block px-3 py-2.5 rounded-lg text-base font-semibold text-gray-300 hover:bg-white/5 hover:text-electric-blue transition-all">الخدمات</a>
@@ -290,6 +281,7 @@ export default function LandingPage() {
         )}
       </header>
 
+      <main id="main-content" tabIndex={-1}>
       {/* 2. HERO SECTION */}
       {CENTER_DATA.sectionsVisibility.hero && (
         <section className="relative pt-8 pb-20 lg:pt-16 lg:pb-32 overflow-hidden">
@@ -325,8 +317,9 @@ export default function LandingPage() {
                 </h1>
                 
                 <div className="bg-electric-blue/5 border-r-4 border-r-electric-blue rounded-xl p-4 sm:p-5 my-6 text-right max-w-2xl mx-auto lg:mx-0 shadow-md">
-                  <p className="text-base sm:text-lg font-bold text-gray-200">
-                    🔬 فحص وتشخيص أعطال السيارات بدقة قبل تغيير القطع
+                  <p className="text-base sm:text-lg font-bold text-gray-200 flex items-center gap-2">
+                    <Search className="w-5 h-5 text-electric-blue shrink-0" aria-hidden="true" />
+                    <span>فحص وتشخيص أعطال السيارات بدقة قبل تغيير القطع</span>
                   </p>
                   <p className="text-xs sm:text-sm text-gray-400 mt-1.5 font-medium leading-relaxed">
                     {CENTER_DATA.slogan}
@@ -486,7 +479,7 @@ export default function LandingPage() {
                 <AlertTriangle className="w-8 h-8" />
               </div>
               <div>
-                <h3 className="text-warning-amber text-xs sm:text-sm font-black tracking-wider uppercase mb-1">القاعدة الأساسية لفحص وصيانة السيارات الحديثة</h3>
+                <p className="text-warning-amber text-xs sm:text-sm font-black tracking-wider uppercase mb-1">القاعدة الأساسية لفحص وصيانة السيارات الحديثة</p>
                 <h2 className="font-cairo-play text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight">
                   &quot;لا تغيّر قطع قبل أن تعرف سبب العطل الحقيقي.&quot;
                 </h2>
@@ -508,10 +501,10 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تخصصنا شامل ومتكامل</h2>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تخصصنا شامل ومتكامل</p>
+              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 أنواع السيارات التي نخدمها في المركز
-              </h1>
+              </h2>
               <p className="text-base text-gray-400 font-medium">
                 سواء كنت تقود سيارة تقليدية أو حديثة صديقة للبيئة، نوفر لك تشخيصاً هندسياً وصيانة متكاملة.
               </p>
@@ -571,10 +564,10 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">ماذا يقدم المركز؟</h2>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">ماذا يقدم المركز؟</p>
+              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 خدمات الفحص والصيانة الذكية
-              </h1>
+              </h2>
               <p className="text-base text-gray-400 font-medium">
                 نقدم باقة متكاملة من فحوصات السيارات الكهربائية، الهايبرد، والبنزين بأحدث الأنظمة الإلكترونية والأجهزة الهندسية لضمان كفاءة التشخيص.
               </p>
@@ -593,7 +586,7 @@ export default function LandingPage() {
                       <div className="absolute -inset-4 bg-electric-blue/5 rounded-2xl blur-2xl group-hover:bg-electric-blue/10 transition-all duration-500" />
                       <div className="relative rounded-2xl overflow-hidden glass-panel border border-white/10 h-[240px] sm:h-[280px] w-full">
                         <Image 
-                          src={(service as any).image || "/images/diagnostics-tablet.png"}
+                          src={service.image || "/images/diagnostics-tablet.png"}
                           alt={service.title}
                           fill
                           sizes="(max-w-768px) 100vw, 40vw"
@@ -609,9 +602,9 @@ export default function LandingPage() {
                         <div className="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-electric-blue">
                           <IconMapper name={service.icon} className="w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-cairo-play">
+                        <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-cairo-play">
                           {service.title}
-                        </h2>
+                        </h3>
                       </div>
                       
                       <p className="text-base text-gray-300 leading-relaxed font-medium">
@@ -651,10 +644,10 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">آلية العمل</h2>
-            <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+            <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">آلية العمل</p>
+            <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
               كيف تتم الخدمة في مركزنا؟
-            </h1>
+            </h2>
             <p className="text-base text-gray-400 font-medium">
               منهجية هندسية واضحة ومبسطة تضمن لك دقة التشخيص وتجنب الصيانة العشوائية.
             </p>
@@ -720,10 +713,10 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs sm:text-sm font-extrabold text-[#ff5c00] uppercase tracking-widest">هل تعاني من هذه المشاكل؟</h2>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              <p className="text-xs sm:text-sm font-extrabold text-[#ff5c00] uppercase tracking-widest">هل تعاني من هذه المشاكل؟</p>
+              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 أعطال شائعة نقوم بتشخيصها وحلها
-              </h1>
+              </h2>
               <p className="text-base text-gray-400 font-medium">
                 السيارات الحديثة مليئة بالحساسات والأنظمة المتداخلة. نحن هنا لنكتشف السبب الدقيق للمشكلة وليس مجرد قراءة أكواد.
               </p>
@@ -736,9 +729,9 @@ export default function LandingPage() {
                   className="glass-panel hover:bg-white/5 rounded-xl p-5 border-r-4 border-r-warning-orange border-y border-white/5 hover:border-y-white/10 transition-all duration-200"
                 >
                   <div className="text-[10px] font-mono text-warning-amber font-bold mb-1 tracking-wider">{problem.code}</div>
-                  <h4 className="text-base font-bold text-white group-hover:text-warning-amber transition-colors">
+                  <h3 className="text-base font-bold text-white group-hover:text-warning-amber transition-colors">
                     {problem.title}
-                  </h4>
+                  </h3>
                 </div>
               ))}
             </div>
@@ -753,10 +746,10 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</h2>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</p>
+              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 لماذا تختار {CENTER_DATA.name}؟
-              </h1>
+              </h2>
               <p className="text-base text-gray-400 font-medium">
                 لسنا مجرد كراج عشوائي؛ بل نعتمد على العلم والهندسة والأجهزة التقنية لتشخيص المشاكل بدقة وتجنب الخسائر المالية.
               </p>
@@ -793,10 +786,10 @@ export default function LandingPage() {
             <div className="absolute -top-16 -left-16 w-32 h-32 bg-electric-blue/10 rounded-full blur-2xl" />
             <div className="absolute -bottom-16 -right-16 w-32 h-32 bg-warning-amber/10 rounded-full blur-2xl" />
             
-            <h2 className="text-xs sm:text-sm font-extrabold text-warning-amber uppercase tracking-widest">توعية مالية وفنية</h2>
-            <h1 className="font-cairo-play text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+            <p className="text-xs sm:text-sm font-extrabold text-warning-amber uppercase tracking-widest">توعية مالية وفنية</p>
+            <h2 className="font-cairo-play text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
               الفحص الصحيح يوفر عليك تكلفة الإصلاح العشوائي
-            </h1>
+            </h2>
             
             <p className="text-base sm:text-lg text-gray-300 leading-relaxed font-medium">
               كثير من مشاكل السيارات لا تحتاج إلى تغيير قطع كثيرة ومكلفة، بل تحتاج إلى تشخيص صحيح للمشكلة من البداية. لذلك نبدأ بفحص السيارة وقراءة الأعطال، ثم تحليل السبب الحقيقي بدقة متناهية، ونشرح لك المشكلة وحلها الفني المناسب بالتفصيل قبل القيام بأي صيانة أو فك أي قطعة في مركبتك.
@@ -855,10 +848,10 @@ export default function LandingPage() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تساؤلات فنية وإجابات واضحة</h2>
-              <h1 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+              <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تساؤلات فنية وإجابات واضحة</p>
+              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
                 الأسئلة الشائعة حول فحص وصيانة السيارات
-              </h1>
+              </h2>
               <p className="text-base text-gray-400 font-medium">
                 إليك إجابات الأسئلة الهامة التي تساعدك في فهم آليات الفحص المتبعة ومستويات الدقة التي نوفرها.
               </p>
@@ -920,8 +913,8 @@ export default function LandingPage() {
               {/* Contact Details Column */}
               <div className="lg:col-span-5 space-y-8">
                 <div className="space-y-4">
-                  <h2 className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">معلومات الاتصال والموقع</h2>
-                  <h1 className="font-cairo-play text-3xl sm:text-4xl font-bold text-white leading-tight">تفضل بزيارتنا أو تواصل معنا</h1>
+                  <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">معلومات الاتصال والموقع</p>
+                  <h2 className="font-cairo-play text-3xl sm:text-4xl font-bold text-white leading-tight">تفضل بزيارتنا أو تواصل معنا</h2>
                   <p className="text-base text-gray-400 font-medium leading-relaxed">
                     نحن متواجدون لمساعدتك في فحص وتشخيص سيارتك. تواصل معنا مسبقاً لحجز موعد لضمان عدم الانتظار وتلقي الخدمة في أسرع وقت.
                   </p>
@@ -934,7 +927,7 @@ export default function LandingPage() {
                       <MapPin className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs text-gray-400 font-bold mb-1">الموقع الجغرافي</h4>
+                      <h3 className="text-xs text-gray-400 font-bold mb-1">الموقع الجغرافي</h3>
                       <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.location}</p>
                       <p className="text-xs text-gray-400 font-medium pt-1">{CENTER_DATA.locationDetail}</p>
                     </div>
@@ -946,7 +939,7 @@ export default function LandingPage() {
                       <Clock className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs text-gray-400 font-bold mb-1">ساعات العمل</h4>
+                      <h3 className="text-xs text-gray-400 font-bold mb-1">ساعات العمل</h3>
                       <p className="text-sm sm:text-base font-bold text-white">{CENTER_DATA.workingHoursDisplay}</p>
                     </div>
                   </div>
@@ -957,7 +950,7 @@ export default function LandingPage() {
                       <Phone className="w-5 h-5" />
                     </div>
                     <div>
-                      <h4 className="text-xs text-gray-400 font-bold mb-1">الهاتف وواتساب</h4>
+                      <h3 className="text-xs text-gray-400 font-bold mb-1">الهاتف وواتساب</h3>
                       <p className="text-sm sm:text-base font-bold text-white">هاتف: {CENTER_DATA.phoneDisplay}</p>
                       <p className="text-xs text-gray-400 font-medium pt-1">واتساب: {CENTER_DATA.phoneDisplay}</p>
                     </div>
@@ -1065,6 +1058,7 @@ export default function LandingPage() {
           </div>
         </section>
       )}
+      </main>
 
       {/* 11. FOOTER SECTION */}
       <footer className="bg-[#080a0f] border-t border-white/5 pt-12 pb-24 sm:pb-12 text-sm text-gray-400">
@@ -1076,8 +1070,10 @@ export default function LandingPage() {
               <div className="flex items-center gap-3">
                 {CENTER_DATA.images.logo ? (
                   <div className="h-8 flex items-center">
-                    <img 
+                    <Image
                       src={`${CENTER_DATA.images.logo}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                      width={120}
+                      height={32}
                       className="h-8 w-auto max-w-[120px] object-contain rounded-lg" 
                       alt={CENTER_DATA.name} 
                     />
@@ -1085,8 +1081,10 @@ export default function LandingPage() {
                 ) : (
                   <div className="w-8 h-8 rounded-lg bg-electric-blue flex items-center justify-center text-white border border-white/10 overflow-hidden">
                     {CENTER_DATA.images.favicon ? (
-                      <img 
+                      <Image
                         src={`${CENTER_DATA.images.favicon}?v=${CENTER_DATA.updatedAt || "1"}`} 
+                        width={32}
+                        height={32}
                         className="w-full h-full object-cover" 
                         alt={CENTER_DATA.name} 
                       />
@@ -1109,7 +1107,7 @@ export default function LandingPage() {
 
             {/* Column 2 - Links */}
             <div className="md:col-span-3 space-y-3">
-              <h5 className="font-cairo-play font-bold text-white text-sm">روابط سريعة</h5>
+              <h2 className="font-cairo-play font-bold text-white text-sm">روابط سريعة</h2>
               <div className="grid grid-cols-2 gap-2 text-xs sm:text-sm">
                 <a href="#" className="hover:text-electric-blue transition-colors">الرئيسية</a>
                 <a href="#services" className="hover:text-electric-blue transition-colors">الخدمات</a>
@@ -1122,7 +1120,7 @@ export default function LandingPage() {
 
             {/* Column 3 - Contact Info details */}
             <div className="md:col-span-4 space-y-3">
-              <h5 className="font-cairo-play font-bold text-white text-sm">تواصل معنا</h5>
+              <h2 className="font-cairo-play font-bold text-white text-sm">تواصل معنا</h2>
               <ul className="space-y-2 text-xs sm:text-sm font-medium">
                 <li className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-electric-blue" />
@@ -1159,7 +1157,7 @@ export default function LandingPage() {
         rel="noopener noreferrer"
         className="hidden sm:flex fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full bg-[#25d366] hover:bg-[#20ba5a] text-white items-center justify-center shadow-xl shadow-green-500/20 hover:shadow-green-500/40 border border-white/10 hover:scale-110 transition-all duration-300"
         title="تواصل عبر الواتساب"
-        aria-label="Contact WhatsApp"
+        aria-label="التواصل عبر واتساب"
       >
         <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
           <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.333 4.993L2 22l5.233-1.371a9.936 9.936 0 0 0 4.773 1.226h.004c5.505 0 9.989-4.478 9.99-9.984A9.97 9.97 0 0 0 12.012 2zm5.82 14.161c-.3.84-1.491 1.568-2.051 1.621-.56.051-1.11.271-3.6-0.73-3.189-1.28-5.229-4.52-5.389-4.731-.16-.21-1.28-1.7-1.28-3.24 0-1.54.8-2.3 1.09-2.6.29-.3.63-.37.84-.37.21 0 .42.01.6.01.19 0 .44-.08.69.51.26.62.88 2.14.96 2.3.08.16.13.35.03.55-.1.21-.15.34-.3.52-.15.18-.32.41-.45.55-.15.15-.31.32-.13.62.18.3.82 1.36 1.76 2.2 1.21 1.08 2.22 1.41 2.53 1.56.31.15.49.13.67-.08.18-.21.79-.92.99-1.23.21-.31.42-.26.71-.15.3.11 1.89.89 2.21 1.05.32.16.54.24.62.38.08.14.08.82-.22 1.66z" />
@@ -1172,7 +1170,9 @@ export default function LandingPage() {
           onClick={() => setChatOpen(true)}
           className="hidden sm:flex fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-electric-blue hover:bg-electric-blue-hover text-white items-center justify-center shadow-xl shadow-electric-blue/20 hover:shadow-electric-blue/40 border border-white/10 hover:scale-110 transition-all duration-300"
           title="المساعد الذكي"
-          aria-label="Open Chatbot"
+          aria-label="فتح المساعد التفاعلي"
+          aria-expanded={chatOpen}
+          aria-controls="chatbot-dialog"
         >
           <Bot className="w-7 h-7" />
         </button>
@@ -1216,7 +1216,7 @@ export default function LandingPage() {
 
       {/* Chatbot Window (Modal/Card Popup) */}
       {CENTER_DATA.sectionsVisibility.chatbot && chatOpen && (
-        <div className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 sm:w-[380px] h-[460px] z-50 glass-panel-glow border border-electric-blue/20 rounded-2xl flex flex-col overflow-hidden shadow-2xl animate-slideUp">
+        <div id="chatbot-dialog" role="dialog" aria-label="المساعد التفاعلي" className="fixed bottom-20 left-4 right-4 sm:bottom-24 sm:left-auto sm:right-6 sm:w-[380px] h-[460px] z-50 glass-panel-glow border border-electric-blue/20 rounded-2xl flex flex-col overflow-hidden shadow-2xl animate-slideUp">
           {/* Chat Header */}
           <div className="bg-gradient-to-r from-electric-blue/20 via-[#0f1422] to-electric-blue/10 px-4 py-3.5 flex items-center justify-between border-b border-white/5">
             <div className="flex items-center gap-2.5">
@@ -1224,7 +1224,7 @@ export default function LandingPage() {
                 <Bot className="w-5 h-5 animate-pulse" />
               </div>
               <div className="text-right">
-                <h4 className="text-sm font-bold text-white font-cairo-play">المساعد الذكي</h4>
+                <h2 className="text-sm font-bold text-white font-cairo-play">المساعد الذكي</h2>
                 <p className="text-[9px] text-green-400 font-bold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping inline-block" />
                   <span>متصل للرد الفوري</span>
@@ -1244,8 +1244,8 @@ export default function LandingPage() {
                 onClick={() => {
                   setChatOpen(false);
                 }}
-                className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-all"
-                aria-label="Close Chat"
+                className="min-w-11 min-h-11 text-gray-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition-all flex items-center justify-center"
+                aria-label="إغلاق المساعد"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1315,12 +1315,14 @@ export default function LandingPage() {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="اكتب سؤالك هنا..."
-                className="flex-grow bg-[#080a0f] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-gray-200 placeholder-gray-600 focus:outline-none focus:border-electric-blue/50 text-right"
+                aria-label="اكتب سؤالك للمساعد"
+                className="flex-grow bg-[#080a0f] border border-white/10 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-gray-200 placeholder-gray-600 focus:border-electric-blue/50 focus-visible:ring-2 focus-visible:ring-electric-blue text-right"
               />
               <button
                 type="submit"
-                className="w-10 h-10 rounded-xl bg-electric-blue hover:bg-electric-blue-hover text-white flex items-center justify-center shrink-0 border border-white/10 transition-all hover:scale-105"
+                className="min-w-11 min-h-11 rounded-xl bg-electric-blue hover:bg-electric-blue-hover text-white flex items-center justify-center shrink-0 border border-white/10 transition-all hover:scale-105"
                 title="إرسال"
+                aria-label="إرسال الرسالة"
               >
                 <Send className="w-4 h-4 transform rotate-180" />
               </button>
