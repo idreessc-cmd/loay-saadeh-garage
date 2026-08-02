@@ -43,7 +43,8 @@ const DEFAULT_PATHS: Record<string, string> = {
   ogImage: "/og-image.png",
   favicon: "/favicon.ico",
   logo: "",
-  hero: ""
+  hero: "",
+  whyUs: "/images/why-us-transparency-2026.webp"
 };
 
 async function getRefSha(owner: string, repo: string, branch: string, token: string): Promise<string> {

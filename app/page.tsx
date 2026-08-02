@@ -523,10 +523,10 @@ export default function LandingPage() {
                         car.image && car.image !== "/electric.png" && car.image !== "/hybrid.png" && car.image !== "/defualt.png"
                           ? car.image
                           : car.title.includes("كهرب") 
-                            ? (CENTER_DATA.images.electric || "/images/hv-battery-service-2026.webp")
+                            ? (CENTER_DATA.images.electric || "/images/electric-vehicle-service-2026-v2.webp")
                             : car.title.includes("هايب")
-                              ? (CENTER_DATA.images.hybrid || "/images/hv-battery-service-2026.webp")
-                              : (CENTER_DATA.images.defaultCar || "/images/engine-service-2026.webp")
+                              ? (CENTER_DATA.images.hybrid || "/images/hybrid-vehicle-service-2026-v2.webp")
+                              : (CENTER_DATA.images.defaultCar || "/images/combustion-vehicle-service-2026-v2.webp")
                       } 
                       alt={car.title}
                       fill
@@ -745,14 +745,34 @@ export default function LandingPage() {
         <section id="why-us" className="py-20 bg-[#0c0f17] border-y border-white/5 relative bg-stripes">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-              <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</p>
-              <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
-                لماذا تختار {CENTER_DATA.name}؟
-              </h2>
-              <p className="text-base text-gray-400 font-medium">
-                لسنا مجرد كراج عشوائي؛ بل نعتمد على العلم والهندسة والأجهزة التقنية لتشخيص المشاكل بدقة وتجنب الخسائر المالية.
-              </p>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-14 lg:mb-16">
+              <div className="lg:col-span-7 text-center lg:text-right space-y-4">
+                <p className="text-xs sm:text-sm font-extrabold text-electric-blue uppercase tracking-widest">تميزنا في مجال الصيانة</p>
+                <h2 className="font-cairo-play text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight">
+                  لماذا تختار {CENTER_DATA.name}؟
+                </h2>
+                <p className="text-base text-gray-400 font-medium leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                  لسنا مجرد كراج عشوائي؛ بل نعتمد على العلم والهندسة والأجهزة التقنية لتشخيص المشاكل بدقة وتجنب الخسائر المالية.
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 relative group">
+                <div className="absolute -inset-4 bg-electric-blue/5 rounded-3xl blur-2xl group-hover:bg-electric-blue/10 transition-colors duration-500" />
+                <div className="relative h-[300px] sm:h-[360px] lg:h-[390px] overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-2xl">
+                  <Image
+                    src={CENTER_DATA.images.whyUs || "/images/why-us-transparency-2026.webp"}
+                    alt="مهندس سيارات يشرح نتيجة الفحص للعميل بوضوح"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 42vw"
+                    className="object-cover object-center opacity-85 group-hover:opacity-100 group-hover:scale-[1.025] transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b1326] via-transparent to-transparent" />
+                  <div className="absolute inset-x-4 bottom-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-[#080a0f]/80 px-4 py-3 backdrop-blur-md">
+                    <span className="text-sm font-bold text-white">تشخيص هندسي موثوق</span>
+                    <span className="text-xs font-semibold text-electric-blue">شرح واضح قبل الإصلاح</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Hexagon/Circle Featured Grid */}

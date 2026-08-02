@@ -76,6 +76,7 @@ export interface CenterData {
     favicon: string;
     logo: string;
     hero: string;
+    whyUs: string;
   };
   mediaHistory: {
     timestamp: string;

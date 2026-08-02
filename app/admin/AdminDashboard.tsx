@@ -1102,6 +1102,7 @@ function MediaManager({ formData, onFormDataChange }: { formData: CenterData; on
     { key: "favicon", label: "أيقونة الموقع (Favicon)", usage: "تبويب المتصفح", default: "/favicon.ico" },
     { key: "logo", label: "شعار الموقع (Logo)", usage: "الشعار في رأس الصفحة (اختياري)", default: "" },
     { key: "hero", label: "صورة الخلفية (Hero Image)", usage: "خلفية قسم البانر الرئيسي (اختياري)", default: "" },
+    { key: "whyUs", label: "صورة لماذا نحن", usage: "مقدمة قسم لماذا تختار المركز", default: "/images/why-us-transparency-2026.webp" },
   ];
 
   const currentPath = (key: string): string => formData.images[key as keyof CenterData["images"]] || "";

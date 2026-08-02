@@ -276,32 +276,33 @@
     }
   ],
   "images": {
-    "electric": "/images/hv-battery-service-2026.webp",
-    "hybrid": "/images/hv-battery-service-2026.webp",
-    "defaultCar": "/images/engine-service-2026.webp",
+    "electric": "/images/electric-vehicle-service-2026-v2.webp",
+    "hybrid": "/images/hybrid-vehicle-service-2026-v2.webp",
+    "defaultCar": "/images/combustion-vehicle-service-2026-v2.webp",
     "ogImage": "/og-image.png",
     "favicon": "/uploads/favicon-20260704-0755.png",
     "logo": "/uploads/logo-20260704-0755.png",
-    "hero": "/images/workshop-hero-2026.webp"
+    "hero": "/images/workshop-hero-2026.webp",
+    "whyUs": "/images/why-us-transparency-2026.webp"
   },
   "mediaHistory": [],
   "carTypes": [
     {
       "title": "السيارات الكهربائية",
       "desc": "اهتمام خاص بسيارات الكهرباء وفحص بطاريات الجهد العالي HV وتشخيص أنظمتها الإلكترونية.",
-      "image": "/electric.png",
+      "image": "/images/electric-vehicle-service-2026-v2.webp",
       "active": true
     },
     {
       "title": "سيارات الهايبرد",
       "desc": "فحص وتشخيص أنظمة الهايبرد، بطارية الهايبرد، وأنظمة الشحن حسب حالة السيارة.",
-      "image": "/hybrid.png",
+      "image": "/images/hybrid-vehicle-service-2026-v2.webp",
       "active": true
     },
     {
       "title": "سيارات البنزين والديزل",
       "desc": "خدمات صيانة شاملة للميكانيك، الكهرباء العامة، وتغيير الزيوت وتشخيص السيارات العادية.",
-      "image": "/defualt.png",
+      "image": "/images/combustion-vehicle-service-2026-v2.webp",
       "active": true
     }
   ],
