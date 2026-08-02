@@ -289,8 +289,8 @@ export default function LandingPage() {
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-b from-[#0b1326]/60 via-[#0b1326]/85 to-[#0b1326] z-10" />
             <Image
-              src="/images/hero-bg.png"
-              alt="High Tech EV Workshop"
+              src={CENTER_DATA.images.hero || "/images/workshop-hero-2026.webp"}
+              alt="فني سيارات يجري فحصاً احترافياً داخل ورشة حديثة"
               fill
               priority
               className="object-cover opacity-20"
@@ -523,10 +523,10 @@ export default function LandingPage() {
                         car.image && car.image !== "/electric.png" && car.image !== "/hybrid.png" && car.image !== "/defualt.png"
                           ? car.image
                           : car.title.includes("كهرب") 
-                            ? (CENTER_DATA.images.electric || "/images/car-types-split.png")
+                            ? (CENTER_DATA.images.electric || "/images/hv-battery-service-2026.webp")
                             : car.title.includes("هايب")
-                              ? (CENTER_DATA.images.hybrid || "/images/hv-battery.png")
-                              : (CENTER_DATA.images.defaultCar || "/images/diagnostics-tablet.png")
+                              ? (CENTER_DATA.images.hybrid || "/images/hv-battery-service-2026.webp")
+                              : (CENTER_DATA.images.defaultCar || "/images/engine-service-2026.webp")
                       } 
                       alt={car.title}
                       fill
@@ -586,7 +586,7 @@ export default function LandingPage() {
                       <div className="absolute -inset-4 bg-electric-blue/5 rounded-2xl blur-2xl group-hover:bg-electric-blue/10 transition-all duration-500" />
                       <div className="relative rounded-2xl overflow-hidden glass-panel border border-white/10 h-[240px] sm:h-[280px] w-full">
                         <Image 
-                          src={service.image || "/images/diagnostics-tablet.png"}
+                          src={service.image || "/images/computer-diagnostics-2026.webp"}
                           alt={service.title}
                           fill
                           sizes="(max-w-768px) 100vw, 40vw"
